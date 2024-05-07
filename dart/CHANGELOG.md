@@ -1,6 +1,10 @@
+## 0.1.2
+
+- chore: Update repository
+
 ## 0.1.1
 
-- Add template-linked policies
+- feat: Add template-linked policies
 
 ## 0.1.0
 
