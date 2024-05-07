@@ -1,0 +1,14 @@
+version: 2
+enable-beta-ecosystems: true
+updates:
+  ### ACTIONS ###
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  ### DART ###
+  - package-ecosystem: "pub"
+    directory: "dart"
+    schedule:
+      interval: "weekly"
