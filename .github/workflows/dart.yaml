@@ -1,9 +1,9 @@
-name: corks_cedar
+name: Dart
 on:
   pull_request:
     paths:
-      - ".github/workflows/corks_cedar.yaml"
-      - "packages/corks_cedar/**"
+      - ".github/workflows/dart.yaml"
+      - "dart/**"
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
@@ -31,8 +31,8 @@ jobs:
       - name: Setup Dart
         uses: dart-lang/setup-dart@f0ead981b4d9a35b37f30d36160575d60931ec30 # main
       - name: Get Packages
-        working-directory: packages/corks_cedar
+        working-directory: dart
         run: dart pub get
       - name: Test
-        working-directory: packages/corks_cedar
+        working-directory: dart
         run: dart --enable-experiment=native-assets test --fail-fast
