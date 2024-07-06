@@ -1,3 +1,7 @@
+## 0.2.0-wip
+
+- feat: Improve and expand Cork model
+
 ## 0.1.2
 
 - chore: Update repository

@@ -4,6 +4,8 @@ package cedar.v3;
 
 import "cedar/v3/value.proto";
 
+option go_package = "cedar/v3;cedarpb";
+
 message Context {
   map<string, Value> values = 1;
 }

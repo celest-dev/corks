@@ -13,23 +13,40 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import '../../google/protobuf/any.pb.dart' as $6;
+
+///  Encodes a cork's metadata and its signature.
+///
+///  A cork can be further restricted by its bearer by appending additional
+///  caveats and creating a new signature.
+///
+///  All existing caveats and other values are not open for extension or
+///  modification once signed.
 class Cork extends $pb.GeneratedMessage {
   factory Cork({
     $core.List<$core.int>? id,
-    $core.List<$core.int>? keyId,
-    SignedBlock? bearer,
-    $core.Iterable<SignedBlock>? caveats,
+    $6.Any? issuer,
+    $6.Any? bearer,
+    $6.Any? audience,
+    $6.Any? claims,
+    $core.Iterable<$6.Any>? caveats,
     $core.List<$core.int>? signature,
   }) {
     final $result = create();
     if (id != null) {
       $result.id = id;
     }
-    if (keyId != null) {
-      $result.keyId = keyId;
+    if (issuer != null) {
+      $result.issuer = issuer;
     }
     if (bearer != null) {
       $result.bearer = bearer;
+    }
+    if (audience != null) {
+      $result.audience = audience;
+    }
+    if (claims != null) {
+      $result.claims = claims;
     }
     if (caveats != null) {
       $result.caveats.addAll(caveats);
@@ -45,10 +62,12 @@ class Cork extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Cork', package: const $pb.PackageName(_omitMessageNames ? '' : 'corks.v1'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'keyId', $pb.PbFieldType.OY)
-    ..aOM<SignedBlock>(3, _omitFieldNames ? '' : 'bearer', subBuilder: SignedBlock.create)
-    ..pc<SignedBlock>(4, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM, subBuilder: SignedBlock.create)
-    ..a<$core.List<$core.int>>(5, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
+    ..aOM<$6.Any>(2, _omitFieldNames ? '' : 'issuer', subBuilder: $6.Any.create)
+    ..aOM<$6.Any>(3, _omitFieldNames ? '' : 'bearer', subBuilder: $6.Any.create)
+    ..aOM<$6.Any>(4, _omitFieldNames ? '' : 'audience', subBuilder: $6.Any.create)
+    ..aOM<$6.Any>(5, _omitFieldNames ? '' : 'claims', subBuilder: $6.Any.create)
+    ..pc<$6.Any>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM, subBuilder: $6.Any.create)
+    ..a<$core.List<$core.int>>(999, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
@@ -73,6 +92,7 @@ class Cork extends $pb.GeneratedMessage {
   static Cork getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Cork>(create);
   static Cork? _defaultInstance;
 
+  /// The unique identifier of the cork and its root key.
   @$pb.TagNumber(1)
   $core.List<$core.int> get id => $_getN(0);
   @$pb.TagNumber(1)
@@ -82,115 +102,67 @@ class Cork extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
 
+  /// The encoded issuer of the cork.
   @$pb.TagNumber(2)
-  $core.List<$core.int> get keyId => $_getN(1);
+  $6.Any get issuer => $_getN(1);
   @$pb.TagNumber(2)
-  set keyId($core.List<$core.int> v) { $_setBytes(1, v); }
+  set issuer($6.Any v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasKeyId() => $_has(1);
+  $core.bool hasIssuer() => $_has(1);
   @$pb.TagNumber(2)
-  void clearKeyId() => clearField(2);
+  void clearIssuer() => clearField(2);
+  @$pb.TagNumber(2)
+  $6.Any ensureIssuer() => $_ensure(1);
 
+  /// The encoded bearer of the cork.
   @$pb.TagNumber(3)
-  SignedBlock get bearer => $_getN(2);
+  $6.Any get bearer => $_getN(2);
   @$pb.TagNumber(3)
-  set bearer(SignedBlock v) { setField(3, v); }
+  set bearer($6.Any v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasBearer() => $_has(2);
   @$pb.TagNumber(3)
   void clearBearer() => clearField(3);
   @$pb.TagNumber(3)
-  SignedBlock ensureBearer() => $_ensure(2);
+  $6.Any ensureBearer() => $_ensure(2);
 
+  /// The encoded audience of the cork.
   @$pb.TagNumber(4)
-  $core.List<SignedBlock> get caveats => $_getList(3);
+  $6.Any get audience => $_getN(3);
+  @$pb.TagNumber(4)
+  set audience($6.Any v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAudience() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAudience() => clearField(4);
+  @$pb.TagNumber(4)
+  $6.Any ensureAudience() => $_ensure(3);
 
+  /// The encoded claims of the cork.
   @$pb.TagNumber(5)
-  $core.List<$core.int> get signature => $_getN(4);
+  $6.Any get claims => $_getN(4);
   @$pb.TagNumber(5)
-  set signature($core.List<$core.int> v) { $_setBytes(4, v); }
+  set claims($6.Any v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasSignature() => $_has(4);
+  $core.bool hasClaims() => $_has(4);
   @$pb.TagNumber(5)
-  void clearSignature() => clearField(5);
-}
+  void clearClaims() => clearField(5);
+  @$pb.TagNumber(5)
+  $6.Any ensureClaims() => $_ensure(4);
 
-class SignedBlock extends $pb.GeneratedMessage {
-  factory SignedBlock({
-    $core.List<$core.int>? block,
-    $core.List<$core.int>? typeUrl,
-    $core.List<$core.int>? signature,
-  }) {
-    final $result = create();
-    if (block != null) {
-      $result.block = block;
-    }
-    if (typeUrl != null) {
-      $result.typeUrl = typeUrl;
-    }
-    if (signature != null) {
-      $result.signature = signature;
-    }
-    return $result;
-  }
-  SignedBlock._() : super();
-  factory SignedBlock.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SignedBlock.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  /// The encoded caveats of the cork.
+  @$pb.TagNumber(6)
+  $core.List<$6.Any> get caveats => $_getList(5);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SignedBlock', package: const $pb.PackageName(_omitMessageNames ? '' : 'corks.v1'), createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'block', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(2, _omitFieldNames ? '' : 'typeUrl', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(3, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  SignedBlock clone() => SignedBlock()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SignedBlock copyWith(void Function(SignedBlock) updates) => super.copyWith((message) => updates(message as SignedBlock)) as SignedBlock;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static SignedBlock create() => SignedBlock._();
-  SignedBlock createEmptyInstance() => create();
-  static $pb.PbList<SignedBlock> createRepeated() => $pb.PbList<SignedBlock>();
-  @$core.pragma('dart2js:noInline')
-  static SignedBlock getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SignedBlock>(create);
-  static SignedBlock? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<$core.int> get block => $_getN(0);
-  @$pb.TagNumber(1)
-  set block($core.List<$core.int> v) { $_setBytes(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasBlock() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearBlock() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.List<$core.int> get typeUrl => $_getN(1);
-  @$pb.TagNumber(2)
-  set typeUrl($core.List<$core.int> v) { $_setBytes(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasTypeUrl() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearTypeUrl() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.List<$core.int> get signature => $_getN(2);
-  @$pb.TagNumber(3)
-  set signature($core.List<$core.int> v) { $_setBytes(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasSignature() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearSignature() => clearField(3);
+  /// The final signature of the cork.
+  @$pb.TagNumber(999)
+  $core.List<$core.int> get signature => $_getN(6);
+  @$pb.TagNumber(999)
+  set signature($core.List<$core.int> v) { $_setBytes(6, v); }
+  @$pb.TagNumber(999)
+  $core.bool hasSignature() => $_has(6);
+  @$pb.TagNumber(999)
+  void clearSignature() => clearField(999);
 }
 
 
