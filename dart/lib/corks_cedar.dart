@@ -5,5 +5,7 @@
 /// [Cedar](https://www.cedarpolicy.com/en) policy caveats.
 library;
 
+export 'src/cedar_cork.dart';
 export 'src/cork.dart';
+export 'src/exceptions.dart';
 export 'src/signer.dart';

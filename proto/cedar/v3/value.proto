@@ -4,6 +4,8 @@ package cedar.v3;
 
 import "cedar/v3/entity_id.proto";
 
+option go_package = "cedar/v3;cedarpb";
+
 message Value {
   oneof value {
     string string = 1;

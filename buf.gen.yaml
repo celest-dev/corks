@@ -1,0 +1,28 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package
+      value: github.com/celest-dev/corks/go/internal/proto/dart;dartoptionspb
+      path: dart/dart_options.proto
+    - file_option: go_package_prefix
+      value: github.com/celest-dev/corks/go/internal/proto
+  disable:
+    - path: google
+inputs:
+  - directory: proto
+  - directory: third_party
+    paths:
+      - third_party/dart/dart_options.proto
+plugins:
+  - remote: buf.build/protocolbuffers/dart:v21.1.2
+    include_imports: true
+    include_wkt: true
+    out: dart/lib/src/proto
+    opt: grpc
+  - remote: buf.build/protocolbuffers/go:v1.34.2
+    include_imports: false
+    include_wkt: false
+    out: go/internal/proto
+    opt:
+      - paths=source_relative

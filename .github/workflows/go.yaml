@@ -1,9 +1,9 @@
-name: Dart
+name: Go
 on:
   pull_request:
     paths:
-      - ".github/workflows/dart.yaml"
-      - "dart/**"
+      - ".github/workflows/go.yaml"
+      - "go/**"
 
 # Prevent duplicate runs due to Graphite
 # https://graphite.dev/docs/troubleshooting#why-are-my-actions-running-twice
@@ -20,11 +20,10 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # 4.1.7
         with:
           submodules: true
-      - name: Setup Dart
-        uses: dart-lang/setup-dart@0a8a0fc875eb934c15d08629302413c671d3f672 # main
-      - name: Get Packages
-        working-directory: dart
-        run: dart pub get
+      - name: Setup Go
+        uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # 5.0.1
+        with:
+          go-version-file: go/go.mod
       - name: Test
-        working-directory: dart
-        run: dart test --fail-fast
+        working-directory: go
+        run: go test ./...

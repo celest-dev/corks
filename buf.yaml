@@ -1,0 +1,13 @@
+version: v2
+modules:
+  - path: proto
+  - path: third_party
+breaking:
+  use:
+    - PACKAGE
+lint:
+  use:
+    - MINIMAL
+  ignore:
+    - third_party
+  disallow_comment_ignores: true

@@ -5,6 +5,8 @@ package cedar.v3;
 import "cedar/v3/entity_id.proto";
 import "cedar/v3/expr.proto";
 
+option go_package = "cedar/v3;cedarpb";
+
 enum PolicyEffect {
   POLICY_EFFECT_UNSPECIFIED = 0;
   POLICY_EFFECT_PERMIT = 1;
