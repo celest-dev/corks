@@ -14,7 +14,13 @@ var unmarshalOpts = proto.UnmarshalOptions{
 
 // Unmarshal decodes the cork from the given encoded data.
 func (s *Cork) UnmarshalFrom(encoded []byte) error {
-	return unmarshalOpts.Unmarshal(encoded, (*corksv1.Cork)(s))
+	var cork corksv1.Cork
+	err := unmarshalOpts.Unmarshal(encoded, &cork)
+	if err != nil {
+		return errors.Join(ErrInvalidCork, err)
+	}
+	s.raw = &cork
+	return nil
 }
 
 // Decode decodes a cork from a base64url-encoded string.

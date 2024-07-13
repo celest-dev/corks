@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	corksproto "github.com/celest-dev/corks/go/internal/proto"
+	corksv1 "github.com/celest-dev/corks/go/internal/proto/corks/v1"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 )
@@ -102,33 +103,33 @@ func (b *Builder) Validate() error {
 }
 
 // Build builds and validates the cork for signing.
-func (c *Builder) Build() (*Cork, error) {
-	err := c.Validate()
+func (b *Builder) Build() (*Cork, error) {
+	err := b.Validate()
 	if err != nil {
 		return nil, err
 	}
 
-	id := make([]byte, len(c.id))
-	copy(id, c.id)
+	id := make([]byte, len(b.id))
+	copy(id, b.id)
 
-	issuer, err := corksproto.MarshalAny(c.issuer)
+	issuer, err := corksproto.MarshalAny(b.issuer)
 	if err != nil {
 		return nil, err
 	}
-	bearer, err := corksproto.MarshalAny(c.bearer)
+	bearer, err := corksproto.MarshalAny(b.bearer)
 	if err != nil {
 		return nil, err
 	}
-	audience, err := corksproto.MarshalAny(c.audience)
+	audience, err := corksproto.MarshalAny(b.audience)
 	if err != nil {
 		return nil, err
 	}
-	claims, err := corksproto.MarshalAny(c.claims)
+	claims, err := corksproto.MarshalAny(b.claims)
 	if err != nil {
 		return nil, err
 	}
-	caveats := make([]*anypb.Any, 0, len(c.caveats))
-	for _, caveat := range c.caveats {
+	caveats := make([]*anypb.Any, 0, len(b.caveats))
+	for _, caveat := range b.caveats {
 		caveat, err := corksproto.MarshalAny(caveat)
 		if err != nil {
 			return nil, err
@@ -138,11 +139,13 @@ func (c *Builder) Build() (*Cork, error) {
 		}
 	}
 	return &Cork{
-		Id:       id,
-		Issuer:   issuer,
-		Bearer:   bearer,
-		Audience: audience,
-		Claims:   claims,
-		Caveats:  caveats,
+		raw: &corksv1.Cork{
+			Id:       id,
+			Issuer:   issuer,
+			Bearer:   bearer,
+			Audience: audience,
+			Claims:   claims,
+			Caveats:  caveats,
+		},
 	}, nil
 }

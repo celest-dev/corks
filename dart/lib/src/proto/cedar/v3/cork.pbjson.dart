@@ -22,7 +22,8 @@ const Cork$json = {
     {'1': 'bearer', '3': 3, '4': 1, '5': 11, '6': '.cedar.v3.EntityId', '10': 'bearer'},
     {'1': 'audience', '3': 4, '4': 1, '5': 11, '6': '.cedar.v3.EntityId', '9': 0, '10': 'audience', '17': true},
     {'1': 'claims', '3': 5, '4': 1, '5': 11, '6': '.cedar.v3.Entity', '9': 1, '10': 'claims', '17': true},
-    {'1': 'caveats', '3': 6, '4': 3, '5': 11, '6': '.cedar.v3.Caveat', '10': 'caveats'},
+    {'1': 'caveats', '3': 6, '4': 3, '5': 11, '6': '.cedar.v3.Policy', '10': 'caveats'},
+    {'1': 'signature', '3': 999, '4': 1, '5': 12, '10': 'signature'},
   ],
   '8': [
     {'1': '_audience'},
@@ -36,23 +37,6 @@ final $typed_data.Uint8List corkDescriptor = $convert.base64Decode(
     'lJZFIGaXNzdWVyEioKBmJlYXJlchgDIAEoCzISLmNlZGFyLnYzLkVudGl0eUlkUgZiZWFyZXIS'
     'MwoIYXVkaWVuY2UYBCABKAsyEi5jZWRhci52My5FbnRpdHlJZEgAUghhdWRpZW5jZYgBARItCg'
     'ZjbGFpbXMYBSABKAsyEC5jZWRhci52My5FbnRpdHlIAVIGY2xhaW1ziAEBEioKB2NhdmVhdHMY'
-    'BiADKAsyEC5jZWRhci52My5DYXZlYXRSB2NhdmVhdHNCCwoJX2F1ZGllbmNlQgkKB19jbGFpbX'
-    'M=');
-
-@$core.Deprecated('Use caveatDescriptor instead')
-const Caveat$json = {
-  '1': 'Caveat',
-  '2': [
-    {'1': 'policy_id', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'policyId'},
-    {'1': 'policy', '3': 2, '4': 1, '5': 11, '6': '.cedar.v3.Policy', '9': 0, '10': 'policy'},
-  ],
-  '8': [
-    {'1': 'caveat'},
-  ],
-};
-
-/// Descriptor for `Caveat`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List caveatDescriptor = $convert.base64Decode(
-    'CgZDYXZlYXQSHQoJcG9saWN5X2lkGAEgASgJSABSCHBvbGljeUlkEioKBnBvbGljeRgCIAEoCz'
-    'IQLmNlZGFyLnYzLlBvbGljeUgAUgZwb2xpY3lCCAoGY2F2ZWF0');
+    'BiADKAsyEC5jZWRhci52My5Qb2xpY3lSB2NhdmVhdHMSHQoJc2lnbmF0dXJlGOcHIAEoDFIJc2'
+    'lnbmF0dXJlQgsKCV9hdWRpZW5jZUIJCgdfY2xhaW1z');
 
