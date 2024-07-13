@@ -28,7 +28,39 @@ var (
 
 // A cork is a bearer token that can be used to make claims about an entity for the purpose
 // of authorization and authentication.
-type Cork corksv1.Cork
+type Cork struct {
+	raw *corksv1.Cork
+}
+
+// Issuer returns the issuer of the cork.
+func (c *Cork) Issuer() *anypb.Any {
+	return c.raw.Issuer
+}
+
+// Bearer returns the bearer of the cork.
+func (c *Cork) Bearer() *anypb.Any {
+	return c.raw.Bearer
+}
+
+// Audience returns the audience of the cork.
+func (c *Cork) Audience() *anypb.Any {
+	return c.raw.Audience
+}
+
+// Claims returns the claims of the cork.
+func (c *Cork) Claims() *anypb.Any {
+	return c.raw.Claims
+}
+
+// Caveats returns the caveats of the cork.
+func (c *Cork) Caveats() []*anypb.Any {
+	return c.raw.Caveats
+}
+
+// Signature returns the signature of the cork.
+func (c *Cork) Signature() []byte {
+	return c.raw.Signature
+}
 
 // Sign signs the cork using the given signer and returns a copy of the cork with
 // the signature.
@@ -38,13 +70,13 @@ func (c *Cork) Sign(signer Signer) (*Cork, error) {
 	if err != nil {
 		return nil, err
 	}
-	signed.Signature = signature
+	signed.raw.Signature = signature
 	return signed, nil
 }
 
 // Verify verifies the cork using the given sealer.
 func (c *Cork) Verify(signer Signer) error {
-	expected := c.Signature
+	expected := c.raw.Signature
 	if len(expected) == 0 {
 		return ErrMissingSignature
 	}
@@ -60,25 +92,25 @@ func (c *Cork) Verify(signer Signer) error {
 
 // Raw returns the underlying proto message.
 func (c *Cork) Raw() *corksv1.Cork {
-	return (*corksv1.Cork)(c)
+	return c.raw
 }
 
 // clone returns a deep copy of the cork.
 func (c *Cork) clone() *Cork {
-	copy := proto.Clone((*corksv1.Cork)(c)).(*corksv1.Cork)
-	return (*Cork)(copy)
+	copy := proto.Clone(c.raw).(*corksv1.Cork)
+	return &Cork{copy}
 }
 
 // sign signs the cork using the given signer and returns the signature.
 func (c *Cork) sign(signer Signer) ([]byte, error) {
-	if !bytes.Equal(signer.KeyID(), c.Id) {
+	if !bytes.Equal(signer.KeyID(), c.raw.Id) {
 		return nil, ErrMismatchedKey
 	}
 
 	defer signer.Reset()
 	signer.Reset()
 
-	_, err := signer.Write(c.Id)
+	_, err := signer.Write(c.raw.Id)
 	if err != nil {
 		return nil, err
 	}
@@ -93,23 +125,23 @@ func (c *Cork) sign(signer Signer) ([]byte, error) {
 		return
 	}
 
-	err = sign(c.Issuer)
+	err = sign(c.raw.Issuer)
 	if err != nil {
 		return nil, err
 	}
-	err = sign(c.Bearer)
+	err = sign(c.raw.Bearer)
 	if err != nil {
 		return nil, err
 	}
-	err = sign(c.Audience)
+	err = sign(c.raw.Audience)
 	if err != nil {
 		return nil, err
 	}
-	err = sign(c.Claims)
+	err = sign(c.raw.Claims)
 	if err != nil {
 		return nil, err
 	}
-	for _, caveat := range c.Caveats {
+	for _, caveat := range c.raw.Caveats {
 		err = sign(caveat)
 		if err != nil {
 			return nil, err

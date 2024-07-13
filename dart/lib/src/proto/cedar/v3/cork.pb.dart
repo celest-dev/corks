@@ -26,7 +26,8 @@ class Cork extends $pb.GeneratedMessage {
     $0.EntityId? bearer,
     $0.EntityId? audience,
     $4.Entity? claims,
-    $core.Iterable<Caveat>? caveats,
+    $core.Iterable<$5.Policy>? caveats,
+    $core.List<$core.int>? signature,
   }) {
     final $result = create();
     if (id != null) {
@@ -47,6 +48,9 @@ class Cork extends $pb.GeneratedMessage {
     if (caveats != null) {
       $result.caveats.addAll(caveats);
     }
+    if (signature != null) {
+      $result.signature = signature;
+    }
     return $result;
   }
   Cork._() : super();
@@ -59,7 +63,8 @@ class Cork extends $pb.GeneratedMessage {
     ..aOM<$0.EntityId>(3, _omitFieldNames ? '' : 'bearer', subBuilder: $0.EntityId.create)
     ..aOM<$0.EntityId>(4, _omitFieldNames ? '' : 'audience', subBuilder: $0.EntityId.create)
     ..aOM<$4.Entity>(5, _omitFieldNames ? '' : 'claims', subBuilder: $4.Entity.create)
-    ..pc<Caveat>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM, subBuilder: Caveat.create)
+    ..pc<$5.Policy>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM, subBuilder: $5.Policy.create)
+    ..a<$core.List<$core.int>>(999, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
 
@@ -142,94 +147,23 @@ class Cork extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $4.Entity ensureClaims() => $_ensure(4);
 
-  /// The caveats to this cork's validity and usage.
+  ///  The caveats to this cork's validity and usage.
+  ///
+  ///
+  ///  Caveats are structured conditions which must be met for the cork to be considered
+  ///  valid and for its claims to be considered true.
   @$pb.TagNumber(6)
-  $core.List<Caveat> get caveats => $_getList(5);
-}
+  $core.List<$5.Policy> get caveats => $_getList(5);
 
-enum Caveat_Caveat {
-  policyId, 
-  policy, 
-  notSet
-}
-
-/// A structured condition which must be met for the cork to be considered valid
-/// and for its claims to be considered true.
-class Caveat extends $pb.GeneratedMessage {
-  factory Caveat({
-    $core.String? policyId,
-    $5.Policy? policy,
-  }) {
-    final $result = create();
-    if (policyId != null) {
-      $result.policyId = policyId;
-    }
-    if (policy != null) {
-      $result.policy = policy;
-    }
-    return $result;
-  }
-  Caveat._() : super();
-  factory Caveat.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory Caveat.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static const $core.Map<$core.int, Caveat_Caveat> _Caveat_CaveatByTag = {
-    1 : Caveat_Caveat.policyId,
-    2 : Caveat_Caveat.policy,
-    0 : Caveat_Caveat.notSet
-  };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Caveat', package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'), createEmptyInstance: create)
-    ..oo(0, [1, 2])
-    ..aOS(1, _omitFieldNames ? '' : 'policyId')
-    ..aOM<$5.Policy>(2, _omitFieldNames ? '' : 'policy', subBuilder: $5.Policy.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  Caveat clone() => Caveat()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  Caveat copyWith(void Function(Caveat) updates) => super.copyWith((message) => updates(message as Caveat)) as Caveat;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static Caveat create() => Caveat._();
-  Caveat createEmptyInstance() => create();
-  static $pb.PbList<Caveat> createRepeated() => $pb.PbList<Caveat>();
-  @$core.pragma('dart2js:noInline')
-  static Caveat getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Caveat>(create);
-  static Caveat? _defaultInstance;
-
-  Caveat_Caveat whichCaveat() => _Caveat_CaveatByTag[$_whichOneof(0)]!;
-  void clearCaveat() => clearField($_whichOneof(0));
-
-  /// An identifier for a policy restricting the cork's usage.
-  @$pb.TagNumber(1)
-  $core.String get policyId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set policyId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasPolicyId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearPolicyId() => clearField(1);
-
-  /// An embedded policy restricting the cork's usage.
-  @$pb.TagNumber(2)
-  $5.Policy get policy => $_getN(1);
-  @$pb.TagNumber(2)
-  set policy($5.Policy v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasPolicy() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearPolicy() => clearField(2);
-  @$pb.TagNumber(2)
-  $5.Policy ensurePolicy() => $_ensure(1);
+  /// The final signature of the cork.
+  @$pb.TagNumber(999)
+  $core.List<$core.int> get signature => $_getN(6);
+  @$pb.TagNumber(999)
+  set signature($core.List<$core.int> v) { $_setBytes(6, v); }
+  @$pb.TagNumber(999)
+  $core.bool hasSignature() => $_has(6);
+  @$pb.TagNumber(999)
+  void clearSignature() => clearField(999);
 }
 
 

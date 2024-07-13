@@ -40,19 +40,19 @@ func TestBuildAndVerify(t *testing.T) {
 
 	tt := []struct {
 		name        string
-		build       func() (*corks.Cork, error)
+		build       func() (*cedarcork.Cork, error)
 		expectError error
 	}{
 		{
 			name: "empty",
-			build: func() (*corks.Cork, error) {
+			build: func() (*cedarcork.Cork, error) {
 				return cedarcork.NewBuilder(aId).Build()
 			},
 			expectError: corks.ErrInvalidCork,
 		},
 		{
 			name: "missing issuer",
-			build: func() (*corks.Cork, error) {
+			build: func() (*cedarcork.Cork, error) {
 				return cedarcork.NewBuilder(aId).
 					Bearer(bearer).
 					Build()
@@ -61,7 +61,7 @@ func TestBuildAndVerify(t *testing.T) {
 		},
 		{
 			name: "missing bearer",
-			build: func() (*corks.Cork, error) {
+			build: func() (*cedarcork.Cork, error) {
 				return cedarcork.NewBuilder(aId).
 					Issuer(issuer).
 					Build()
@@ -70,7 +70,7 @@ func TestBuildAndVerify(t *testing.T) {
 		},
 		{
 			name: "valid minimal",
-			build: func() (*corks.Cork, error) {
+			build: func() (*cedarcork.Cork, error) {
 				return cedarcork.NewBuilder(aId).
 					Bearer(bearer).
 					Issuer(issuer).
@@ -79,7 +79,7 @@ func TestBuildAndVerify(t *testing.T) {
 		},
 		{
 			name: "valid full",
-			build: func() (*corks.Cork, error) {
+			build: func() (*cedarcork.Cork, error) {
 				audience := issuer
 				claims := &cedar.Entity{
 					Uid: bearer,
