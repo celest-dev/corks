@@ -6,7 +6,7 @@ import (
 )
 
 type Policy struct {
-	Id          string             `json:"id,omitempty"`
+	ID          string             `json:"id,omitempty"`
 	Effect      PolicyEffect       `json:"effect"`
 	Principal   *PolicyPrincipal   `json:"principal,omitempty"`
 	Action      *PolicyAction      `json:"action,omitempty"`
@@ -17,8 +17,8 @@ type Policy struct {
 
 func (p *Policy) Raw() *cedarv3.Policy {
 	var id *string
-	if p.Id != "" {
-		id = &p.Id
+	if p.ID != "" {
+		id = &p.ID
 	}
 	principal := p.Principal.Raw()
 	action := p.Action.Raw()
@@ -38,31 +38,31 @@ func (p *Policy) Raw() *cedarv3.Policy {
 	}
 }
 
-type PolicyEffect int32
+type PolicyEffect string
 
 const (
-	EffectPermit PolicyEffect = 1
-	EffectForbid PolicyEffect = 2
+	EffectPermit PolicyEffect = "permit"
+	EffectForbid PolicyEffect = "forbid"
 )
 
 func (e PolicyEffect) Raw() cedarv3.PolicyEffect {
-	return cedarv3.PolicyEffect(e)
+	switch e {
+	case EffectPermit:
+		return cedarv3.PolicyEffect_POLICY_EFFECT_PERMIT
+	case EffectForbid:
+		return cedarv3.PolicyEffect_POLICY_EFFECT_FORBID
+	default:
+		return cedarv3.PolicyEffect_POLICY_EFFECT_UNSPECIFIED
+	}
 }
 
 func (e PolicyEffect) String() string {
-	switch e {
-	case EffectPermit:
-		return "permit"
-	case EffectForbid:
-		return "forbid"
-	default:
-		return "unknown"
-	}
+	return string(e)
 }
 
 type PolicyPrincipal struct {
 	Op         PolicyOp  `json:"op"`
-	Entity     *EntityId `json:"entity,omitempty"`
+	Entity     *EntityID `json:"entity,omitempty"`
 	EntityType string    `json:"entity_type,omitempty"`
 }
 
@@ -82,8 +82,8 @@ func (p *PolicyPrincipal) Raw() *cedarv3.PolicyPrincipal {
 
 type PolicyAction struct {
 	Op       PolicyOp    `json:"op"`
-	Entity   *EntityId   `json:"entity,omitempty"`
-	Entities []*EntityId `json:"entities,omitempty"`
+	Entity   *EntityID   `json:"entity,omitempty"`
+	Entities []*EntityID `json:"entities,omitempty"`
 }
 
 func (a *PolicyAction) Raw() *cedarv3.PolicyAction {
@@ -108,7 +108,7 @@ func (a *PolicyAction) Raw() *cedarv3.PolicyAction {
 
 type PolicyResource struct {
 	Op         PolicyOp  `json:"op"`
-	Entity     *EntityId `json:"entity,omitempty"`
+	Entity     *EntityID `json:"entity,omitempty"`
 	EntityType string    `json:"entity_type,omitempty"`
 }
 
@@ -143,52 +143,52 @@ func (c *PolicyCondition) Raw() *cedarv3.PolicyCondition {
 	}
 }
 
-type PolicyOp int32
+type PolicyOp string
 
 const (
-	OpAll    PolicyOp = 1
-	OpEquals PolicyOp = 2
-	OpIn     PolicyOp = 3
-	OpIs     PolicyOp = 4
+	OpAll    PolicyOp = "All"
+	OpEquals PolicyOp = "=="
+	OpIn     PolicyOp = "in"
+	OpIs     PolicyOp = "is"
 )
 
 func (o PolicyOp) Raw() cedarv3.PolicyOp {
-	return cedarv3.PolicyOp(o)
+	switch o {
+	case OpAll:
+		return cedarv3.PolicyOp_POLICY_OP_ALL
+	case OpEquals:
+		return cedarv3.PolicyOp_POLICY_OP_EQUALS
+	case OpIn:
+		return cedarv3.PolicyOp_POLICY_OP_IN
+	case OpIs:
+		return cedarv3.PolicyOp_POLICY_OP_IS
+	default:
+		return cedarv3.PolicyOp_POLICY_OP_UNSPECIFIED
+	}
 }
 
 func (o PolicyOp) String() string {
-	switch o {
-	case OpAll:
-		return "All"
-	case OpEquals:
-		return "=="
-	case OpIn:
-		return "in"
-	case OpIs:
-		return "is"
-	default:
-		return "unknown"
-	}
+	return string(o)
 }
 
-type PolicyConditionKind int32
+type PolicyConditionKind string
 
 const (
-	ConditionKindWhen   PolicyConditionKind = 1
-	ConditionKindUnless PolicyConditionKind = 2
+	ConditionKindWhen   PolicyConditionKind = "when"
+	ConditionKindUnless PolicyConditionKind = "unless"
 )
 
 func (k PolicyConditionKind) Raw() cedarv3.PolicyConditionKind {
-	return cedarv3.PolicyConditionKind(k)
+	switch k {
+	case ConditionKindWhen:
+		return cedarv3.PolicyConditionKind_POLICY_CONDITION_KIND_WHEN
+	case ConditionKindUnless:
+		return cedarv3.PolicyConditionKind_POLICY_CONDITION_KIND_UNLESS
+	default:
+		return cedarv3.PolicyConditionKind_POLICY_CONDITION_KIND_UNSPECIFIED
+	}
 }
 
 func (k PolicyConditionKind) String() string {
-	switch k {
-	case ConditionKindWhen:
-		return "when"
-	case ConditionKindUnless:
-		return "unless"
-	default:
-		return "unknown"
-	}
+	return string(k)
 }

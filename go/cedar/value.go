@@ -97,7 +97,7 @@ func (e Extension) RawValue() *cedarv3.Value {
 	}
 }
 
-func (e *EntityId) RawValue() *cedarv3.Value {
+func (e *EntityID) RawValue() *cedarv3.Value {
 	return &cedarv3.Value{
 		Value: &cedarv3.Value_Entity{
 			Entity: &cedarv3.EntityValue{
