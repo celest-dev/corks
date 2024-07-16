@@ -29,11 +29,11 @@ func TestBuildAndVerify(t *testing.T) {
 	bId := []byte("b")
 	bKey := newSecretKey()
 
-	issuer := &cedar.EntityId{
+	issuer := &cedar.EntityID{
 		Type: "Organization",
 		Id:   "acme-corp",
 	}
-	bearer := &cedar.EntityId{
+	bearer := &cedar.EntityID{
 		Type: "User",
 		Id:   "alice",
 	}
@@ -82,7 +82,7 @@ func TestBuildAndVerify(t *testing.T) {
 			build: func() (*cedarcork.Cork, error) {
 				audience := issuer
 				claims := &cedar.Entity{
-					Uid: bearer,
+					UID: bearer,
 					Attrs: map[string]cedar.Value{
 						"email": cedar.String("test@example.com"),
 					},

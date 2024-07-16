@@ -1,20 +1,35 @@
 package cedar
 
-import cedarv3 "github.com/celest-dev/corks/go/internal/proto/cedar/v3"
+import (
+	"fmt"
 
-type EntityId cedarv3.EntityId
+	cedarv3 "github.com/celest-dev/corks/go/internal/proto/cedar/v3"
+)
 
-func (e *EntityId) Raw() *cedarv3.EntityId {
+type EntityID cedarv3.EntityId
+
+func NewEntityID(typ, id string) *EntityID {
+	return &EntityID{
+		Type: typ,
+		Id:   id,
+	}
+}
+
+func (e *EntityID) Raw() *cedarv3.EntityId {
 	if e == nil {
 		return nil
 	}
 	return (*cedarv3.EntityId)(e)
 }
 
+func (e *EntityID) String() string {
+	return fmt.Sprintf("%s::%q", e.Type, e.Id)
+}
+
 type Entity struct {
-	Uid     *EntityId        `json:"uid"`
-	Parents []*EntityId      `json:"parents"`
-	Attrs   map[string]Value `json:"attributes"`
+	UID     *EntityID        `json:"uid"`
+	Parents []*EntityID      `json:"parents,omitempty"`
+	Attrs   map[string]Value `json:"attrs"`
 }
 
 func (e *Entity) Raw() *cedarv3.Entity {
@@ -27,7 +42,7 @@ func (e *Entity) Raw() *cedarv3.Entity {
 		attrs[k] = v.RawValue()
 	}
 	return &cedarv3.Entity{
-		Uid:        e.Uid.Raw(),
+		Uid:        e.UID.Raw(),
 		Parents:    parents,
 		Attributes: attrs,
 	}
