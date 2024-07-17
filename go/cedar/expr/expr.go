@@ -1,6 +1,6 @@
 package cedarexpr
 
-import cedarv3 "github.com/celest-dev/corks/go/internal/proto/cedar/v3"
+import cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 
 type Expr = cedarv3.Expr
 type Value = cedarv3.Expr_Value

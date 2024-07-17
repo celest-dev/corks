@@ -2,7 +2,7 @@ package cedar
 
 import (
 	cedarexpr "github.com/celest-dev/corks/go/cedar/expr"
-	cedarv3 "github.com/celest-dev/corks/go/internal/proto/cedar/v3"
+	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 )
 
 type Policy struct {

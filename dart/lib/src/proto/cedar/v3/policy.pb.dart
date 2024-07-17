@@ -19,6 +19,50 @@ import 'policy.pbenum.dart';
 
 export 'policy.pbenum.dart';
 
+class PolicySet extends $pb.GeneratedMessage {
+  factory PolicySet({
+    $core.Iterable<Policy>? policies,
+  }) {
+    final $result = create();
+    if (policies != null) {
+      $result.policies.addAll(policies);
+    }
+    return $result;
+  }
+  PolicySet._() : super();
+  factory PolicySet.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PolicySet.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PolicySet', package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'), createEmptyInstance: create)
+    ..pc<Policy>(1, _omitFieldNames ? '' : 'policies', $pb.PbFieldType.PM, subBuilder: Policy.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PolicySet clone() => PolicySet()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PolicySet copyWith(void Function(PolicySet) updates) => super.copyWith((message) => updates(message as PolicySet)) as PolicySet;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PolicySet create() => PolicySet._();
+  PolicySet createEmptyInstance() => create();
+  static $pb.PbList<PolicySet> createRepeated() => $pb.PbList<PolicySet>();
+  @$core.pragma('dart2js:noInline')
+  static PolicySet getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PolicySet>(create);
+  static PolicySet? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Policy> get policies => $_getList(0);
+}
+
 class Policy extends $pb.GeneratedMessage {
   factory Policy({
     $core.String? id,

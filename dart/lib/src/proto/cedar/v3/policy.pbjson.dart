@@ -62,6 +62,19 @@ final $typed_data.Uint8List policyConditionKindDescriptor = $convert.base64Decod
     'lFRBAAEh4KGlBPTElDWV9DT05ESVRJT05fS0lORF9XSEVOEAESIAocUE9MSUNZX0NPTkRJVElP'
     'Tl9LSU5EX1VOTEVTUxAC');
 
+@$core.Deprecated('Use policySetDescriptor instead')
+const PolicySet$json = {
+  '1': 'PolicySet',
+  '2': [
+    {'1': 'policies', '3': 1, '4': 3, '5': 11, '6': '.cedar.v3.Policy', '10': 'policies'},
+  ],
+};
+
+/// Descriptor for `PolicySet`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List policySetDescriptor = $convert.base64Decode(
+    'CglQb2xpY3lTZXQSLAoIcG9saWNpZXMYASADKAsyEC5jZWRhci52My5Qb2xpY3lSCHBvbGljaW'
+    'Vz');
+
 @$core.Deprecated('Use policyDescriptor instead')
 const Policy$json = {
   '1': 'Policy',

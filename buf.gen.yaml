@@ -3,10 +3,10 @@ managed:
   enabled: true
   override:
     - file_option: go_package
-      value: github.com/celest-dev/corks/go/internal/proto/dart;dartoptionspb
+      value: github.com/celest-dev/corks/go/proto/dart;dartoptionspb
       path: dart/dart_options.proto
     - file_option: go_package_prefix
-      value: github.com/celest-dev/corks/go/internal/proto
+      value: github.com/celest-dev/corks/go/proto
   disable:
     - path: google
 inputs:
@@ -23,6 +23,6 @@ plugins:
   - remote: buf.build/protocolbuffers/go:v1.34.2
     include_imports: false
     include_wkt: false
-    out: go/internal/proto
+    out: go/proto
     opt:
       - paths=source_relative
