@@ -946,12 +946,12 @@ class FieldDescriptorProto extends $pb.GeneratedMessage {
   ///  If true, this is a proto3 "optional". When a proto3 field is optional, it
   ///  tracks presence regardless of field type.
   ///
-  ///  When proto3_optional is true, this field must be belong to a oneof to
-  ///  signal to old proto3 clients that presence is tracked for this field. This
-  ///  oneof is known as a "synthetic" oneof, and this field must be its sole
-  ///  member (each proto3 optional field gets its own synthetic oneof). Synthetic
-  ///  oneofs exist in the descriptor only, and do not generate any API. Synthetic
-  ///  oneofs must be ordered after all "real" oneofs.
+  ///  When proto3_optional is true, this field must belong to a oneof to signal
+  ///  to old proto3 clients that presence is tracked for this field. This oneof
+  ///  is known as a "synthetic" oneof, and this field must be its sole member
+  ///  (each proto3 optional field gets its own synthetic oneof). Synthetic oneofs
+  ///  exist in the descriptor only, and do not generate any API. Synthetic oneofs
+  ///  must be ordered after all "real" oneofs.
   ///
   ///  For message fields, proto3_optional doesn't create any semantic change,
   ///  since non-repeated message fields always track presence. However it still
@@ -1505,7 +1505,6 @@ class FileOptions extends $pb.GeneratedMessage {
     $core.String? swiftPrefix,
     $core.String? phpClassPrefix,
     $core.String? phpNamespace,
-    $core.bool? phpGenericServices,
     $core.String? phpMetadataNamespace,
     $core.String? rubyPackage,
     FeatureSet? features,
@@ -1564,9 +1563,6 @@ class FileOptions extends $pb.GeneratedMessage {
     if (phpNamespace != null) {
       $result.phpNamespace = phpNamespace;
     }
-    if (phpGenericServices != null) {
-      $result.phpGenericServices = phpGenericServices;
-    }
     if (phpMetadataNamespace != null) {
       $result.phpMetadataNamespace = phpMetadataNamespace;
     }
@@ -1603,7 +1599,6 @@ class FileOptions extends $pb.GeneratedMessage {
     ..aOS(39, _omitFieldNames ? '' : 'swiftPrefix')
     ..aOS(40, _omitFieldNames ? '' : 'phpClassPrefix')
     ..aOS(41, _omitFieldNames ? '' : 'phpNamespace')
-    ..aOB(42, _omitFieldNames ? '' : 'phpGenericServices')
     ..aOS(44, _omitFieldNames ? '' : 'phpMetadataNamespace')
     ..aOS(45, _omitFieldNames ? '' : 'rubyPackage')
     ..aOM<FeatureSet>(50, _omitFieldNames ? '' : 'features', subBuilder: FeatureSet.create)
@@ -1761,12 +1756,16 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(23)
   void clearDeprecated() => clearField(23);
 
-  /// If set true, then the Java2 code generator will generate code that
-  /// throws an exception whenever an attempt is made to assign a non-UTF-8
-  /// byte sequence to a string field.
-  /// Message reflection will do the same.
-  /// However, an extension field still accepts non-UTF-8 byte sequences.
-  /// This option has no effect on when used with the lite runtime.
+  ///  A proto2 file can set this to true to opt in to UTF-8 checking for Java,
+  ///  which will throw an exception if invalid UTF-8 is parsed from the wire or
+  ///  assigned to a string field.
+  ///
+  ///  TODO: clarify exactly what kinds of field types this option
+  ///  applies to, and update these docs accordingly.
+  ///
+  ///  Proto3 files already perform these checks. Setting the option explicitly to
+  ///  false has no effect: it cannot be used to opt proto3 files out of UTF-8
+  ///  checks.
   @$pb.TagNumber(27)
   $core.bool get javaStringCheckUtf8 => $_getBF(10);
   @$pb.TagNumber(27)
@@ -1844,24 +1843,15 @@ class FileOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(41)
   void clearPhpNamespace() => clearField(41);
 
-  @$pb.TagNumber(42)
-  $core.bool get phpGenericServices => $_getBF(17);
-  @$pb.TagNumber(42)
-  set phpGenericServices($core.bool v) { $_setBool(17, v); }
-  @$pb.TagNumber(42)
-  $core.bool hasPhpGenericServices() => $_has(17);
-  @$pb.TagNumber(42)
-  void clearPhpGenericServices() => clearField(42);
-
   /// Use this option to change the namespace of php generated metadata classes.
   /// Default is empty. When this option is empty, the proto file name will be
   /// used for determining the namespace.
   @$pb.TagNumber(44)
-  $core.String get phpMetadataNamespace => $_getSZ(18);
+  $core.String get phpMetadataNamespace => $_getSZ(17);
   @$pb.TagNumber(44)
-  set phpMetadataNamespace($core.String v) { $_setString(18, v); }
+  set phpMetadataNamespace($core.String v) { $_setString(17, v); }
   @$pb.TagNumber(44)
-  $core.bool hasPhpMetadataNamespace() => $_has(18);
+  $core.bool hasPhpMetadataNamespace() => $_has(17);
   @$pb.TagNumber(44)
   void clearPhpMetadataNamespace() => clearField(44);
 
@@ -1869,30 +1859,30 @@ class FileOptions extends $pb.GeneratedMessage {
   /// is empty. When this option is not set, the package name will be used for
   /// determining the ruby package.
   @$pb.TagNumber(45)
-  $core.String get rubyPackage => $_getSZ(19);
+  $core.String get rubyPackage => $_getSZ(18);
   @$pb.TagNumber(45)
-  set rubyPackage($core.String v) { $_setString(19, v); }
+  set rubyPackage($core.String v) { $_setString(18, v); }
   @$pb.TagNumber(45)
-  $core.bool hasRubyPackage() => $_has(19);
+  $core.bool hasRubyPackage() => $_has(18);
   @$pb.TagNumber(45)
   void clearRubyPackage() => clearField(45);
 
   /// Any features defined in the specific edition.
   @$pb.TagNumber(50)
-  FeatureSet get features => $_getN(20);
+  FeatureSet get features => $_getN(19);
   @$pb.TagNumber(50)
   set features(FeatureSet v) { setField(50, v); }
   @$pb.TagNumber(50)
-  $core.bool hasFeatures() => $_has(20);
+  $core.bool hasFeatures() => $_has(19);
   @$pb.TagNumber(50)
   void clearFeatures() => clearField(50);
   @$pb.TagNumber(50)
-  FeatureSet ensureFeatures() => $_ensure(20);
+  FeatureSet ensureFeatures() => $_ensure(19);
 
   /// The parser stores options it doesn't recognize here.
   /// See the documentation for the "Options" section above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(21);
+  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(20);
 }
 
 class MessageOptions extends $pb.GeneratedMessage {
@@ -2019,10 +2009,6 @@ class MessageOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearDeprecated() => clearField(3);
 
-  ///  NOTE: Do not set the option in .proto files. Always use the maps syntax
-  ///  instead. The option should only be implicitly set by the proto compiler
-  ///  parser.
-  ///
   ///  Whether the message is an automatically generated map entry type for the
   ///  maps field.
   ///
@@ -2040,6 +2026,10 @@ class MessageOptions extends $pb.GeneratedMessage {
   ///  use a native map in the target language to hold the keys and values.
   ///  The reflection APIs in such implementations still need to work as
   ///  if the field is a repeated message field.
+  ///
+  ///  NOTE: Do not set the option in .proto files. Always use the maps syntax
+  ///  instead. The option should only be implicitly set by the proto compiler
+  ///  parser.
   @$pb.TagNumber(7)
   $core.bool get mapEntry => $_getBF(3);
   @$pb.TagNumber(7)
@@ -2153,6 +2143,109 @@ class FieldOptions_EditionDefault extends $pb.GeneratedMessage {
   void clearEdition() => clearField(3);
 }
 
+/// Information about the support window of a feature.
+class FieldOptions_FeatureSupport extends $pb.GeneratedMessage {
+  factory FieldOptions_FeatureSupport({
+    Edition? editionIntroduced,
+    Edition? editionDeprecated,
+    $core.String? deprecationWarning,
+    Edition? editionRemoved,
+  }) {
+    final $result = create();
+    if (editionIntroduced != null) {
+      $result.editionIntroduced = editionIntroduced;
+    }
+    if (editionDeprecated != null) {
+      $result.editionDeprecated = editionDeprecated;
+    }
+    if (deprecationWarning != null) {
+      $result.deprecationWarning = deprecationWarning;
+    }
+    if (editionRemoved != null) {
+      $result.editionRemoved = editionRemoved;
+    }
+    return $result;
+  }
+  FieldOptions_FeatureSupport._() : super();
+  factory FieldOptions_FeatureSupport.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FieldOptions_FeatureSupport.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FieldOptions.FeatureSupport', package: const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'), createEmptyInstance: create)
+    ..e<Edition>(1, _omitFieldNames ? '' : 'editionIntroduced', $pb.PbFieldType.OE, defaultOrMaker: Edition.EDITION_UNKNOWN, valueOf: Edition.valueOf, enumValues: Edition.values)
+    ..e<Edition>(2, _omitFieldNames ? '' : 'editionDeprecated', $pb.PbFieldType.OE, defaultOrMaker: Edition.EDITION_UNKNOWN, valueOf: Edition.valueOf, enumValues: Edition.values)
+    ..aOS(3, _omitFieldNames ? '' : 'deprecationWarning')
+    ..e<Edition>(4, _omitFieldNames ? '' : 'editionRemoved', $pb.PbFieldType.OE, defaultOrMaker: Edition.EDITION_UNKNOWN, valueOf: Edition.valueOf, enumValues: Edition.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FieldOptions_FeatureSupport clone() => FieldOptions_FeatureSupport()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FieldOptions_FeatureSupport copyWith(void Function(FieldOptions_FeatureSupport) updates) => super.copyWith((message) => updates(message as FieldOptions_FeatureSupport)) as FieldOptions_FeatureSupport;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static FieldOptions_FeatureSupport create() => FieldOptions_FeatureSupport._();
+  FieldOptions_FeatureSupport createEmptyInstance() => create();
+  static $pb.PbList<FieldOptions_FeatureSupport> createRepeated() => $pb.PbList<FieldOptions_FeatureSupport>();
+  @$core.pragma('dart2js:noInline')
+  static FieldOptions_FeatureSupport getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FieldOptions_FeatureSupport>(create);
+  static FieldOptions_FeatureSupport? _defaultInstance;
+
+  /// The edition that this feature was first available in.  In editions
+  /// earlier than this one, the default assigned to EDITION_LEGACY will be
+  /// used, and proto files will not be able to override it.
+  @$pb.TagNumber(1)
+  Edition get editionIntroduced => $_getN(0);
+  @$pb.TagNumber(1)
+  set editionIntroduced(Edition v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEditionIntroduced() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEditionIntroduced() => clearField(1);
+
+  /// The edition this feature becomes deprecated in.  Using this after this
+  /// edition may trigger warnings.
+  @$pb.TagNumber(2)
+  Edition get editionDeprecated => $_getN(1);
+  @$pb.TagNumber(2)
+  set editionDeprecated(Edition v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasEditionDeprecated() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEditionDeprecated() => clearField(2);
+
+  /// The deprecation warning text if this feature is used after the edition it
+  /// was marked deprecated in.
+  @$pb.TagNumber(3)
+  $core.String get deprecationWarning => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set deprecationWarning($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDeprecationWarning() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDeprecationWarning() => clearField(3);
+
+  /// The edition this feature is no longer available in.  In editions after
+  /// this one, the last default assigned will be used, and proto files will
+  /// not be able to override it.
+  @$pb.TagNumber(4)
+  Edition get editionRemoved => $_getN(3);
+  @$pb.TagNumber(4)
+  set editionRemoved(Edition v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasEditionRemoved() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearEditionRemoved() => clearField(4);
+}
+
 class FieldOptions extends $pb.GeneratedMessage {
   factory FieldOptions({
     FieldOptions_CType? ctype,
@@ -2167,6 +2260,7 @@ class FieldOptions extends $pb.GeneratedMessage {
     $core.Iterable<FieldOptions_OptionTargetType>? targets,
     $core.Iterable<FieldOptions_EditionDefault>? editionDefaults,
     FeatureSet? features,
+    FieldOptions_FeatureSupport? featureSupport,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
     final $result = create();
@@ -2206,6 +2300,9 @@ class FieldOptions extends $pb.GeneratedMessage {
     if (features != null) {
       $result.features = features;
     }
+    if (featureSupport != null) {
+      $result.featureSupport = featureSupport;
+    }
     if (uninterpretedOption != null) {
       $result.uninterpretedOption.addAll(uninterpretedOption);
     }
@@ -2228,6 +2325,7 @@ class FieldOptions extends $pb.GeneratedMessage {
     ..pc<FieldOptions_OptionTargetType>(19, _omitFieldNames ? '' : 'targets', $pb.PbFieldType.PE, valueOf: FieldOptions_OptionTargetType.valueOf, enumValues: FieldOptions_OptionTargetType.values, defaultEnumValue: FieldOptions_OptionTargetType.TARGET_TYPE_UNKNOWN)
     ..pc<FieldOptions_EditionDefault>(20, _omitFieldNames ? '' : 'editionDefaults', $pb.PbFieldType.PM, subBuilder: FieldOptions_EditionDefault.create)
     ..aOM<FeatureSet>(21, _omitFieldNames ? '' : 'features', subBuilder: FeatureSet.create)
+    ..aOM<FieldOptions_FeatureSupport>(22, _omitFieldNames ? '' : 'featureSupport', subBuilder: FieldOptions_FeatureSupport.create)
     ..pc<UninterpretedOption>(999, _omitFieldNames ? '' : 'uninterpretedOption', $pb.PbFieldType.PM, subBuilder: UninterpretedOption.create)
     ..hasExtensions = true
   ;
@@ -2314,19 +2412,11 @@ class FieldOptions extends $pb.GeneratedMessage {
   ///  call from multiple threads concurrently, while non-const methods continue
   ///  to require exclusive access.
   ///
-  ///  Note that implementations may choose not to check required fields within
-  ///  a lazy sub-message.  That is, calling IsInitialized() on the outer message
-  ///  may return true even if the inner message has missing required fields.
-  ///  This is necessary because otherwise the inner message would have to be
-  ///  parsed in order to perform the check, defeating the purpose of lazy
-  ///  parsing.  An implementation which chooses not to check required fields
-  ///  must be consistent about it.  That is, for any particular sub-message, the
-  ///  implementation must either *always* check its required fields, or *never*
-  ///  check its required fields, regardless of whether or not the message has
-  ///  been parsed.
-  ///
-  ///  As of May 2022, lazy verifies the contents of the byte stream during
-  ///  parsing.  An invalid byte stream will cause the overall parsing to fail.
+  ///  Note that lazy message fields are still eagerly verified to check
+  ///  ill-formed wireformat or missing required fields. Calling IsInitialized()
+  ///  on the outer message would fail if the inner message has missing required
+  ///  fields. Failed verification would result in parsing failure (except when
+  ///  uninitialized messages are acceptable).
   @$pb.TagNumber(5)
   $core.bool get lazy => $_getBF(3);
   @$pb.TagNumber(5)
@@ -2416,9 +2506,20 @@ class FieldOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(21)
   FeatureSet ensureFeatures() => $_ensure(11);
 
+  @$pb.TagNumber(22)
+  FieldOptions_FeatureSupport get featureSupport => $_getN(12);
+  @$pb.TagNumber(22)
+  set featureSupport(FieldOptions_FeatureSupport v) { setField(22, v); }
+  @$pb.TagNumber(22)
+  $core.bool hasFeatureSupport() => $_has(12);
+  @$pb.TagNumber(22)
+  void clearFeatureSupport() => clearField(22);
+  @$pb.TagNumber(22)
+  FieldOptions_FeatureSupport ensureFeatureSupport() => $_ensure(12);
+
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(12);
+  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(13);
 }
 
 class OneofOptions extends $pb.GeneratedMessage {
@@ -2610,6 +2711,7 @@ class EnumValueOptions extends $pb.GeneratedMessage {
     $core.bool? deprecated,
     FeatureSet? features,
     $core.bool? debugRedact,
+    FieldOptions_FeatureSupport? featureSupport,
     $core.Iterable<UninterpretedOption>? uninterpretedOption,
   }) {
     final $result = create();
@@ -2621,6 +2723,9 @@ class EnumValueOptions extends $pb.GeneratedMessage {
     }
     if (debugRedact != null) {
       $result.debugRedact = debugRedact;
+    }
+    if (featureSupport != null) {
+      $result.featureSupport = featureSupport;
     }
     if (uninterpretedOption != null) {
       $result.uninterpretedOption.addAll(uninterpretedOption);
@@ -2635,6 +2740,7 @@ class EnumValueOptions extends $pb.GeneratedMessage {
     ..aOB(1, _omitFieldNames ? '' : 'deprecated')
     ..aOM<FeatureSet>(2, _omitFieldNames ? '' : 'features', subBuilder: FeatureSet.create)
     ..aOB(3, _omitFieldNames ? '' : 'debugRedact')
+    ..aOM<FieldOptions_FeatureSupport>(4, _omitFieldNames ? '' : 'featureSupport', subBuilder: FieldOptions_FeatureSupport.create)
     ..pc<UninterpretedOption>(999, _omitFieldNames ? '' : 'uninterpretedOption', $pb.PbFieldType.PM, subBuilder: UninterpretedOption.create)
     ..hasExtensions = true
   ;
@@ -2697,9 +2803,21 @@ class EnumValueOptions extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearDebugRedact() => clearField(3);
 
+  /// Information about the support window of a feature value.
+  @$pb.TagNumber(4)
+  FieldOptions_FeatureSupport get featureSupport => $_getN(3);
+  @$pb.TagNumber(4)
+  set featureSupport(FieldOptions_FeatureSupport v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasFeatureSupport() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearFeatureSupport() => clearField(4);
+  @$pb.TagNumber(4)
+  FieldOptions_FeatureSupport ensureFeatureSupport() => $_ensure(3);
+
   /// The parser stores options it doesn't recognize here. See above.
   @$pb.TagNumber(999)
-  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(3);
+  $core.List<UninterpretedOption> get uninterpretedOption => $_getList(4);
 }
 
 class ServiceOptions extends $pb.GeneratedMessage {
@@ -3211,15 +3329,19 @@ class FeatureSet extends $pb.GeneratedMessage {
 /// be used.  This field must be in strict ascending order by edition.
 class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
   factory FeatureSetDefaults_FeatureSetEditionDefault({
-    FeatureSet? features,
     Edition? edition,
+    FeatureSet? overridableFeatures,
+    FeatureSet? fixedFeatures,
   }) {
     final $result = create();
-    if (features != null) {
-      $result.features = features;
-    }
     if (edition != null) {
       $result.edition = edition;
+    }
+    if (overridableFeatures != null) {
+      $result.overridableFeatures = overridableFeatures;
+    }
+    if (fixedFeatures != null) {
+      $result.fixedFeatures = fixedFeatures;
     }
     return $result;
   }
@@ -3228,8 +3350,9 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
   factory FeatureSetDefaults_FeatureSetEditionDefault.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FeatureSetDefaults.FeatureSetEditionDefault', package: const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'), createEmptyInstance: create)
-    ..aOM<FeatureSet>(2, _omitFieldNames ? '' : 'features', subBuilder: FeatureSet.create)
     ..e<Edition>(3, _omitFieldNames ? '' : 'edition', $pb.PbFieldType.OE, defaultOrMaker: Edition.EDITION_UNKNOWN, valueOf: Edition.valueOf, enumValues: Edition.values)
+    ..aOM<FeatureSet>(4, _omitFieldNames ? '' : 'overridableFeatures', subBuilder: FeatureSet.create)
+    ..aOM<FeatureSet>(5, _omitFieldNames ? '' : 'fixedFeatures', subBuilder: FeatureSet.create)
   ;
 
   @$core.Deprecated(
@@ -3253,25 +3376,38 @@ class FeatureSetDefaults_FeatureSetEditionDefault extends $pb.GeneratedMessage {
   static FeatureSetDefaults_FeatureSetEditionDefault getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FeatureSetDefaults_FeatureSetEditionDefault>(create);
   static FeatureSetDefaults_FeatureSetEditionDefault? _defaultInstance;
 
-  @$pb.TagNumber(2)
-  FeatureSet get features => $_getN(0);
-  @$pb.TagNumber(2)
-  set features(FeatureSet v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasFeatures() => $_has(0);
-  @$pb.TagNumber(2)
-  void clearFeatures() => clearField(2);
-  @$pb.TagNumber(2)
-  FeatureSet ensureFeatures() => $_ensure(0);
-
   @$pb.TagNumber(3)
-  Edition get edition => $_getN(1);
+  Edition get edition => $_getN(0);
   @$pb.TagNumber(3)
   set edition(Edition v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasEdition() => $_has(1);
+  $core.bool hasEdition() => $_has(0);
   @$pb.TagNumber(3)
   void clearEdition() => clearField(3);
+
+  /// Defaults of features that can be overridden in this edition.
+  @$pb.TagNumber(4)
+  FeatureSet get overridableFeatures => $_getN(1);
+  @$pb.TagNumber(4)
+  set overridableFeatures(FeatureSet v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasOverridableFeatures() => $_has(1);
+  @$pb.TagNumber(4)
+  void clearOverridableFeatures() => clearField(4);
+  @$pb.TagNumber(4)
+  FeatureSet ensureOverridableFeatures() => $_ensure(1);
+
+  /// Defaults of features that can't be overridden in this edition.
+  @$pb.TagNumber(5)
+  FeatureSet get fixedFeatures => $_getN(2);
+  @$pb.TagNumber(5)
+  set fixedFeatures(FeatureSet v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasFixedFeatures() => $_has(2);
+  @$pb.TagNumber(5)
+  void clearFixedFeatures() => clearField(5);
+  @$pb.TagNumber(5)
+  FeatureSet ensureFixedFeatures() => $_ensure(2);
 }
 
 /// A compiled specification for the defaults of a set of features.  These
@@ -3417,7 +3553,7 @@ class SourceCodeInfo_Location extends $pb.GeneratedMessage {
   ///  location.
   ///
   ///  Each element is a field number or an index.  They form a path from
-  ///  the root FileDescriptorProto to the place where the definition occurs.
+  ///  the root FileDescriptorProto to the place where the definition appears.
   ///  For example, this path:
   ///    [ 4, 3, 2, 7, 1 ]
   ///  refers to:

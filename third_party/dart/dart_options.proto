@@ -9,7 +9,7 @@ package dart_options;
 // (The import statement and "google.protobuf." prefix need to be changed.)
 
 import "google/protobuf/descriptor.proto";
-import "google/protobuf/plugin.proto";
+import "google/protobuf/compiler/plugin.proto";
 
 // A mixin that can be used in the 'with' clause of the generated Dart class
 // for a proto message.
