@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	corksproto "github.com/celest-dev/corks/go/internal/proto"
-	corksv1 "github.com/celest-dev/corks/go/internal/proto/corks/v1"
+	corksproto "github.com/celest-dev/corks/go/proto"
+	corksv1 "github.com/celest-dev/corks/go/proto/corks/v1"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 )

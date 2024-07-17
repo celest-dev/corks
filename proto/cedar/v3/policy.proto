@@ -27,6 +27,10 @@ enum PolicyConditionKind {
   POLICY_CONDITION_KIND_UNLESS = 2;
 }
 
+message PolicySet {
+  repeated Policy policies = 1;
+}
+
 message Policy {
   optional string id = 1;
   PolicyEffect effect = 2;

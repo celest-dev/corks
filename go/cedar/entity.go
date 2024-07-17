@@ -3,7 +3,7 @@ package cedar
 import (
 	"fmt"
 
-	cedarv3 "github.com/celest-dev/corks/go/internal/proto/cedar/v3"
+	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 )
 
 type EntityID cedarv3.EntityId

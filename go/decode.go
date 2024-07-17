@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"errors"
 
-	corksv1 "github.com/celest-dev/corks/go/internal/proto/corks/v1"
+	corksv1 "github.com/celest-dev/corks/go/proto/corks/v1"
 	"google.golang.org/protobuf/proto"
 )
 

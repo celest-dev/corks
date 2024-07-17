@@ -1,6 +1,6 @@
 package cedar
 
-import cedarv3 "github.com/celest-dev/corks/go/internal/proto/cedar/v3"
+import cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 
 type Value interface {
 	RawValue() *cedarv3.Value

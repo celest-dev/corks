@@ -6,7 +6,7 @@ import (
 
 	corks "github.com/celest-dev/corks/go"
 	"github.com/celest-dev/corks/go/cedar"
-	cedarv3 "github.com/celest-dev/corks/go/internal/proto/cedar/v3"
+	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 )
 
 type Cork struct {
