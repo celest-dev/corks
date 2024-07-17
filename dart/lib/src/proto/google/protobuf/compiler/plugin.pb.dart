@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: google/protobuf/plugin.proto
+//  source: google/protobuf/compiler/plugin.proto
 //
 // @dart = 2.12
 
@@ -14,7 +14,7 @@ import 'dart:core' as $core;
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'descriptor.pb.dart' as $0;
+import '../descriptor.pb.dart' as $0;
 
 export 'plugin.pbenum.dart';
 
@@ -120,6 +120,7 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
     $core.String? parameter,
     Version? compilerVersion,
     $core.Iterable<$0.FileDescriptorProto>? protoFile,
+    $core.Iterable<$0.FileDescriptorProto>? sourceFileDescriptors,
   }) {
     final $result = create();
     if (fileToGenerate != null) {
@@ -134,6 +135,9 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
     if (protoFile != null) {
       $result.protoFile.addAll(protoFile);
     }
+    if (sourceFileDescriptors != null) {
+      $result.sourceFileDescriptors.addAll(sourceFileDescriptors);
+    }
     return $result;
   }
   CodeGeneratorRequest._() : super();
@@ -145,6 +149,7 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'parameter')
     ..aOM<Version>(3, _omitFieldNames ? '' : 'compilerVersion', subBuilder: Version.create)
     ..pc<$0.FileDescriptorProto>(15, _omitFieldNames ? '' : 'protoFile', $pb.PbFieldType.PM, subBuilder: $0.FileDescriptorProto.create)
+    ..pc<$0.FileDescriptorProto>(17, _omitFieldNames ? '' : 'sourceFileDescriptors', $pb.PbFieldType.PM, subBuilder: $0.FileDescriptorProto.create)
   ;
 
   @$core.Deprecated(
@@ -200,6 +205,11 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
   ///  they import.  The files will appear in topological order, so each file
   ///  appears before any file that imports it.
   ///
+  ///  Note: the files listed in files_to_generate will include runtime-retention
+  ///  options only, but all other files will include source-retention options.
+  ///  The source_file_descriptors field below is available in case you need
+  ///  source-retention options for files_to_generate.
+  ///
   ///  protoc guarantees that all proto_files will be written after
   ///  the fields above, even though this is not technically guaranteed by the
   ///  protobuf wire format.  This theoretically could allow a plugin to stream
@@ -212,6 +222,12 @@ class CodeGeneratorRequest extends $pb.GeneratedMessage {
   ///  fully qualified.
   @$pb.TagNumber(15)
   $core.List<$0.FileDescriptorProto> get protoFile => $_getList(3);
+
+  /// File descriptors with all options, including source-retention options.
+  /// These descriptors are only provided for the files listed in
+  /// files_to_generate.
+  @$pb.TagNumber(17)
+  $core.List<$0.FileDescriptorProto> get sourceFileDescriptors => $_getList(4);
 }
 
 /// Represents a single generated file.
@@ -366,6 +382,8 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   factory CodeGeneratorResponse({
     $core.String? error,
     $fixnum.Int64? supportedFeatures,
+    $core.int? minimumEdition,
+    $core.int? maximumEdition,
     $core.Iterable<CodeGeneratorResponse_File>? file,
   }) {
     final $result = create();
@@ -374,6 +392,12 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
     }
     if (supportedFeatures != null) {
       $result.supportedFeatures = supportedFeatures;
+    }
+    if (minimumEdition != null) {
+      $result.minimumEdition = minimumEdition;
+    }
+    if (maximumEdition != null) {
+      $result.maximumEdition = maximumEdition;
     }
     if (file != null) {
       $result.file.addAll(file);
@@ -387,6 +411,8 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CodeGeneratorResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf.compiler'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'error')
     ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'supportedFeatures', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'minimumEdition', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'maximumEdition', $pb.PbFieldType.O3)
     ..pc<CodeGeneratorResponse_File>(15, _omitFieldNames ? '' : 'file', $pb.PbFieldType.PM, subBuilder: CodeGeneratorResponse_File.create)
     ..hasRequiredFields = false
   ;
@@ -440,8 +466,34 @@ class CodeGeneratorResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearSupportedFeatures() => clearField(2);
 
+  /// The minimum edition this plugin supports.  This will be treated as an
+  /// Edition enum, but we want to allow unknown values.  It should be specified
+  /// according the edition enum value, *not* the edition number.  Only takes
+  /// effect for plugins that have FEATURE_SUPPORTS_EDITIONS set.
+  @$pb.TagNumber(3)
+  $core.int get minimumEdition => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set minimumEdition($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMinimumEdition() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMinimumEdition() => clearField(3);
+
+  /// The maximum edition this plugin supports.  This will be treated as an
+  /// Edition enum, but we want to allow unknown values.  It should be specified
+  /// according the edition enum value, *not* the edition number.  Only takes
+  /// effect for plugins that have FEATURE_SUPPORTS_EDITIONS set.
+  @$pb.TagNumber(4)
+  $core.int get maximumEdition => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set maximumEdition($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMaximumEdition() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMaximumEdition() => clearField(4);
+
   @$pb.TagNumber(15)
-  $core.List<CodeGeneratorResponse_File> get file => $_getList(2);
+  $core.List<CodeGeneratorResponse_File> get file => $_getList(4);
 }
 
 

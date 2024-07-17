@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: google/protobuf/plugin.proto
+//  source: google/protobuf/compiler/plugin.proto
 //
 // @dart = 2.12
 
@@ -36,6 +36,7 @@ const CodeGeneratorRequest$json = {
     {'1': 'file_to_generate', '3': 1, '4': 3, '5': 9, '10': 'fileToGenerate'},
     {'1': 'parameter', '3': 2, '4': 1, '5': 9, '10': 'parameter'},
     {'1': 'proto_file', '3': 15, '4': 3, '5': 11, '6': '.google.protobuf.FileDescriptorProto', '10': 'protoFile'},
+    {'1': 'source_file_descriptors', '3': 17, '4': 3, '5': 11, '6': '.google.protobuf.FileDescriptorProto', '10': 'sourceFileDescriptors'},
     {'1': 'compiler_version', '3': 3, '4': 1, '5': 11, '6': '.google.protobuf.compiler.Version', '10': 'compilerVersion'},
   ],
 };
@@ -44,9 +45,11 @@ const CodeGeneratorRequest$json = {
 final $typed_data.Uint8List codeGeneratorRequestDescriptor = $convert.base64Decode(
     'ChRDb2RlR2VuZXJhdG9yUmVxdWVzdBIoChBmaWxlX3RvX2dlbmVyYXRlGAEgAygJUg5maWxlVG'
     '9HZW5lcmF0ZRIcCglwYXJhbWV0ZXIYAiABKAlSCXBhcmFtZXRlchJDCgpwcm90b19maWxlGA8g'
-    'AygLMiQuZ29vZ2xlLnByb3RvYnVmLkZpbGVEZXNjcmlwdG9yUHJvdG9SCXByb3RvRmlsZRJMCh'
-    'Bjb21waWxlcl92ZXJzaW9uGAMgASgLMiEuZ29vZ2xlLnByb3RvYnVmLmNvbXBpbGVyLlZlcnNp'
-    'b25SD2NvbXBpbGVyVmVyc2lvbg==');
+    'AygLMiQuZ29vZ2xlLnByb3RvYnVmLkZpbGVEZXNjcmlwdG9yUHJvdG9SCXByb3RvRmlsZRJcCh'
+    'dzb3VyY2VfZmlsZV9kZXNjcmlwdG9ycxgRIAMoCzIkLmdvb2dsZS5wcm90b2J1Zi5GaWxlRGVz'
+    'Y3JpcHRvclByb3RvUhVzb3VyY2VGaWxlRGVzY3JpcHRvcnMSTAoQY29tcGlsZXJfdmVyc2lvbh'
+    'gDIAEoCzIhLmdvb2dsZS5wcm90b2J1Zi5jb21waWxlci5WZXJzaW9uUg9jb21waWxlclZlcnNp'
+    'b24=');
 
 @$core.Deprecated('Use codeGeneratorResponseDescriptor instead')
 const CodeGeneratorResponse$json = {
@@ -54,6 +57,8 @@ const CodeGeneratorResponse$json = {
   '2': [
     {'1': 'error', '3': 1, '4': 1, '5': 9, '10': 'error'},
     {'1': 'supported_features', '3': 2, '4': 1, '5': 4, '10': 'supportedFeatures'},
+    {'1': 'minimum_edition', '3': 3, '4': 1, '5': 5, '10': 'minimumEdition'},
+    {'1': 'maximum_edition', '3': 4, '4': 1, '5': 5, '10': 'maximumEdition'},
     {'1': 'file', '3': 15, '4': 3, '5': 11, '6': '.google.protobuf.compiler.CodeGeneratorResponse.File', '10': 'file'},
   ],
   '3': [CodeGeneratorResponse_File$json],
@@ -77,17 +82,20 @@ const CodeGeneratorResponse_Feature$json = {
   '2': [
     {'1': 'FEATURE_NONE', '2': 0},
     {'1': 'FEATURE_PROTO3_OPTIONAL', '2': 1},
+    {'1': 'FEATURE_SUPPORTS_EDITIONS', '2': 2},
   ],
 };
 
 /// Descriptor for `CodeGeneratorResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List codeGeneratorResponseDescriptor = $convert.base64Decode(
     'ChVDb2RlR2VuZXJhdG9yUmVzcG9uc2USFAoFZXJyb3IYASABKAlSBWVycm9yEi0KEnN1cHBvcn'
-    'RlZF9mZWF0dXJlcxgCIAEoBFIRc3VwcG9ydGVkRmVhdHVyZXMSSAoEZmlsZRgPIAMoCzI0Lmdv'
-    'b2dsZS5wcm90b2J1Zi5jb21waWxlci5Db2RlR2VuZXJhdG9yUmVzcG9uc2UuRmlsZVIEZmlsZR'
-    'qxAQoERmlsZRISCgRuYW1lGAEgASgJUgRuYW1lEicKD2luc2VydGlvbl9wb2ludBgCIAEoCVIO'
-    'aW5zZXJ0aW9uUG9pbnQSGAoHY29udGVudBgPIAEoCVIHY29udGVudBJSChNnZW5lcmF0ZWRfY2'
-    '9kZV9pbmZvGBAgASgLMiIuZ29vZ2xlLnByb3RvYnVmLkdlbmVyYXRlZENvZGVJbmZvUhFnZW5l'
-    'cmF0ZWRDb2RlSW5mbyI4CgdGZWF0dXJlEhAKDEZFQVRVUkVfTk9ORRAAEhsKF0ZFQVRVUkVfUF'
-    'JPVE8zX09QVElPTkFMEAE=');
+    'RlZF9mZWF0dXJlcxgCIAEoBFIRc3VwcG9ydGVkRmVhdHVyZXMSJwoPbWluaW11bV9lZGl0aW9u'
+    'GAMgASgFUg5taW5pbXVtRWRpdGlvbhInCg9tYXhpbXVtX2VkaXRpb24YBCABKAVSDm1heGltdW'
+    '1FZGl0aW9uEkgKBGZpbGUYDyADKAsyNC5nb29nbGUucHJvdG9idWYuY29tcGlsZXIuQ29kZUdl'
+    'bmVyYXRvclJlc3BvbnNlLkZpbGVSBGZpbGUasQEKBEZpbGUSEgoEbmFtZRgBIAEoCVIEbmFtZR'
+    'InCg9pbnNlcnRpb25fcG9pbnQYAiABKAlSDmluc2VydGlvblBvaW50EhgKB2NvbnRlbnQYDyAB'
+    'KAlSB2NvbnRlbnQSUgoTZ2VuZXJhdGVkX2NvZGVfaW5mbxgQIAEoCzIiLmdvb2dsZS5wcm90b2'
+    'J1Zi5HZW5lcmF0ZWRDb2RlSW5mb1IRZ2VuZXJhdGVkQ29kZUluZm8iVwoHRmVhdHVyZRIQCgxG'
+    'RUFUVVJFX05PTkUQABIbChdGRUFUVVJFX1BST1RPM19PUFRJT05BTBABEh0KGUZFQVRVUkVfU1'
+    'VQUE9SVFNfRURJVElPTlMQAg==');
 
