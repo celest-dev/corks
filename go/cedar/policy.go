@@ -139,7 +139,7 @@ func (c *PolicyCondition) Raw() *cedarv3.PolicyCondition {
 	}
 	return &cedarv3.PolicyCondition{
 		Kind: c.Kind.Raw(),
-		Body: c.Body,
+		Body: c.Body.Raw(),
 	}
 }
 

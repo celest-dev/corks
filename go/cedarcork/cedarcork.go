@@ -6,6 +6,7 @@ import (
 
 	corks "github.com/celest-dev/corks/go"
 	"github.com/celest-dev/corks/go/cedar"
+	cedarexpr "github.com/celest-dev/corks/go/cedar/expr"
 	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 )
 
@@ -77,21 +78,27 @@ func (c *Cork) Claims() *cedarv3.Entity {
 	return entity
 }
 
-func (c *Cork) Caveats() []*cedarv3.Policy {
+func (c *Cork) Caveats() []*cedarv3.Expr {
 	if c == nil {
 		return nil
 	}
 	caveats := c.Cork.Caveats()
-	policies := make([]*cedarv3.Policy, len(caveats))
+	expressions := make([]*cedarv3.Expr, len(caveats))
 	for i, caveat := range caveats {
-		policy := new(cedarv3.Policy)
-		err := caveat.UnmarshalTo(policy)
+		expression := new(cedarv3.Expr)
+		err := caveat.UnmarshalTo(expression)
 		if err != nil {
 			return nil
 		}
-		policies[i] = policy
+		expressions[i] = expression
 	}
-	return policies
+	return expressions
+}
+
+// Rebuild returns a new builder with the cork's data.
+func (c *Cork) Rebuild() *builder {
+	b := &builder{Builder: c.Cork.Rebuild()}
+	return b
 }
 
 type builder struct {
@@ -129,12 +136,12 @@ func (b *builder) Claims(claims *cedar.Entity) *builder {
 }
 
 // Caveat adds a caveat to the cork.
-func (b *builder) Caveat(caveat *cedar.Policy) *builder {
-	if caveat.Effect != cedar.EffectForbid {
-		b.errors = append(b.errors, errors.New("only forbid policies are allowed"))
-	} else {
-		b.Builder.Caveat(caveat.Raw())
+func (b *builder) Caveat(caveat *cedarexpr.Expr) *builder {
+	if caveat == nil {
+		b.errors = append(b.errors, fmt.Errorf("%w: caveat is nil", corks.ErrInvalidCork))
+		return b
 	}
+	b.Builder.Caveat(caveat.Raw())
 	return b
 }
 

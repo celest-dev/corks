@@ -22,7 +22,7 @@ const Cork$json = {
     {'1': 'bearer', '3': 3, '4': 1, '5': 11, '6': '.cedar.v3.EntityId', '10': 'bearer'},
     {'1': 'audience', '3': 4, '4': 1, '5': 11, '6': '.cedar.v3.EntityId', '9': 0, '10': 'audience', '17': true},
     {'1': 'claims', '3': 5, '4': 1, '5': 11, '6': '.cedar.v3.Entity', '9': 1, '10': 'claims', '17': true},
-    {'1': 'caveats', '3': 6, '4': 3, '5': 11, '6': '.cedar.v3.Policy', '10': 'caveats'},
+    {'1': 'caveats', '3': 6, '4': 3, '5': 11, '6': '.cedar.v3.Expr', '10': 'caveats'},
     {'1': 'signature', '3': 999, '4': 1, '5': 12, '10': 'signature'},
   ],
   '8': [
@@ -36,7 +36,7 @@ final $typed_data.Uint8List corkDescriptor = $convert.base64Decode(
     'CgRDb3JrEg4KAmlkGAEgASgMUgJpZBIqCgZpc3N1ZXIYAiABKAsyEi5jZWRhci52My5FbnRpdH'
     'lJZFIGaXNzdWVyEioKBmJlYXJlchgDIAEoCzISLmNlZGFyLnYzLkVudGl0eUlkUgZiZWFyZXIS'
     'MwoIYXVkaWVuY2UYBCABKAsyEi5jZWRhci52My5FbnRpdHlJZEgAUghhdWRpZW5jZYgBARItCg'
-    'ZjbGFpbXMYBSABKAsyEC5jZWRhci52My5FbnRpdHlIAVIGY2xhaW1ziAEBEioKB2NhdmVhdHMY'
-    'BiADKAsyEC5jZWRhci52My5Qb2xpY3lSB2NhdmVhdHMSHQoJc2lnbmF0dXJlGOcHIAEoDFIJc2'
-    'lnbmF0dXJlQgsKCV9hdWRpZW5jZUIJCgdfY2xhaW1z');
+    'ZjbGFpbXMYBSABKAsyEC5jZWRhci52My5FbnRpdHlIAVIGY2xhaW1ziAEBEigKB2NhdmVhdHMY'
+    'BiADKAsyDi5jZWRhci52My5FeHByUgdjYXZlYXRzEh0KCXNpZ25hdHVyZRjnByABKAxSCXNpZ2'
+    '5hdHVyZUILCglfYXVkaWVuY2VCCQoHX2NsYWltcw==');
 

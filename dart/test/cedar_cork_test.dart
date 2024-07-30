@@ -32,28 +32,14 @@ final bKey = secretKey;
 final issuer = CedarEntityId('Organization', 'acme-corp');
 final bearer = CedarEntityId('User', 'alice');
 
-final _caveat = CedarPolicy(
-  effect: CedarPolicyEffect.forbid,
-  principal: CedarPolicyPrincipal(
-    op: CedarPolicyOp.equals,
-    entity: bearer,
+final _caveat = JsonExpr.equals(
+  JsonExpr.getAttribute(
+    JsonExpr.variable(CedarVariable.principal),
+    'name',
   ),
-  action: CedarPolicyAction(op: CedarPolicyOp.all),
-  resource: CedarPolicyResource(op: CedarPolicyOp.all),
-  conditions: [
-    CedarPolicyCondition(
-      kind: CedarPolicyConditionKind.unless,
-      body: JsonExpr.equals(
-        JsonExpr.getAttribute(
-          JsonExpr.variable(CedarVariable.principal),
-          'name',
-        ),
-        JsonExpr.value(
-          CedarValueJson.string('Alice'),
-        ),
-      ),
-    ),
-  ],
+  JsonExpr.value(
+    CedarValueJson.string('Alice'),
+  ),
 );
 
 final _tests = <_TestCase>[

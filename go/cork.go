@@ -95,6 +95,20 @@ func (c *Cork) Raw() *corksv1.Cork {
 	return c.raw
 }
 
+// Rebuild returns a new builder with the cork's data.
+func (c *Cork) Rebuild() *Builder {
+	b := &Builder{id: c.raw.Id}
+	b.
+		Issuer(c.raw.Issuer).
+		Bearer(c.raw.Bearer).
+		Audience(c.raw.Audience).
+		Claims(c.raw.Claims)
+	for _, caveat := range c.raw.Caveats {
+		b.Caveat(caveat)
+	}
+	return b
+}
+
 // clone returns a deep copy of the cork.
 func (c *Cork) clone() *Cork {
 	copy := proto.Clone(c.raw).(*corksv1.Cork)

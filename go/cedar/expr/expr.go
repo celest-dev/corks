@@ -2,7 +2,15 @@ package cedarexpr
 
 import cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 
-type Expr = cedarv3.Expr
+type Expr cedarv3.Expr
+
+func (e *Expr) Raw() *cedarv3.Expr {
+	if e == nil {
+		return nil
+	}
+	return (*cedarv3.Expr)(e)
+}
+
 type Value = cedarv3.Expr_Value
 type Var = cedarv3.Expr_Var
 type Slot = cedarv3.Expr_Slot

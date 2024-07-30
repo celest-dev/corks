@@ -7,7 +7,9 @@ import (
 
 	corks "github.com/celest-dev/corks/go"
 	"github.com/celest-dev/corks/go/cedar"
+	cedarexpr "github.com/celest-dev/corks/go/cedar/expr"
 	"github.com/celest-dev/corks/go/cedarcork"
+	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/testing/protocmp"
@@ -87,8 +89,16 @@ func TestBuildAndVerify(t *testing.T) {
 						"email": cedar.String("test@example.com"),
 					},
 				}
-				caveat := &cedar.Policy{
-					Effect: cedar.EffectForbid,
+				caveat := &cedarexpr.Expr{
+					Expr: &cedarv3.Expr_Value{
+						Value: &cedarv3.ExprValue{
+							Value: &cedarv3.Value{
+								Value: &cedarv3.Value_Bool{
+									Bool: true,
+								},
+							},
+						},
+					},
 				}
 				return cedarcork.NewBuilder(aId).
 					Issuer(issuer).
