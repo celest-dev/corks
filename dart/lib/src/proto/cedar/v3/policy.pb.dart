@@ -14,7 +14,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'entity_id.pb.dart' as $0;
-import 'expr.pb.dart' as $3;
+import 'expr.pb.dart' as $4;
 import 'policy.pbenum.dart';
 
 export 'policy.pbenum.dart';
@@ -428,7 +428,7 @@ class PolicyResource extends $pb.GeneratedMessage {
 class PolicyCondition extends $pb.GeneratedMessage {
   factory PolicyCondition({
     PolicyConditionKind? kind,
-    $3.Expr? body,
+    $4.Expr? body,
   }) {
     final $result = create();
     if (kind != null) {
@@ -445,7 +445,7 @@ class PolicyCondition extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PolicyCondition', package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'), createEmptyInstance: create)
     ..e<PolicyConditionKind>(1, _omitFieldNames ? '' : 'kind', $pb.PbFieldType.OE, defaultOrMaker: PolicyConditionKind.POLICY_CONDITION_KIND_UNSPECIFIED, valueOf: PolicyConditionKind.valueOf, enumValues: PolicyConditionKind.values)
-    ..aOM<$3.Expr>(2, _omitFieldNames ? '' : 'body', subBuilder: $3.Expr.create)
+    ..aOM<$4.Expr>(2, _omitFieldNames ? '' : 'body', subBuilder: $4.Expr.create)
     ..hasRequiredFields = false
   ;
 
@@ -480,15 +480,15 @@ class PolicyCondition extends $pb.GeneratedMessage {
   void clearKind() => clearField(1);
 
   @$pb.TagNumber(2)
-  $3.Expr get body => $_getN(1);
+  $4.Expr get body => $_getN(1);
   @$pb.TagNumber(2)
-  set body($3.Expr v) { setField(2, v); }
+  set body($4.Expr v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasBody() => $_has(1);
   @$pb.TagNumber(2)
   void clearBody() => clearField(2);
   @$pb.TagNumber(2)
-  $3.Expr ensureBody() => $_ensure(1);
+  $4.Expr ensureBody() => $_ensure(1);
 }
 
 

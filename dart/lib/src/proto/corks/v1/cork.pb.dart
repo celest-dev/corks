@@ -13,7 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../google/protobuf/any.pb.dart' as $6;
+import '../../google/protobuf/any.pb.dart' as $5;
 
 ///  Encodes a cork's metadata and its signature.
 ///
@@ -25,11 +25,11 @@ import '../../google/protobuf/any.pb.dart' as $6;
 class Cork extends $pb.GeneratedMessage {
   factory Cork({
     $core.List<$core.int>? id,
-    $6.Any? issuer,
-    $6.Any? bearer,
-    $6.Any? audience,
-    $6.Any? claims,
-    $core.Iterable<$6.Any>? caveats,
+    $5.Any? issuer,
+    $5.Any? bearer,
+    $5.Any? audience,
+    $5.Any? claims,
+    $core.Iterable<$5.Any>? caveats,
     $core.List<$core.int>? signature,
   }) {
     final $result = create();
@@ -62,11 +62,11 @@ class Cork extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Cork', package: const $pb.PackageName(_omitMessageNames ? '' : 'corks.v1'), createEmptyInstance: create)
     ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'id', $pb.PbFieldType.OY)
-    ..aOM<$6.Any>(2, _omitFieldNames ? '' : 'issuer', subBuilder: $6.Any.create)
-    ..aOM<$6.Any>(3, _omitFieldNames ? '' : 'bearer', subBuilder: $6.Any.create)
-    ..aOM<$6.Any>(4, _omitFieldNames ? '' : 'audience', subBuilder: $6.Any.create)
-    ..aOM<$6.Any>(5, _omitFieldNames ? '' : 'claims', subBuilder: $6.Any.create)
-    ..pc<$6.Any>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM, subBuilder: $6.Any.create)
+    ..aOM<$5.Any>(2, _omitFieldNames ? '' : 'issuer', subBuilder: $5.Any.create)
+    ..aOM<$5.Any>(3, _omitFieldNames ? '' : 'bearer', subBuilder: $5.Any.create)
+    ..aOM<$5.Any>(4, _omitFieldNames ? '' : 'audience', subBuilder: $5.Any.create)
+    ..aOM<$5.Any>(5, _omitFieldNames ? '' : 'claims', subBuilder: $5.Any.create)
+    ..pc<$5.Any>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM, subBuilder: $5.Any.create)
     ..a<$core.List<$core.int>>(999, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
@@ -104,55 +104,55 @@ class Cork extends $pb.GeneratedMessage {
 
   /// The encoded issuer of the cork.
   @$pb.TagNumber(2)
-  $6.Any get issuer => $_getN(1);
+  $5.Any get issuer => $_getN(1);
   @$pb.TagNumber(2)
-  set issuer($6.Any v) { setField(2, v); }
+  set issuer($5.Any v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasIssuer() => $_has(1);
   @$pb.TagNumber(2)
   void clearIssuer() => clearField(2);
   @$pb.TagNumber(2)
-  $6.Any ensureIssuer() => $_ensure(1);
+  $5.Any ensureIssuer() => $_ensure(1);
 
   /// The encoded bearer of the cork.
   @$pb.TagNumber(3)
-  $6.Any get bearer => $_getN(2);
+  $5.Any get bearer => $_getN(2);
   @$pb.TagNumber(3)
-  set bearer($6.Any v) { setField(3, v); }
+  set bearer($5.Any v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasBearer() => $_has(2);
   @$pb.TagNumber(3)
   void clearBearer() => clearField(3);
   @$pb.TagNumber(3)
-  $6.Any ensureBearer() => $_ensure(2);
+  $5.Any ensureBearer() => $_ensure(2);
 
   /// The encoded audience of the cork.
   @$pb.TagNumber(4)
-  $6.Any get audience => $_getN(3);
+  $5.Any get audience => $_getN(3);
   @$pb.TagNumber(4)
-  set audience($6.Any v) { setField(4, v); }
+  set audience($5.Any v) { setField(4, v); }
   @$pb.TagNumber(4)
   $core.bool hasAudience() => $_has(3);
   @$pb.TagNumber(4)
   void clearAudience() => clearField(4);
   @$pb.TagNumber(4)
-  $6.Any ensureAudience() => $_ensure(3);
+  $5.Any ensureAudience() => $_ensure(3);
 
   /// The encoded claims of the cork.
   @$pb.TagNumber(5)
-  $6.Any get claims => $_getN(4);
+  $5.Any get claims => $_getN(4);
   @$pb.TagNumber(5)
-  set claims($6.Any v) { setField(5, v); }
+  set claims($5.Any v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasClaims() => $_has(4);
   @$pb.TagNumber(5)
   void clearClaims() => clearField(5);
   @$pb.TagNumber(5)
-  $6.Any ensureClaims() => $_ensure(4);
+  $5.Any ensureClaims() => $_ensure(4);
 
   /// The encoded caveats of the cork.
   @$pb.TagNumber(6)
-  $core.List<$6.Any> get caveats => $_getList(5);
+  $core.List<$5.Any> get caveats => $_getList(5);
 
   /// The final signature of the cork.
   @$pb.TagNumber(999)

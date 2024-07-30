@@ -30,11 +30,8 @@ extension type CedarCorkBuilder(CorkBuilder _builder) implements CorkBuilder {
   }
 
   @redeclare
-  void addCaveat(cedar.CedarPolicy policy) {
-    if (policy.effect != cedar.CedarPolicyEffect.forbid) {
-      throw ArgumentError('Only forbid policies are allowed as caveats.');
-    }
-    _builder.addCaveat(policy.toProto());
+  void addCaveat(cedar.JsonExpr caveat) {
+    _builder.addCaveat(caveat.toProto());
   }
 }
 
@@ -81,8 +78,8 @@ extension type CedarCork(Cork _cork) implements Cork {
   }
 
   @redeclare
-  List<cedar.CedarPolicy> get caveats => UnmodifiableListView([
+  List<cedar.JsonExpr> get caveats => UnmodifiableListView([
         for (final caveat in _cork.caveats)
-          proto.Policy().unpackAny(caveat).fromProto(),
+          proto.Expr().unpackAny(caveat).fromProto(),
       ]);
 }

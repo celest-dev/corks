@@ -13,9 +13,9 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'entity.pb.dart' as $4;
+import 'entity.pb.dart' as $3;
 import 'entity_id.pb.dart' as $0;
-import 'policy.pb.dart' as $5;
+import 'expr.pb.dart' as $4;
 
 /// A bearer token that can be used to make claims about an entity for the purpose
 /// of authorization and authentication w/ Cedar.
@@ -25,8 +25,8 @@ class Cork extends $pb.GeneratedMessage {
     $0.EntityId? issuer,
     $0.EntityId? bearer,
     $0.EntityId? audience,
-    $4.Entity? claims,
-    $core.Iterable<$5.Policy>? caveats,
+    $3.Entity? claims,
+    $core.Iterable<$4.Expr>? caveats,
     $core.List<$core.int>? signature,
   }) {
     final $result = create();
@@ -62,8 +62,8 @@ class Cork extends $pb.GeneratedMessage {
     ..aOM<$0.EntityId>(2, _omitFieldNames ? '' : 'issuer', subBuilder: $0.EntityId.create)
     ..aOM<$0.EntityId>(3, _omitFieldNames ? '' : 'bearer', subBuilder: $0.EntityId.create)
     ..aOM<$0.EntityId>(4, _omitFieldNames ? '' : 'audience', subBuilder: $0.EntityId.create)
-    ..aOM<$4.Entity>(5, _omitFieldNames ? '' : 'claims', subBuilder: $4.Entity.create)
-    ..pc<$5.Policy>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM, subBuilder: $5.Policy.create)
+    ..aOM<$3.Entity>(5, _omitFieldNames ? '' : 'claims', subBuilder: $3.Entity.create)
+    ..pc<$4.Expr>(6, _omitFieldNames ? '' : 'caveats', $pb.PbFieldType.PM, subBuilder: $4.Expr.create)
     ..a<$core.List<$core.int>>(999, _omitFieldNames ? '' : 'signature', $pb.PbFieldType.OY)
     ..hasRequiredFields = false
   ;
@@ -137,23 +137,24 @@ class Cork extends $pb.GeneratedMessage {
 
   /// Claims made about the [bearer] of the cork.
   @$pb.TagNumber(5)
-  $4.Entity get claims => $_getN(4);
+  $3.Entity get claims => $_getN(4);
   @$pb.TagNumber(5)
-  set claims($4.Entity v) { setField(5, v); }
+  set claims($3.Entity v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasClaims() => $_has(4);
   @$pb.TagNumber(5)
   void clearClaims() => clearField(5);
   @$pb.TagNumber(5)
-  $4.Entity ensureClaims() => $_ensure(4);
+  $3.Entity ensureClaims() => $_ensure(4);
 
   ///  The caveats to this cork's validity and usage.
   ///
-  ///
   ///  Caveats are structured conditions which must be met for the cork to be considered
   ///  valid and for its claims to be considered true.
+  ///
+  ///  Effectively, these form the body of a `forbid unless` policy AND'd together.
   @$pb.TagNumber(6)
-  $core.List<$5.Policy> get caveats => $_getList(5);
+  $core.List<$4.Expr> get caveats => $_getList(5);
 
   /// The final signature of the cork.
   @$pb.TagNumber(999)
