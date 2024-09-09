@@ -7,7 +7,7 @@ environment:
   sdk: ^3.3.0
 
 dependencies:
-  cedar: ^0.1.1
+  cedar: ">=0.1.1 <0.3.0"
   collection: ^1.18.0
   convert: ^3.0.0
   crypto: ^3.0.0
