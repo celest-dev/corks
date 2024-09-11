@@ -1,16 +1,6 @@
 export 'src/proto.dart' show AnyHelper;
-export 'src/proto/cedar/v3/context.pb.dart';
-export 'src/proto/cedar/v3/context.pbjson.dart';
-export 'src/proto/cedar/v3/entity.pb.dart';
-export 'src/proto/cedar/v3/entity.pbjson.dart';
-export 'src/proto/cedar/v3/entity_id.pb.dart';
-export 'src/proto/cedar/v3/entity_id.pbjson.dart';
-export 'src/proto/cedar/v3/expr.pb.dart';
-export 'src/proto/cedar/v3/expr.pbjson.dart';
-export 'src/proto/cedar/v3/policy.pb.dart';
-export 'src/proto/cedar/v3/policy.pbjson.dart';
-export 'src/proto/cedar/v3/value.pb.dart';
-export 'src/proto/cedar/v3/value.pbjson.dart';
+export 'src/proto/corks/cedar/v3/cork.pb.dart';
+export 'src/proto/corks/cedar/v3/cork.pbjson.dart';
 export 'src/proto/corks/v1/cork.pb.dart';
 export 'src/proto/corks/v1/cork.pbjson.dart';
 export 'src/proto/google/protobuf/any.pb.dart';

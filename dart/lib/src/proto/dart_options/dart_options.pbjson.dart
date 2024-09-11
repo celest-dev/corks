@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: dart/dart_options.proto
+//  source: dart_options/dart_options.proto
 //
 // @dart = 2.12
 
@@ -32,7 +32,14 @@ final $typed_data.Uint8List dartMixinDescriptor = $convert.base64Decode(
 const Imports$json = {
   '1': 'Imports',
   '2': [
-    {'1': 'mixins', '3': 1, '4': 3, '5': 11, '6': '.dart_options.DartMixin', '10': 'mixins'},
+    {
+      '1': 'mixins',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.dart_options.DartMixin',
+      '10': 'mixins'
+    },
   ],
 };
 
@@ -40,4 +47,3 @@ const Imports$json = {
 final $typed_data.Uint8List importsDescriptor = $convert.base64Decode(
     'CgdJbXBvcnRzEi8KBm1peGlucxgBIAMoCzIXLmRhcnRfb3B0aW9ucy5EYXJ0TWl4aW5SBm1peG'
     'lucw==');
-

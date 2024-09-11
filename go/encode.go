@@ -16,7 +16,7 @@ func (c *Cork) Marshal() ([]byte, error) {
 	if c.Signature() == nil {
 		return nil, ErrMissingSignature
 	}
-	return marshalOpts.Marshal(c.Raw())
+	return marshalOpts.Marshal(c.Proto())
 }
 
 // Encode encodes the sealed cork into a base64url-encoded string.

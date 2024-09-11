@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package corks.v1;
 
-import "cedar/v3/entity.proto";
-import "cedar/v3/entity_id.proto";
-import "cedar/v3/policy.proto";
 import "google/protobuf/any.proto";
 
 option go_package = "corks/v1;corkspb";

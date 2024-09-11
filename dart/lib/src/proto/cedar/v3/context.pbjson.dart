@@ -17,7 +17,14 @@ import 'dart:typed_data' as $typed_data;
 const Context$json = {
   '1': 'Context',
   '2': [
-    {'1': 'values', '3': 1, '4': 3, '5': 11, '6': '.cedar.v3.Context.ValuesEntry', '10': 'values'},
+    {
+      '1': 'values',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.cedar.v3.Context.ValuesEntry',
+      '10': 'values'
+    },
   ],
   '3': [Context_ValuesEntry$json],
 };
@@ -27,7 +34,14 @@ const Context_ValuesEntry$json = {
   '1': 'ValuesEntry',
   '2': [
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.cedar.v3.Value', '10': 'value'},
+    {
+      '1': 'value',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.cedar.v3.Value',
+      '10': 'value'
+    },
   ],
   '7': {'7': true},
 };
@@ -37,4 +51,3 @@ final $typed_data.Uint8List contextDescriptor = $convert.base64Decode(
     'CgdDb250ZXh0EjUKBnZhbHVlcxgBIAMoCzIdLmNlZGFyLnYzLkNvbnRleHQuVmFsdWVzRW50cn'
     'lSBnZhbHVlcxpKCgtWYWx1ZXNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIlCgV2YWx1ZRgCIAEo'
     'CzIPLmNlZGFyLnYzLlZhbHVlUgV2YWx1ZToCOAE=');
-

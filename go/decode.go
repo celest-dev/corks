@@ -19,7 +19,7 @@ func (s *Cork) UnmarshalFrom(encoded []byte) error {
 	if err != nil {
 		return errors.Join(ErrInvalidCork, err)
 	}
-	s.raw = &cork
+	s.proto = &cork
 	return nil
 }
 

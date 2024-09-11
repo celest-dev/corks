@@ -1,3 +1,7 @@
+## 0.2.1
+
+- chore: Move Cedar protobufs to the [cedar-dart](https://github.com/celest-dev/cedar-dart) repo
+
 ## 0.2.0
 
 - feat: Improve and expand Cork model

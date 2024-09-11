@@ -139,7 +139,7 @@ func (b *Builder) Build() (*Cork, error) {
 		}
 	}
 	return &Cork{
-		raw: &corksv1.Cork{
+		proto: &corksv1.Cork{
 			Id:       id,
 			Issuer:   issuer,
 			Bearer:   bearer,
