@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: cedar/v3/entity.proto
+//  source: cedar/v3/entity_uid.proto
 //
 // @dart = 2.12
 

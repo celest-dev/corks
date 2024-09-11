@@ -14,7 +14,7 @@ type Cork struct {
 	*corks.Cork
 }
 
-func (c *Cork) Issuer() *cedar.EntityID {
+func (c *Cork) Issuer() *cedar.EntityUid {
 	if c == nil {
 		return nil
 	}
@@ -22,15 +22,15 @@ func (c *Cork) Issuer() *cedar.EntityID {
 	if issuer == nil {
 		return nil
 	}
-	entityId := new(cedarv3.EntityId)
+	entityId := new(cedarv3.EntityUid)
 	err := issuer.UnmarshalTo(entityId)
 	if err != nil {
 		return nil
 	}
-	return (*cedar.EntityID)(entityId)
+	return (*cedar.EntityUid)(entityId)
 }
 
-func (c *Cork) Bearer() *cedar.EntityID {
+func (c *Cork) Bearer() *cedar.EntityUid {
 	if c == nil {
 		return nil
 	}
@@ -38,15 +38,15 @@ func (c *Cork) Bearer() *cedar.EntityID {
 	if bearer == nil {
 		return nil
 	}
-	entityId := new(cedarv3.EntityId)
+	entityId := new(cedarv3.EntityUid)
 	err := bearer.UnmarshalTo(entityId)
 	if err != nil {
 		return nil
 	}
-	return (*cedar.EntityID)(entityId)
+	return (*cedar.EntityUid)(entityId)
 }
 
-func (c *Cork) Audience() *cedar.EntityID {
+func (c *Cork) Audience() *cedar.EntityUid {
 	if c == nil {
 		return nil
 	}
@@ -54,12 +54,12 @@ func (c *Cork) Audience() *cedar.EntityID {
 	if audience == nil {
 		return nil
 	}
-	entityId := new(cedarv3.EntityId)
+	entityId := new(cedarv3.EntityUid)
 	err := audience.UnmarshalTo(entityId)
 	if err != nil {
 		return nil
 	}
-	return (*cedar.EntityID)(entityId)
+	return (*cedar.EntityUid)(entityId)
 }
 
 func (c *Cork) Claims() *cedarv3.Entity {
@@ -112,26 +112,26 @@ func NewBuilder(id []byte) *builder {
 }
 
 // Issuer sets the issuer of the cork.
-func (b *builder) Issuer(issuer *cedar.EntityID) *builder {
-	b.Builder.Issuer(issuer.Raw())
+func (b *builder) Issuer(issuer *cedar.EntityUid) *builder {
+	b.Builder.Issuer(issuer.Proto())
 	return b
 }
 
 // Bearer sets the bearer of the cork.
-func (b *builder) Bearer(bearer *cedar.EntityID) *builder {
-	b.Builder.Bearer(bearer.Raw())
+func (b *builder) Bearer(bearer *cedar.EntityUid) *builder {
+	b.Builder.Bearer(bearer.Proto())
 	return b
 }
 
 // Audience sets the audience of the cork.
-func (b *builder) Audience(audience *cedar.EntityID) *builder {
-	b.Builder.Audience(audience.Raw())
+func (b *builder) Audience(audience *cedar.EntityUid) *builder {
+	b.Builder.Audience(audience.Proto())
 	return b
 }
 
 // Claims sets the claims of the cork.
 func (b *builder) Claims(claims *cedar.Entity) *builder {
-	b.Builder.Claims(claims.Raw())
+	b.Builder.Claims(claims.Proto())
 	return b
 }
 
@@ -141,7 +141,7 @@ func (b *builder) Caveat(caveat *cedarexpr.Expr) *builder {
 		b.errors = append(b.errors, fmt.Errorf("%w: caveat is nil", corks.ErrInvalidCork))
 		return b
 	}
-	b.Builder.Caveat(caveat.Raw())
+	b.Builder.Caveat(caveat.Proto())
 	return b
 }
 

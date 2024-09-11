@@ -6,44 +6,28 @@ import (
 	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
 )
 
-type EntityID cedarv3.EntityId
+type EntityUid cedarv3.EntityUid
 
-func NewEntityID(typ, id string) *EntityID {
-	return &EntityID{
+func NewEntityID(typ, id string) *EntityUid {
+	return &EntityUid{
 		Type: typ,
 		Id:   id,
 	}
 }
 
-func (e *EntityID) Raw() *cedarv3.EntityId {
+func (e *EntityUid) Proto() *cedarv3.EntityUid {
 	if e == nil {
 		return nil
 	}
-	return (*cedarv3.EntityId)(e)
+	return (*cedarv3.EntityUid)(e)
 }
 
-func (e *EntityID) String() string {
+func (e *EntityUid) String() string {
 	return fmt.Sprintf("%s::%q", e.Type, e.Id)
 }
 
-type Entity struct {
-	UID     *EntityID        `json:"uid"`
-	Parents []*EntityID      `json:"parents,omitempty"`
-	Attrs   map[string]Value `json:"attrs"`
-}
+type Entity cedarv3.Entity
 
-func (e *Entity) Raw() *cedarv3.Entity {
-	parents := make([]*cedarv3.EntityId, len(e.Parents))
-	for i, p := range e.Parents {
-		parents[i] = p.Raw()
-	}
-	attrs := make(map[string]*cedarv3.Value, len(e.Attrs))
-	for k, v := range e.Attrs {
-		attrs[k] = v.RawValue()
-	}
-	return &cedarv3.Entity{
-		Uid:        e.UID.Raw(),
-		Parents:    parents,
-		Attributes: attrs,
-	}
+func (e *Entity) Proto() *cedarv3.Entity {
+	return (*cedarv3.Entity)(e)
 }

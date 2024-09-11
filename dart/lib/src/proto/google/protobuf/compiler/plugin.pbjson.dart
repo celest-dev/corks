@@ -35,9 +35,30 @@ const CodeGeneratorRequest$json = {
   '2': [
     {'1': 'file_to_generate', '3': 1, '4': 3, '5': 9, '10': 'fileToGenerate'},
     {'1': 'parameter', '3': 2, '4': 1, '5': 9, '10': 'parameter'},
-    {'1': 'proto_file', '3': 15, '4': 3, '5': 11, '6': '.google.protobuf.FileDescriptorProto', '10': 'protoFile'},
-    {'1': 'source_file_descriptors', '3': 17, '4': 3, '5': 11, '6': '.google.protobuf.FileDescriptorProto', '10': 'sourceFileDescriptors'},
-    {'1': 'compiler_version', '3': 3, '4': 1, '5': 11, '6': '.google.protobuf.compiler.Version', '10': 'compilerVersion'},
+    {
+      '1': 'proto_file',
+      '3': 15,
+      '4': 3,
+      '5': 11,
+      '6': '.google.protobuf.FileDescriptorProto',
+      '10': 'protoFile'
+    },
+    {
+      '1': 'source_file_descriptors',
+      '3': 17,
+      '4': 3,
+      '5': 11,
+      '6': '.google.protobuf.FileDescriptorProto',
+      '10': 'sourceFileDescriptors'
+    },
+    {
+      '1': 'compiler_version',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.compiler.Version',
+      '10': 'compilerVersion'
+    },
   ],
 };
 
@@ -56,10 +77,23 @@ const CodeGeneratorResponse$json = {
   '1': 'CodeGeneratorResponse',
   '2': [
     {'1': 'error', '3': 1, '4': 1, '5': 9, '10': 'error'},
-    {'1': 'supported_features', '3': 2, '4': 1, '5': 4, '10': 'supportedFeatures'},
+    {
+      '1': 'supported_features',
+      '3': 2,
+      '4': 1,
+      '5': 4,
+      '10': 'supportedFeatures'
+    },
     {'1': 'minimum_edition', '3': 3, '4': 1, '5': 5, '10': 'minimumEdition'},
     {'1': 'maximum_edition', '3': 4, '4': 1, '5': 5, '10': 'maximumEdition'},
-    {'1': 'file', '3': 15, '4': 3, '5': 11, '6': '.google.protobuf.compiler.CodeGeneratorResponse.File', '10': 'file'},
+    {
+      '1': 'file',
+      '3': 15,
+      '4': 3,
+      '5': 11,
+      '6': '.google.protobuf.compiler.CodeGeneratorResponse.File',
+      '10': 'file'
+    },
   ],
   '3': [CodeGeneratorResponse_File$json],
   '4': [CodeGeneratorResponse_Feature$json],
@@ -72,7 +106,14 @@ const CodeGeneratorResponse_File$json = {
     {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     {'1': 'insertion_point', '3': 2, '4': 1, '5': 9, '10': 'insertionPoint'},
     {'1': 'content', '3': 15, '4': 1, '5': 9, '10': 'content'},
-    {'1': 'generated_code_info', '3': 16, '4': 1, '5': 11, '6': '.google.protobuf.GeneratedCodeInfo', '10': 'generatedCodeInfo'},
+    {
+      '1': 'generated_code_info',
+      '3': 16,
+      '4': 1,
+      '5': 11,
+      '6': '.google.protobuf.GeneratedCodeInfo',
+      '10': 'generatedCodeInfo'
+    },
   ],
 };
 
@@ -98,4 +139,3 @@ final $typed_data.Uint8List codeGeneratorResponseDescriptor = $convert.base64Dec
     'J1Zi5HZW5lcmF0ZWRDb2RlSW5mb1IRZ2VuZXJhdGVkQ29kZUluZm8iVwoHRmVhdHVyZRIQCgxG'
     'RUFUVVJFX05PTkUQABIbChdGRUFUVVJFX1BST1RPM19PUFRJT05BTBABEh0KGUZFQVRVUkVfU1'
     'VQUE9SVFNfRURJVElPTlMQAg==');
-

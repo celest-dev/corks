@@ -13,6 +13,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/testing/protocmp"
+	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
 func newSecretKey() []byte {
@@ -31,11 +32,11 @@ func TestBuildAndVerify(t *testing.T) {
 	bId := []byte("b")
 	bKey := newSecretKey()
 
-	issuer := &cedar.EntityID{
+	issuer := &cedar.EntityUid{
 		Type: "Organization",
 		Id:   "acme-corp",
 	}
-	bearer := &cedar.EntityID{
+	bearer := &cedar.EntityUid{
 		Type: "User",
 		Id:   "alice",
 	}
@@ -84,9 +85,13 @@ func TestBuildAndVerify(t *testing.T) {
 			build: func() (*cedarcork.Cork, error) {
 				audience := issuer
 				claims := &cedar.Entity{
-					UID: bearer,
-					Attrs: map[string]cedar.Value{
-						"email": cedar.String("test@example.com"),
+					Uid: bearer.Proto(),
+					Attributes: map[string]*cedarv3.Value{
+						"email": {
+							Value: &cedarv3.Value_String_{
+								String_: wrapperspb.String("test@example.com"),
+							},
+						},
 					},
 				}
 				caveat := &cedarexpr.Expr{
@@ -94,7 +99,7 @@ func TestBuildAndVerify(t *testing.T) {
 						Value: &cedarv3.ExprValue{
 							Value: &cedarv3.Value{
 								Value: &cedarv3.Value_Bool{
-									Bool: true,
+									Bool: wrapperspb.Bool(true),
 								},
 							},
 						},
@@ -147,7 +152,7 @@ func TestBuildAndVerify(t *testing.T) {
 				decoded, err := corks.Decode(encoded)
 				require.NoError(t, err)
 
-				if diff := cmp.Diff(decoded.Raw(), cork.Raw(), protocmp.Transform()); diff != "" {
+				if diff := cmp.Diff(decoded.Proto(), cork.Proto(), protocmp.Transform()); diff != "" {
 					t.Errorf("decoded != encoded: %s", diff)
 				}
 

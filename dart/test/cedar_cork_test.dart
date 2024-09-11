@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:cedar/ast.dart';
 import 'package:cedar/cedar.dart';
 import 'package:corks_cedar/corks_cedar.dart';
 import 'package:test/test.dart';
@@ -29,16 +30,16 @@ final aId = 'a'.bytes;
 final aKey = secretKey;
 final bId = 'b'.bytes;
 final bKey = secretKey;
-final issuer = CedarEntityId('Organization', 'acme-corp');
-final bearer = CedarEntityId('User', 'alice');
+final issuer = EntityUid.of('Organization', 'acme-corp');
+final bearer = EntityUid.of('User', 'alice');
 
-final _caveat = JsonExpr.equals(
-  JsonExpr.getAttribute(
-    JsonExpr.variable(CedarVariable.principal),
-    'name',
+final _caveat = Expr.equals(
+  left: Expr.getAttribute(
+    left: Expr.variable(CedarVariable.principal),
+    attr: 'name',
   ),
-  JsonExpr.value(
-    CedarValueJson.string('Alice'),
+  right: Expr.value(
+    Value.string('Alice'),
   ),
 );
 
@@ -50,20 +51,20 @@ final _tests = <_TestCase>[
   ),
   (
     description: 'missing issuer',
-    create: () => CedarCork.builder()..bearer = CedarEntityId('User', 'alice'),
+    create: () => CedarCork.builder()..bearer = EntityUid.of('User', 'alice'),
     expectError: throwsInvalidCork,
   ),
   (
     description: 'missing bearer',
-    create: () => CedarCork.builder()
-      ..issuer = CedarEntityId('Organization', 'acme-corp'),
+    create: () =>
+        CedarCork.builder()..issuer = EntityUid.of('Organization', 'acme-corp'),
     expectError: throwsInvalidCork,
   ),
   (
     description: 'valid minimal',
     create: () => CedarCork.builder(aId)
-      ..issuer = CedarEntityId('Organization', 'acme-corp')
-      ..bearer = CedarEntityId('User', 'alice'),
+      ..issuer = EntityUid.of('Organization', 'acme-corp')
+      ..bearer = EntityUid.of('User', 'alice'),
     expectError: null,
   ),
   (
@@ -72,12 +73,12 @@ final _tests = <_TestCase>[
       ..issuer = issuer
       ..bearer = bearer
       ..audience = issuer
-      ..claims = CedarEntity(
-        id: bearer,
+      ..claims = Entity(
+        uid: bearer,
         parents: [issuer],
         attributes: {
-          'name': CedarValueJson.string('Alice'),
-          'email': CedarValueJson.string('alice@acme.com'),
+          'name': Value.string('Alice'),
+          'email': Value.string('alice@acme.com'),
         },
       )
       ..addCaveat(_caveat),
