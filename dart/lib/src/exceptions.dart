@@ -1,10 +1,6 @@
-import 'dart:typed_data';
-
-import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
 
 import 'cork.dart';
-import 'signer.dart';
 
 /// {@template corks.invalid_cork_exception}
 /// Thrown when a [Cork] is invalid or corrupted and cannot be processed.
@@ -49,17 +45,4 @@ final class InvalidSignatureException implements Exception {
 final class MissingSignatureError extends StateError {
   /// {@macro corks.missing_signature_error}
   MissingSignatureError() : super('Cork has not been signed.');
-}
-
-/// {@template corks.mismatched_key_error}
-/// Thrown when a [Signer] key ID does not match the [Cork] ID.
-/// {@endtemplate}
-final class MismatchedKeyError extends ArgumentError {
-  /// {@macro corks.mismatched_key_error}
-  MismatchedKeyError({required Uint8List keyId, required Uint8List corkId})
-      : super(
-          'Signer key ID and cork ID do not match:\n'
-          'Key ID:  ${hex.encode(keyId)}\n'
-          'Cork ID: ${hex.encode(corkId)}',
-        );
 }

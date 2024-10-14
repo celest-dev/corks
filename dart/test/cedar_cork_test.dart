@@ -88,7 +88,6 @@ final _tests = <_TestCase>[
 
 final throwsInvalidCork = throwsA(isA<InvalidCorkException>());
 final throwsInvalidSignature = throwsA(isA<InvalidSignatureException>());
-final throwsMismatchedKey = throwsA(isA<MismatchedKeyError>());
 final throwsMissingSignature = throwsA(isA<MissingSignatureError>());
 
 void main() {
@@ -123,20 +122,10 @@ void main() {
               completes,
               reason: 'A signer should not depend on internal state',
             );
-
-            final invalidKeypairs = [
-              (bId, bKey, throwsMismatchedKey),
-              (aId, bKey, throwsInvalidSignature),
-              (bId, aKey, throwsMismatchedKey),
-            ];
-
-            for (final (id, key, throwsError) in invalidKeypairs) {
-              await expectLater(
-                () => signed.verify(Signer(id, key)),
-                throwsError,
-                reason: 'Mismatched key should fail verification',
-              );
-            }
+            await expectLater(
+              () => signed.verify(Signer(bId, bKey)),
+              throwsInvalidSignature,
+            );
           });
 
           test('encode/decode', () async {
