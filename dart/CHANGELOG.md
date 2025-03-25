@@ -2,6 +2,7 @@
 
 - chore: Remove restriction that signer/cork keys match
 - chore: Remove `MismatchedKeyError`
+- chore: Update license
 
 ## 0.2.1
 
