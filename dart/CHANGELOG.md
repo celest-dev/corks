@@ -1,3 +1,8 @@
+## 0.2.2
+
+- chore: Remove restriction that signer/cork keys match
+- chore: Remove `MismatchedKeyError`
+
 ## 0.2.1
 
 - chore: Move Cedar protobufs to the [cedar-dart](https://github.com/celest-dev/cedar-dart) repo

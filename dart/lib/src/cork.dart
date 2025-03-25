@@ -147,10 +147,6 @@ final class Cork {
   }
 
   Future<Uint8List> _sign(Signer signer) async {
-    if (!signer.keyId.equals(id)) {
-      throw MismatchedKeyError(keyId: signer.keyId, corkId: id);
-    }
-
     signer.reset();
 
     var signature = await signer.sign(id);
