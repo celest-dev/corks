@@ -1,4 +1,4 @@
-## 0.2.2
+## 0.2.3
 
 - chore: Remove restriction that signer/cork keys match
 - chore: Remove `MismatchedKeyError`

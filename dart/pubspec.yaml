@@ -1,6 +1,6 @@
 name: corks_cedar
 description: An embedded authorization token format, based off Google's macaroons.
-version: 0.2.2
+version: 0.2.3
 repository: https://github.com/celest-dev/corks/tree/main/dart
 
 environment:
