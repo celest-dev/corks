@@ -1,8 +1,8 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cedar/ast.dart' as cedar;
-import 'package:cedar/cedar.dart' as cedar;
 import 'package:cedar/src/proto/cedar/v3/entity.pb.dart' as proto;
 import 'package:cedar/src/proto/cedar/v3/entity_uid.pb.dart' as proto;
 import 'package:cedar/src/proto/cedar/v3/expr.pb.dart' as proto;
@@ -50,6 +50,10 @@ extension type CedarCork(Cork _cork) implements Cork {
   factory CedarCork.fromProto(proto.Cork proto) =>
       CedarCork(Cork.fromProto(proto));
 
+  /// Creates a [CedarCork] from its JSON representation.
+  factory CedarCork.fromJson(Map<String, Object?> json) =>
+      CedarCork(Cork.fromJson(json));
+
   /// Creates a new [CedarCorkBuilder].
   ///
   /// If [id] is not provided, a random nonce will be generated.
@@ -85,4 +89,14 @@ extension type CedarCork(Cork _cork) implements Cork {
         for (final caveat in _cork.caveats)
           cedar.Expr.fromProto(proto.Expr().unpackAny(caveat)),
       ]);
+
+  @redeclare
+  Map<String, Object?> toJson() => {
+        'id': base64.encode(_cork.id),
+        'issuer': issuer.toString(),
+        'bearer': bearer.toString(),
+        'audience': audience?.toString(),
+        'claims': claims?.toJson(),
+        'caveats': caveats.map((c) => c.toJson()).toList(),
+      };
 }
