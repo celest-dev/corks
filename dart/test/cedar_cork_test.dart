@@ -143,6 +143,16 @@ void main() {
 
             await expectLater(decoded.verify(signer), completes);
           });
+
+          if (t.expectError == null) {
+            test('toJson/fromJson', () async {
+              final cork = await t.create().build().sign(signer);
+              final json = cork.toJson();
+              final fromJson = Cork.fromJson(json);
+              expect(fromJson.toJson(), equals(json));
+              expect(fromJson.toProto(), equals(cork.toProto()));
+            });
+          }
         }
       });
     }

@@ -45,6 +45,16 @@ final class Cork {
         signature: Uint8List.fromList(proto.signature),
       );
 
+  /// Creates a [Cork] from its JSON representation.
+  factory Cork.fromJson(Map<String, Object?> json) {
+    final message = proto.Cork()
+      ..mergeFromProto3Json(
+        json,
+        typeRegistry: typeRegistry,
+      );
+    return Cork.fromProto(message);
+  }
+
   /// Creates a new [CorkBuilder].
   ///
   /// If [id] is not provided, a random nonce will be generated.
@@ -93,6 +103,11 @@ final class Cork {
 
   /// Encodes the [Cork] in binary format.
   Uint8List encode() => toProto().writeToBuffer();
+
+  /// Encodes the [Cork] as a JSON object.
+  Map<String, Object?> toJson() =>
+      toProto().toProto3Json(typeRegistry: typeRegistry)
+          as Map<String, Object?>;
 
   /// Signs the [Cork] using the provided [signer] and returns a new [Cork]
   /// with the signature.

@@ -1,3 +1,7 @@
+## 0.2.4
+
+- feat: Add `toJson`/`fromJson` methods to `Cork` and `CedarCork`
+
 ## 0.2.3
 
 - chore: Remove restriction that signer/cork keys match
