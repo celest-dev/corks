@@ -13,8 +13,8 @@ abstract interface class Signer {
 
 final class _Signer implements Signer {
   _Signer(this.keyId, Uint8List key)
-      : hmac = Hmac(sha256, key),
-        _newHmac = ((Uint8List? newKey) => Hmac(sha256, newKey ?? key));
+    : hmac = Hmac(sha256, key),
+      _newHmac = ((Uint8List? newKey) => Hmac(sha256, newKey ?? key));
 
   @override
   final Uint8List keyId;

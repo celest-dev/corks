@@ -20,8 +20,8 @@ final class Cork {
     this.claims,
     required List<Any> caveats,
     Uint8List? signature,
-  })  : _caveats = caveats,
-        _signature = signature;
+  }) : _caveats = caveats,
+       _signature = signature;
 
   /// Parses a base64-encoded [Cork].
   factory Cork.parse(String token) => Cork.decode(base64Url.decode(token));
@@ -34,24 +34,19 @@ final class Cork {
 
   /// Creates a [Cork] from its protocol buffer representation.
   factory Cork.fromProto(proto.Cork proto) => Cork._(
-        id: Uint8List.fromList(proto.id),
-        issuer: proto.issuer..freeze(),
-        bearer: proto.bearer..freeze(),
-        audience: proto.hasAudience() ? (proto.audience..freeze()) : null,
-        claims: proto.hasClaims() ? (proto.claims..freeze()) : null,
-        caveats: [
-          for (final caveat in proto.caveats) caveat..freeze(),
-        ],
-        signature: Uint8List.fromList(proto.signature),
-      );
+    id: Uint8List.fromList(proto.id),
+    issuer: proto.issuer..freeze(),
+    bearer: proto.bearer..freeze(),
+    audience: proto.hasAudience() ? (proto.audience..freeze()) : null,
+    claims: proto.hasClaims() ? (proto.claims..freeze()) : null,
+    caveats: [for (final caveat in proto.caveats) caveat..freeze()],
+    signature: Uint8List.fromList(proto.signature),
+  );
 
   /// Creates a [Cork] from its JSON representation.
   factory Cork.fromJson(Map<String, Object?> json) {
-    final message = proto.Cork()
-      ..mergeFromProto3Json(
-        json,
-        typeRegistry: typeRegistry,
-      );
+    final message =
+        proto.Cork()..mergeFromProto3Json(json, typeRegistry: typeRegistry);
     return Cork.fromProto(message);
   }
 
@@ -92,14 +87,14 @@ final class Cork {
 
   /// Converts the [Cork] to its protocol buffer representation.
   proto.Cork toProto() => proto.Cork(
-        id: id,
-        issuer: issuer,
-        bearer: bearer,
-        audience: audience,
-        claims: claims,
-        caveats: _caveats,
-        signature: signature,
-      );
+    id: id,
+    issuer: issuer,
+    bearer: bearer,
+    audience: audience,
+    claims: claims,
+    caveats: _caveats,
+    signature: signature,
+  );
 
   /// Encodes the [Cork] in binary format.
   Uint8List encode() => toProto().writeToBuffer();
@@ -138,24 +133,23 @@ final class Cork {
         typeUrl: bearer.typeUrl,
         value: Uint8List.fromList(bearer.value),
       ),
-      audience: audience == null
-          ? null
-          : Any(
-              typeUrl: audience!.typeUrl,
-              value: Uint8List.fromList(audience!.value),
-            ),
-      claims: claims == null
-          ? null
-          : Any(
-              typeUrl: claims!.typeUrl,
-              value: Uint8List.fromList(claims!.value),
-            ),
+      audience:
+          audience == null
+              ? null
+              : Any(
+                typeUrl: audience!.typeUrl,
+                value: Uint8List.fromList(audience!.value),
+              ),
+      claims:
+          claims == null
+              ? null
+              : Any(
+                typeUrl: claims!.typeUrl,
+                value: Uint8List.fromList(claims!.value),
+              ),
       caveats: [
         for (final caveat in _caveats)
-          Any(
-            typeUrl: caveat.typeUrl,
-            value: Uint8List.fromList(caveat.value),
-          ),
+          Any(typeUrl: caveat.typeUrl, value: Uint8List.fromList(caveat.value)),
       ],
       signature: _signature == null ? null : Uint8List.fromList(_signature!),
     );

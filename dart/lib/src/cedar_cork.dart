@@ -86,17 +86,17 @@ extension type CedarCork(Cork _cork) implements Cork {
 
   @redeclare
   List<cedar.Expr> get caveats => UnmodifiableListView([
-        for (final caveat in _cork.caveats)
-          cedar.Expr.fromProto(proto.Expr().unpackAny(caveat)),
-      ]);
+    for (final caveat in _cork.caveats)
+      cedar.Expr.fromProto(proto.Expr().unpackAny(caveat)),
+  ]);
 
   @redeclare
   Map<String, Object?> toJson() => {
-        'id': base64.encode(_cork.id),
-        'issuer': issuer.toString(),
-        'bearer': bearer.toString(),
-        'audience': audience?.toString(),
-        'claims': claims?.toJson(),
-        'caveats': caveats.map((c) => c.toJson()).toList(),
-      };
+    'id': base64.encode(_cork.id),
+    'issuer': issuer.toString(),
+    'bearer': bearer.toString(),
+    'audience': audience?.toString(),
+    'claims': claims?.toJson(),
+    'caveats': caveats.map((c) => c.toJson()).toList(),
+  };
 }

@@ -20,11 +20,8 @@ extension on String {
   Uint8List get bytes => Uint8List.fromList(codeUnits);
 }
 
-typedef _TestCase = ({
-  String description,
-  CorkBuilder Function() create,
-  Matcher? expectError,
-});
+typedef _TestCase =
+    ({String description, CorkBuilder Function() create, Matcher? expectError});
 
 final aId = 'a'.bytes;
 final aKey = secretKey;
@@ -38,9 +35,7 @@ final _caveat = Expr.equals(
     left: Expr.variable(CedarVariable.principal),
     attr: 'name',
   ),
-  right: Expr.value(
-    Value.string('Alice'),
-  ),
+  right: Expr.value(Value.string('Alice')),
 );
 
 final _tests = <_TestCase>[
@@ -56,32 +51,38 @@ final _tests = <_TestCase>[
   ),
   (
     description: 'missing bearer',
-    create: () =>
-        CedarCork.builder()..issuer = EntityUid.of('Organization', 'acme-corp'),
+    create:
+        () =>
+            CedarCork.builder()
+              ..issuer = EntityUid.of('Organization', 'acme-corp'),
     expectError: throwsInvalidCork,
   ),
   (
     description: 'valid minimal',
-    create: () => CedarCork.builder(aId)
-      ..issuer = EntityUid.of('Organization', 'acme-corp')
-      ..bearer = EntityUid.of('User', 'alice'),
+    create:
+        () =>
+            CedarCork.builder(aId)
+              ..issuer = EntityUid.of('Organization', 'acme-corp')
+              ..bearer = EntityUid.of('User', 'alice'),
     expectError: null,
   ),
   (
     description: 'valid full',
-    create: () => CedarCork.builder(aId)
-      ..issuer = issuer
-      ..bearer = bearer
-      ..audience = issuer
-      ..claims = Entity(
-        uid: bearer,
-        parents: [issuer],
-        attributes: {
-          'name': Value.string('Alice'),
-          'email': Value.string('alice@acme.com'),
-        },
-      )
-      ..addCaveat(_caveat),
+    create:
+        () =>
+            CedarCork.builder(aId)
+              ..issuer = issuer
+              ..bearer = bearer
+              ..audience = issuer
+              ..claims = Entity(
+                uid: bearer,
+                parents: [issuer],
+                attributes: {
+                  'name': Value.string('Alice'),
+                  'email': Value.string('alice@acme.com'),
+                },
+              )
+              ..addCaveat(_caveat),
     expectError: null,
   ),
 ];
