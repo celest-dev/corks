@@ -1,12 +1,9 @@
-## 0.2.5
-
-- chore: Bump Dart SDK constraint to `^3.7.0`
-- chore: Update `protobuf` dependency to `^4.0.0`
-- chore: Re-generate protobuf files with protoc_plugin v22.1.0
-
 ## 0.2.4
 
 - feat: Add `toJson`/`fromJson` methods to `Cork` and `CedarCork`
+- chore: Bump Dart SDK constraint to `^3.7.0`
+- chore: Update `protobuf` dependency to `^4.0.0`
+- chore: Re-generate protobuf files with protoc_plugin v22.1.0
 
 ## 0.2.3
 
