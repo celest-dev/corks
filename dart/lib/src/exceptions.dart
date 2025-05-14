@@ -27,14 +27,15 @@ final class InvalidSignatureException implements Exception {
   const InvalidSignatureException({
     required Digest expected,
     required Digest actual,
-  })  : _expected = expected,
-        _actual = actual;
+  }) : _expected = expected,
+       _actual = actual;
 
   final Digest _expected;
   final Digest _actual;
 
   @override
-  String toString() => 'Signatures do not match:\n'
+  String toString() =>
+      'Signatures do not match:\n'
       'Expected: $_expected\n'
       'Got:      $_actual';
 }
