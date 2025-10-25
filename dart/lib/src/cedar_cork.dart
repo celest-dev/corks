@@ -13,7 +13,11 @@ import 'cork.dart';
 import 'proto/corks/v1/cork.pb.dart' as corksv1;
 import 'proto/google/protobuf/any.pb.dart' as anypb;
 
-/// A [Cork] backed by Cedar.
+/// Cedar-specialized view over a [Cork] credential.
+///
+/// This extension type exposes Cedar domain objects instead of raw protobuf
+/// payloads so applications can work with strongly typed entities, claims, and
+/// caveat expressions.
 extension type CedarCork(Cork _cork) implements Cork {
   /// Parses a base64-encoded [CedarCork].
   factory CedarCork.parse(String token) => CedarCork(Cork.parse(token));
@@ -37,18 +41,23 @@ extension type CedarCork(Cork _cork) implements Cork {
   static const String caveatNamespace = 'celest.cedar';
   static const String caveatPredicate = 'expr';
 
+  /// Cedar entity that issued this cork, if present.
   @redeclare
   cedar.EntityUid? get issuer => _decodeEntityUid(_cork.issuer);
 
+  /// Cedar entity representing the bearer, if present.
   @redeclare
   cedar.EntityUid? get bearer => _decodeEntityUid(_cork.bearer);
 
+  /// Cedar entity representing the audience, if present.
   @redeclare
   cedar.EntityUid? get audience => _decodeEntityUid(_cork.audience);
 
+  /// Structured Cedar claims packed into the cork, if present.
   @redeclare
   cedar.Entity? get claims => _decodeEntity(_cork.claims);
 
+  /// Cedar caveat expressions embedded as first-party caveats.
   @redeclare
   List<cedar.Expr> get caveats {
     final expressions = <cedar.Expr>[];
@@ -75,8 +84,9 @@ extension type CedarCork(Cork _cork) implements Cork {
   CedarCorkBuilder rebuild() => CedarCorkBuilder._(_cork.rebuild());
 }
 
-/// A builder for [Cork]s backed by Cedar.
+/// Builder for cork credentials that embed Cedar payloads.
 extension type CedarCorkBuilder._(CorkBuilder _builder) implements CorkBuilder {
+  /// Creates a Cedar-aware builder for the given [keyId].
   factory CedarCorkBuilder.forKey(Uint8List keyId) =>
       CedarCorkBuilder._(CorkBuilder(keyId));
 

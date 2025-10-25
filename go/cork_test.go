@@ -127,6 +127,173 @@ func TestCorkSignPropagatesDerivationFailures(t *testing.T) {
 	require.ErrorContains(t, err, "derived root key must be")
 }
 
+func TestBuilderDefaultCaveats(t *testing.T) {
+	t.Helper()
+
+	keyID := []byte("default-caveat-key")
+	builder := NewBuilder(keyID)
+	builder.Issuer(wrapperspb.String("celest::issuer"))
+	builder.Bearer(wrapperspb.String("celest::bearer"))
+
+	notAfter := time.Date(2024, time.December, 1, 12, 0, 0, 0, time.UTC)
+	builder.DefaultExpiry(notAfter)
+
+	orgScope := &corksv1.OrganizationScope{
+		OrganizationId: "org-123",
+		ProjectId:      "proj-abc",
+		EnvironmentId:  "env-main",
+	}
+	builder.DefaultOrganizationScope(orgScope)
+
+	actions := []string{"read", "write"}
+	builder.DefaultActionScope(actions)
+
+	// Mutate inputs after registration to confirm defensive copying.
+	orgScope.OrganizationId = "changed"
+	actions[0] = "changed"
+
+	manual := firstPartyCaveat(t,
+		mustDecodeHex(t, "00112233445566778899aabbccddeeff"),
+		"celest.auth",
+		"allow_all",
+		wrapperspb.Bool(true),
+	)
+	builder.Caveat(manual)
+
+	cork, err := builder.Build()
+	require.NoError(t, err)
+	corkProto := cork.Proto()
+	require.Equal(t, uint64(notAfter.UnixMilli()), corkProto.GetNotAfter())
+
+	require.Len(t, corkProto.GetCaveats(), 4)
+
+	expiry := corkProto.GetCaveats()[0]
+	require.NotNil(t, expiry.GetFirstParty())
+	require.Equal(t, "celest.auth", expiry.GetFirstParty().GetNamespace())
+	require.Equal(t, "expiry", expiry.GetFirstParty().GetPredicate())
+
+	expiryPayload := &corksv1.Expiry{}
+	require.NoError(t, expiry.GetFirstParty().GetPayload().UnmarshalTo(expiryPayload))
+	require.Equal(t, corkProto.GetNotAfter(), expiryPayload.GetNotAfter())
+
+	org := corkProto.GetCaveats()[1]
+	require.Equal(t, "organization_scope", org.GetFirstParty().GetPredicate())
+	orgPayload := &corksv1.OrganizationScope{}
+	require.NoError(t, org.GetFirstParty().GetPayload().UnmarshalTo(orgPayload))
+	require.Equal(t, "org-123", orgPayload.GetOrganizationId())
+	require.Equal(t, "proj-abc", orgPayload.GetProjectId())
+	require.Equal(t, "env-main", orgPayload.GetEnvironmentId())
+
+	action := corkProto.GetCaveats()[2]
+	require.Equal(t, "actions", action.GetFirstParty().GetPredicate())
+	actionPayload := &corksv1.ActionScope{}
+	require.NoError(t, action.GetFirstParty().GetPayload().UnmarshalTo(actionPayload))
+	require.Equal(t, []string{"read", "write"}, actionPayload.GetActions())
+
+	added := corkProto.GetCaveats()[3]
+	require.True(t, proto.Equal(added, manual))
+}
+
+func TestBuilderClearsDefaultCaveats(t *testing.T) {
+	t.Helper()
+
+	builder := NewBuilder([]byte("clear-defaults"))
+	builder.Issuer(wrapperspb.String("celest::issuer"))
+	builder.Bearer(wrapperspb.String("celest::bearer"))
+
+	builder.DefaultExpiry(time.Now())
+	builder.DefaultOrganizationScope(&corksv1.OrganizationScope{OrganizationId: "tenant"})
+	builder.DefaultActionScope([]string{"read"})
+
+	builder.DefaultExpiry(time.Time{})
+	builder.DefaultOrganizationScope(nil)
+	builder.DefaultActionScope(nil)
+
+	cork, err := builder.Build()
+	require.NoError(t, err)
+	require.Empty(t, cork.Proto().GetCaveats())
+	require.Zero(t, cork.Proto().GetNotAfter())
+}
+
+func TestBuilderAppendFirstPartyCaveatHelpers(t *testing.T) {
+	t.Helper()
+
+	builder := NewBuilder([]byte("first-party-helpers"))
+	builder.Issuer(wrapperspb.String("celest::issuer"))
+	builder.Bearer(wrapperspb.String("celest::bearer"))
+
+	_, err := builder.AppendExpiryCaveat(time.Time{})
+	require.ErrorContains(t, err, "expiry")
+
+	expiryAt := time.Date(2025, time.July, 1, 12, 0, 0, 0, time.UTC)
+	builder, err = builder.AppendExpiryCaveat(expiryAt)
+	require.NoError(t, err)
+
+	scope := &corksv1.OrganizationScope{OrganizationId: "org-123", ProjectId: "proj-abc"}
+	builder, err = builder.AppendOrganizationScopeCaveat(scope)
+	require.NoError(t, err)
+
+	actions := []string{"read", "write"}
+	builder, err = builder.AppendActionScopeCaveat(actions)
+	require.NoError(t, err)
+
+	builder, err = builder.AppendIPBindingCaveat([]string{"10.0.0.0/8", "192.168.0.0/16"})
+	require.NoError(t, err)
+
+	sessionState := &corksv1.SessionState{SessionId: "sess-123", Version: 3}
+	builder, err = builder.AppendSessionStateCaveat(sessionState)
+	require.NoError(t, err)
+
+	// Mutating the original inputs should not affect stored payloads.
+	scope.OrganizationId = "mutated"
+	actions[0] = "mutated"
+	sessionState.Version = 9
+
+	_, err = builder.AppendActionScopeCaveat(nil)
+	require.ErrorContains(t, err, "action scope")
+	_, err = builder.AppendIPBindingCaveat(nil)
+	require.ErrorContains(t, err, "ip binding")
+	_, err = builder.AppendSessionStateCaveat(&corksv1.SessionState{})
+	require.ErrorContains(t, err, "session_id")
+
+	cork, err := builder.Build()
+	require.NoError(t, err)
+	proto := cork.Proto()
+	require.Len(t, proto.GetCaveats(), 5)
+	// Expiry
+	expiry := proto.GetCaveats()[0]
+	require.Equal(t, "expiry", expiry.GetFirstParty().GetPredicate())
+	expiryPayload := &corksv1.Expiry{}
+	require.NoError(t, expiry.GetFirstParty().GetPayload().UnmarshalTo(expiryPayload))
+	require.Equal(t, uint64(expiryAt.UnixMilli()), expiryPayload.GetNotAfter())
+	// Organization scope
+	org := proto.GetCaveats()[1]
+	require.Equal(t, "organization_scope", org.GetFirstParty().GetPredicate())
+	orgPayload := &corksv1.OrganizationScope{}
+	require.NoError(t, org.GetFirstParty().GetPayload().UnmarshalTo(orgPayload))
+	require.Equal(t, "org-123", orgPayload.GetOrganizationId())
+	require.Equal(t, "proj-abc", orgPayload.GetProjectId())
+	// Actions
+	action := proto.GetCaveats()[2]
+	require.Equal(t, "actions", action.GetFirstParty().GetPredicate())
+	actionPayload := &corksv1.ActionScope{}
+	require.NoError(t, action.GetFirstParty().GetPayload().UnmarshalTo(actionPayload))
+	require.Equal(t, []string{"read", "write"}, actionPayload.GetActions())
+	// IP binding
+	ip := proto.GetCaveats()[3]
+	require.Equal(t, "ip_binding", ip.GetFirstParty().GetPredicate())
+	ipPayload := &corksv1.IpBinding{}
+	require.NoError(t, ip.GetFirstParty().GetPayload().UnmarshalTo(ipPayload))
+	require.ElementsMatch(t, []string{"10.0.0.0/8", "192.168.0.0/16"}, ipPayload.GetCidrs())
+	// Session state
+	session := proto.GetCaveats()[4]
+	require.Equal(t, "session_state", session.GetFirstParty().GetPredicate())
+	sessionPayload := &corksv1.SessionState{}
+	require.NoError(t, session.GetFirstParty().GetPayload().UnmarshalTo(sessionPayload))
+	require.Equal(t, "sess-123", sessionPayload.GetSessionId())
+	require.Equal(t, uint64(3), sessionPayload.GetVersion())
+}
+
 func firstPartyCaveat(t *testing.T, id []byte, namespace, predicate string, payload proto.Message) *corksv1.Caveat {
 	t.Helper()
 

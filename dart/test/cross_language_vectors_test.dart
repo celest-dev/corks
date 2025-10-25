@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:corks_cedar/corks_cedar.dart';
@@ -9,7 +8,7 @@ import 'package:corks_cedar/src/proto/cedar/v3/entity_uid.pb.dart'
     as cedar_proto;
 import 'package:test/test.dart';
 
-const _fixturePath = 'test/vectors/celest_cork_vectors.json';
+import 'vectors/celest_cork_vectors.dart';
 
 void main() {
   group('Cross-language cork vectors', () {
@@ -20,27 +19,11 @@ void main() {
     });
 
     test('fixture matches generated vectors', () async {
-      final fixtureFile = File(_fixturePath);
-      if (!fixtureFile.existsSync()) {
-        final encoder = const JsonEncoder.withIndent('  ');
-        fail(
-          'Missing $_fixturePath. Suggested content:\n${encoder.convert(expected)}',
-        );
-      }
-
-      final actual =
-          jsonDecode(await fixtureFile.readAsString()) as Map<String, dynamic>;
-      expect(actual, equals(expected));
+      expect(celestCorkVectors, equals(expected));
     });
 
     test('vectors verify with expected outcomes', () async {
-      final fixtureFile = File(_fixturePath);
-      if (!fixtureFile.existsSync()) {
-        fail('Missing $_fixturePath – run fixture test for details.');
-      }
-
-      final fixture =
-          jsonDecode(await fixtureFile.readAsString()) as Map<String, dynamic>;
+      final fixture = celestCorkVectors;
 
       final signers = (fixture['signers'] as Map<String, dynamic>).map(
         (key, value) => MapEntry(key, (

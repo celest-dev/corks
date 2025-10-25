@@ -11,6 +11,7 @@ import 'package:corks_cedar/src/proto/google/protobuf/any.pb.dart' as anypb;
 import 'package:corks_cedar/src/proto/google/protobuf/wrappers.pb.dart'
     as wrappers;
 import 'package:corks_cedar/src/signer.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -138,6 +139,200 @@ void main() {
             ..notAfter = DateTime.fromMillisecondsSinceEpoch(0, isUtc: true);
 
       expect(okBuilder.build, returnsNormally);
+    });
+
+    test('builder adds default caveats', () {
+      final keyId = utf8.encode('defaults-key');
+      final builder =
+          CorkBuilder(Uint8List.fromList(keyId))
+            ..issuer = wrappers.StringValue(value: 'celest::issuer')
+            ..bearer = wrappers.StringValue(value: 'celest::bearer');
+
+      final expiryInstant = DateTime.utc(2024, 12, 1, 12);
+      builder.defaultExpiry = expiryInstant;
+
+      final scope = corksv1.OrganizationScope(
+        organizationId: 'org-123',
+        projectId: 'proj-abc',
+        environmentId: 'env-main',
+      );
+      builder.defaultOrganizationScope = scope;
+
+      final actions = ['read', 'write'];
+      builder.defaultActionScope = actions;
+
+      // Mutate inputs after configuration to confirm defensive copies.
+      scope.organizationId = 'mutated';
+      actions[0] = 'mutated';
+
+      builder.addCaveat(
+        _firstPartyCaveat(
+          _hex('00112233445566778899aabbccddeeff'),
+          'celest.auth',
+          'allow_all',
+          wrappers.BoolValue(value: true),
+        ),
+      );
+
+      final cork = builder.build();
+      final proto = cork.toProto();
+
+      expect(proto.hasNotAfter(), isTrue);
+      expect(
+        proto.notAfter,
+        equals(Int64(expiryInstant.millisecondsSinceEpoch)),
+      );
+
+      expect(proto.caveats, hasLength(4));
+
+      final expiryCaveat = proto.caveats[0];
+      expect(expiryCaveat.firstParty.namespace, 'celest.auth');
+      expect(expiryCaveat.firstParty.predicate, 'expiry');
+      final expiryPayload = corksv1.Expiry();
+      expiryCaveat.firstParty.payload.unpackInto(expiryPayload);
+      expect(expiryPayload.notAfter, proto.notAfter);
+
+      final orgCaveat = proto.caveats[1];
+      expect(orgCaveat.firstParty.predicate, 'organization_scope');
+      final orgPayload = corksv1.OrganizationScope();
+      orgCaveat.firstParty.payload.unpackInto(orgPayload);
+      expect(orgPayload.organizationId, 'org-123');
+      expect(orgPayload.projectId, 'proj-abc');
+      expect(orgPayload.environmentId, 'env-main');
+
+      final actionCaveat = proto.caveats[2];
+      expect(actionCaveat.firstParty.predicate, 'actions');
+      final actionPayload = corksv1.ActionScope();
+      actionCaveat.firstParty.payload.unpackInto(actionPayload);
+      expect(actionPayload.actions, ['read', 'write']);
+
+      final appended = proto.caveats[3];
+      expect(appended, isNot(same(proto.caveats[0])));
+      final manual = _firstPartyCaveat(
+        _hex('00112233445566778899aabbccddeeff'),
+        'celest.auth',
+        'allow_all',
+        wrappers.BoolValue(value: true),
+      );
+      expect(appended.caveatVersion, manual.caveatVersion);
+      expect(appended.firstParty.predicate, manual.firstParty.predicate);
+      expect(appended.caveatId, manual.caveatId);
+    });
+
+    test('clearing default caveats removes defaults', () {
+      final builder =
+          CorkBuilder(Uint8List.fromList(utf8.encode('clear-defaults')))
+            ..issuer = wrappers.StringValue(value: 'celest::issuer')
+            ..bearer = wrappers.StringValue(value: 'celest::bearer');
+
+      builder.defaultExpiry = DateTime.now();
+      builder.defaultOrganizationScope = corksv1.OrganizationScope(
+        organizationId: 'tenant-1',
+      );
+      builder.defaultActionScope = ['read'];
+
+      builder.defaultExpiry = null;
+      builder.defaultOrganizationScope = null;
+      builder.defaultActionScope = const <String>[];
+
+      final cork = builder.build();
+      final proto = cork.toProto();
+      expect(proto.hasNotAfter(), isFalse);
+      expect(proto.caveats, isEmpty);
+    });
+
+    test('builder first-party helpers append caveats', () {
+      final builder =
+          CorkBuilder(Uint8List.fromList(utf8.encode('first-party-helpers')))
+            ..issuer = wrappers.StringValue(value: 'celest::issuer')
+            ..bearer = wrappers.StringValue(value: 'celest::bearer');
+
+      expect(
+        () => builder.appendExpiryCaveat(
+          DateTime.fromMillisecondsSinceEpoch(0, isUtc: true),
+        ),
+        throwsA(isA<InvalidCorkException>()),
+      );
+
+      final expiryInstant = DateTime.utc(2025, 7, 1, 12);
+      builder.appendExpiryCaveat(expiryInstant);
+
+      final scope = corksv1.OrganizationScope(
+        organizationId: 'org-123',
+        projectId: 'proj-abc',
+      );
+      builder.appendOrganizationScopeCaveat(scope);
+
+      final actions = ['read', 'write'];
+      builder.appendActionScopeCaveat(actions);
+
+      builder.appendIpBindingCaveat(['10.0.0.0/8', '192.168.0.0/16']);
+
+      final sessionState = corksv1.SessionState(
+        sessionId: 'sess-123',
+        version: Int64(3),
+      );
+      builder.appendSessionStateCaveat(sessionState);
+
+      scope.organizationId = 'mutated';
+      actions[0] = 'mutated';
+      sessionState.version = Int64(9);
+
+      expect(
+        () => builder.appendActionScopeCaveat([]),
+        throwsA(isA<InvalidCorkException>()),
+      );
+      expect(
+        () => builder.appendIpBindingCaveat([]),
+        throwsA(isA<InvalidCorkException>()),
+      );
+      expect(
+        () => builder.appendSessionStateCaveat(corksv1.SessionState()),
+        throwsA(isA<InvalidCorkException>()),
+      );
+
+      final cork = builder.build();
+      final proto = cork.toProto();
+
+      expect(proto.caveats, hasLength(5));
+
+      final expiryCaveat = proto.caveats[0];
+      expect(expiryCaveat.firstParty.predicate, 'expiry');
+      final expiryPayload = corksv1.Expiry();
+      expiryCaveat.firstParty.payload.unpackInto(expiryPayload);
+      expect(
+        expiryPayload.notAfter,
+        Int64(expiryInstant.millisecondsSinceEpoch),
+      );
+
+      final orgCaveat = proto.caveats[1];
+      expect(orgCaveat.firstParty.predicate, 'organization_scope');
+      final orgPayload = corksv1.OrganizationScope();
+      orgCaveat.firstParty.payload.unpackInto(orgPayload);
+      expect(orgPayload.organizationId, 'org-123');
+      expect(orgPayload.projectId, 'proj-abc');
+
+      final actionCaveat = proto.caveats[2];
+      expect(actionCaveat.firstParty.predicate, 'actions');
+      final actionPayload = corksv1.ActionScope();
+      actionCaveat.firstParty.payload.unpackInto(actionPayload);
+      expect(actionPayload.actions, ['read', 'write']);
+
+      final ipCaveat = proto.caveats[3];
+      expect(ipCaveat.firstParty.predicate, 'ip_binding');
+      final ipPayload = corksv1.IpBinding();
+      ipCaveat.firstParty.payload.unpackInto(ipPayload);
+      expect(
+        ipPayload.cidrs,
+        unorderedEquals(['10.0.0.0/8', '192.168.0.0/16']),
+      );
+
+      final sessionCaveat = proto.caveats[4];
+      expect(sessionCaveat.firstParty.predicate, 'session_state');
+      final sessionPayload = corksv1.SessionState();
+      sessionCaveat.firstParty.payload.unpackInto(sessionPayload);
+      expect(sessionPayload.sessionId, 'sess-123');
+      expect(sessionPayload.version, Int64(3));
     });
   });
 }

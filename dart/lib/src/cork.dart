@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -11,11 +12,12 @@ import 'proto/corks/v1/cork.pb.dart' as corksv1;
 import 'proto/google/protobuf/any.pb.dart' as anypb;
 import 'signer.dart';
 
-/// High-level API for the Celest cork credential described in
-/// `docs/corks_spec.md`.
+/// A Celest cork credential that supports deterministic serialization,
+/// signing, verification, and caveat attenuation.
 ///
-/// Instances are immutable protobuf payloads that support deterministic
-/// serialization, signing, verification, and attenuation through caveats.
+/// Instances are immutable protobuf payloads. They follow the structure
+/// described in `docs/corks_spec.md` and are interoperable with Celest
+/// services.
 ///
 /// ### Example
 /// ```dart
@@ -27,28 +29,22 @@ import 'signer.dart';
 /// final masterKey = Uint8List.fromList(List<int>.generate(32, (i) => i + 16));
 /// final signer = Signer(keyId, masterKey);
 ///
-/// final builder = Cork.builder(keyId)
-///   ..issuer = cedar.EntityUid(type: 'Service', id: 'celest-cloud')
-///   ..bearer = cedar.EntityUid(type: 'Session', id: 'sess-123')
-///   ..notAfter = DateTime.now().toUtc().add(const Duration(hours: 1));
+/// final cork = await Cork(
+///   keyId: keyId,
+///   issuer: cedar.EntityUid(type: 'Service', id: 'celest-cloud'),
+///   bearer: cedar.EntityUid(type: 'Session', id: 'sess-123'),
+///   notAfter: DateTime.now().toUtc().add(const Duration(hours: 1)),
+/// )
+///   .sign(signer);
 ///
-/// // Caveat helpers wrap the registry payloads documented in Spec §9.
-/// builder.addCaveat(buildExpiryCaveat(DateTime.now().toUtc().add(
-///   const Duration(hours: 1),
-/// )));
-/// builder.addCaveat(buildOrganizationScopeCaveat(
-///   organizationId: 'org:acme',
-///   projectId: 'proj:web',
-///   environmentId: 'env:prod',
-/// ));
-///
-/// final signed = await builder.build().sign(signer);
-/// await Cork.parse(signed.toString()).verify(signer); // throws if invalid
+/// await cork.verify(signer);
 /// ```
 class Cork {
-  /// Convenience factory that builds a cork via [CorkBuilder] and immediately
-  /// signs it with the supplied fields.  Useful for tests and migration flows
-  /// that already have caveats materialised.
+  /// Builds a cork via [CorkBuilder] using the provided fields.
+  ///
+  /// Useful for tests and migration flows where caveats are already
+  /// materialized. The resulting instance is unsigned; call [sign] to produce a
+  /// transferable token.
   factory Cork({
     required Uint8List keyId,
     Uint8List? nonce,
@@ -90,6 +86,8 @@ class Cork {
   final corksv1.Cork _proto;
 
   /// Parses a base64-encoded [Cork].
+  ///
+  /// Throws [InvalidCorkException] if the token cannot be decoded.
   factory Cork.parse(String token) {
     try {
       final normalized = base64Url.normalize(token);
@@ -102,6 +100,8 @@ class Cork {
   }
 
   /// Decodes a binary-encoded [Cork].
+  ///
+  /// Throws [InvalidCorkException] if the buffer cannot be decoded.
   factory Cork.decode(Uint8List bytes) {
     try {
       final message = corksv1.Cork.fromBuffer(bytes);
@@ -123,7 +123,7 @@ class Cork {
 
   corksv1.Cork toProto() => _proto.deepCopy();
 
-  /// Returns a [CorkBuilder] initialised with [keyId].
+  /// Returns a [CorkBuilder] initialized with [keyId].
   static CorkBuilder builder(Uint8List keyId) => CorkBuilder(keyId);
 
   /// Protocol version embedded in the underlying protobuf.
@@ -138,7 +138,7 @@ class Cork {
   /// Issuer entity packed as `google.protobuf.Any` (Cedar EntityUid).
   anypb.Any? get issuer => _proto.hasIssuer() ? _proto.issuer.deepCopy() : null;
 
-  /// Bearer entity representing the authorised principal.
+  /// Bearer entity representing the authorized principal.
   anypb.Any? get bearer => _proto.hasBearer() ? _proto.bearer.deepCopy() : null;
 
   /// Optional audience that the cork is scoped to.
@@ -161,7 +161,7 @@ class Cork {
 
   /// Tail signature captured in the protobuf.
   ///
-  /// Throws if the cork is unsigned.
+  /// Throws [MissingSignatureError] if the cork is unsigned.
   Uint8List get tailSignature {
     final signature = _proto.tailSignature;
     if (signature.isEmpty) {
@@ -170,9 +170,9 @@ class Cork {
     return Uint8List.fromList(signature);
   }
 
-  /// Serializes the cork to a protobuf binary buffer.
+  /// Serializes this cork to a protobuf binary buffer.
   ///
-  /// Requires the cork to be signed.
+  /// Throws [MissingSignatureError] if the cork has not been signed.
   Uint8List encode() {
     if (_proto.tailSignature.isEmpty) {
       throw MissingSignatureError();
@@ -189,7 +189,10 @@ class Cork {
     return Cork._(message);
   }
 
-  /// Recomputes the chained MAC with [signer] and throws
+  /// Recomputes the chained MAC with [signer] and compares it with the stored
+  /// signature.
+  ///
+  /// Throws [MissingSignatureError] if the cork is unsigned and
   /// [InvalidSignatureException] if verification fails.
   Future<void> verify(Signer signer) async {
     final expected = _proto.tailSignature;
@@ -206,12 +209,14 @@ class Cork {
     }
   }
 
-  /// Returns a [CorkBuilder] initialised from this cork so callers can append
-  /// caveats without mutating the existing instance.
+  /// Returns a [CorkBuilder] initialized from this cork.
+  ///
+  /// The returned builder lets callers append caveats without mutating this
+  /// instance.
   CorkBuilder rebuild() => CorkBuilder._fromProto(_proto.deepCopy());
 
-  @override
   /// Encodes the cork to URL-safe base64, omitting padding.
+  @override
   String toString() {
     final bytes = encode();
     return base64Url.encode(bytes).replaceAll('=', '');
@@ -219,13 +224,81 @@ class Cork {
 }
 
 /// Fluent builder that enforces the structural rules from Spec §4 before a
-/// cork is signed.  It validates required fields, enforces nonce length, and
-/// copies caveats so templates can be reused safely.
+/// cork is signed.
+///
+/// The builder validates required fields, enforces nonce length, and copies
+/// caveats so templates can be reused safely.
+const _defaultCaveatNamespace = 'celest.auth';
+const _expiryPredicate = 'expiry';
+const _organizationScopePredicate = 'organization_scope';
+const _actionScopePredicate = 'actions';
+const _ipBindingPredicate = 'ip_binding';
+const _sessionStatePredicate = 'session_state';
+const _defaultCaveatVersion = 1;
+const _caveatIdSize = 16;
+
+/// Callback invoked by [ThirdPartyCaveatOptions] to encrypt a discharge ticket.
+typedef ThirdPartyTicketEncrypter =
+    FutureOr<List<int>> Function(Uint8List caveatId, Uint8List caveatRootKey);
+
+/// Options that control how a third-party caveat is constructed.
+final class ThirdPartyCaveatOptions {
+  ThirdPartyCaveatOptions({
+    required this.location,
+    required List<int> tag,
+    List<int>? salt,
+    List<int>? caveatId,
+    List<int>? challengeNonce,
+    required this.encryptTicket,
+  }) : _tag = Uint8List.fromList(tag),
+       _salt = salt == null ? null : Uint8List.fromList(salt),
+       _caveatId = caveatId == null ? null : Uint8List.fromList(caveatId),
+       _challengeNonce =
+           challengeNonce == null ? null : Uint8List.fromList(challengeNonce);
+
+  final String location;
+  final ThirdPartyTicketEncrypter encryptTicket;
+  final Uint8List _tag;
+  final Uint8List? _salt;
+  final Uint8List? _caveatId;
+  final Uint8List? _challengeNonce;
+
+  /// Attenuation tag used when deriving the third-party root key.
+  Uint8List get tag => Uint8List.fromList(_tag);
+
+  /// Optional HKDF salt mixed into the derived key.
+  Uint8List? get salt {
+    final value = _salt;
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+    return Uint8List.fromList(value);
+  }
+
+  /// Optional caller-provided caveat identifier.
+  Uint8List? get caveatId {
+    final value = _caveatId;
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+    return Uint8List.fromList(value);
+  }
+
+  /// Optional nonce to use when encrypting the challenge payload.
+  Uint8List? get challengeNonce {
+    final value = _challengeNonce;
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+    return Uint8List.fromList(value);
+  }
+}
+
 class CorkBuilder {
   /// Creates a builder for a new cork with the given [keyId].
   ///
-  /// The builder pre-populates `nonce` using secure randomness and `issuedAt`
-  /// using the current UTC timestamp.
+  /// The builder pre-populates [nonce] using secure randomness and [issuedAt]
+  /// with the current UTC timestamp.
   CorkBuilder(Uint8List keyId)
     : _version = Cork.currentVersion,
       _nonce = secureRandomBytes(nonceSize),
@@ -260,16 +333,21 @@ class CorkBuilder {
   final List<corksv1.Caveat> _caveats = [];
   Int64 _issuedAt;
   Int64? _notAfter;
+  corksv1.Expiry? _defaultExpiry;
+  corksv1.OrganizationScope? _defaultOrganizationScope;
+  corksv1.ActionScope? _defaultActionScope;
 
-  /// Overrides the protocol [version]. Primarily used in tests when simulating
-  /// migration scenarios.
+  /// Overrides the protocol [version].
+  ///
+  /// This is primarily useful in tests when simulating migration scenarios.
   CorkBuilder version(int version) {
     _version = version;
     return this;
   }
 
-  /// Overrides the randomly generated [nonce].  Ensures the provided value has
-  /// the required length.
+  /// Overrides the randomly generated [nonce].
+  ///
+  /// Throws [InvalidCorkException] if the provided nonce has the wrong length.
   set nonce(Uint8List nonce) {
     if (nonce.length != nonceSize) {
       throw InvalidCorkException('nonce must be $nonceSize bytes');
@@ -287,7 +365,7 @@ class CorkBuilder {
     _issuer = issuer;
   }
 
-  /// Sets the bearer (authorised principal) entity.
+  /// Sets the bearer (authorized principal) entity.
   set bearer(GeneratedMessage bearer) {
     _bearer = bearer;
   }
@@ -302,8 +380,10 @@ class CorkBuilder {
     _claims = claims;
   }
 
-  /// Adds [caveat] to the builder, storing a defensive copy so the caller can
-  /// reuse the original instance when minting discharges or parallel corks.
+  /// Adds [caveat] to the builder.
+  ///
+  /// Stores a defensive copy so the caller can reuse the original instance
+  /// when minting discharges or parallel corks.
   void addCaveat(corksv1.Caveat caveat) {
     _caveats.add(caveat.deepCopy());
   }
@@ -314,6 +394,8 @@ class CorkBuilder {
   }
 
   /// Overrides or clears the expiry timestamp.
+  ///
+  /// Pass `null` to create a non-expiring cork.
   set notAfter(DateTime? notAfter) {
     final millis = notAfter?.toUtc().millisecondsSinceEpoch;
     if (millis == null || millis == 0) {
@@ -323,8 +405,146 @@ class CorkBuilder {
     }
   }
 
+  /// Configures the default expiry caveat and synchronises metadata.
+  set defaultExpiry(DateTime? notAfter) {
+    if (notAfter == null || notAfter.millisecondsSinceEpoch == 0) {
+      _notAfter = null;
+      _defaultExpiry = null;
+      return;
+    }
+    final millis = Int64(notAfter.toUtc().millisecondsSinceEpoch);
+    _notAfter = millis;
+    _defaultExpiry = corksv1.Expiry(notAfter: millis).deepCopy();
+  }
+
+  /// Appends a first-party expiry caveat that attenuates the cork.
+  void appendExpiryCaveat(DateTime notAfter) {
+    final millis = notAfter.toUtc().millisecondsSinceEpoch;
+    if (millis == 0) {
+      throw InvalidCorkException('expiry notAfter must be set');
+    }
+    final payload = corksv1.Expiry(notAfter: Int64(millis));
+    _caveats.add(_firstPartyCaveat(_expiryPredicate, payload));
+  }
+
+  /// Appends a first-party organization scope caveat.
+  void appendOrganizationScopeCaveat(corksv1.OrganizationScope scope) {
+    _caveats.add(
+      _firstPartyCaveat(_organizationScopePredicate, scope.deepCopy()),
+    );
+  }
+
+  /// Appends a first-party action scope caveat.
+  void appendActionScopeCaveat(List<String> actions) {
+    if (actions.isEmpty) {
+      throw InvalidCorkException('action scope requires at least one action');
+    }
+    final scope = corksv1.ActionScope()..actions.addAll(actions);
+    _caveats.add(_firstPartyCaveat(_actionScopePredicate, scope));
+  }
+
+  /// Appends a first-party IP binding caveat.
+  void appendIpBindingCaveat(List<String> cidrs) {
+    if (cidrs.isEmpty) {
+      throw InvalidCorkException('ip binding requires at least one CIDR');
+    }
+    final binding = corksv1.IpBinding()..cidrs.addAll(cidrs);
+    _caveats.add(_firstPartyCaveat(_ipBindingPredicate, binding));
+  }
+
+  /// Appends a first-party session state caveat for revocation.
+  void appendSessionStateCaveat(corksv1.SessionState state) {
+    if (!state.hasSessionId() || state.sessionId.isEmpty) {
+      throw InvalidCorkException('session state requires sessionId');
+    }
+    _caveats.add(_firstPartyCaveat(_sessionStatePredicate, state.deepCopy()));
+  }
+
+  /// Appends a third-party caveat that delegates discharge to an external service.
+  Future<CorkBuilder> appendThirdPartyCaveat(
+    ThirdPartyCaveatOptions options,
+  ) async {
+    if (options.location.isEmpty) {
+      throw InvalidCorkException('third-party location is required');
+    }
+    final encryptTicket = options.encryptTicket;
+
+    final tag = options.tag;
+    final salt = options.salt;
+    final providedId = options.caveatId;
+    final caveatId =
+        providedId == null || providedId.isEmpty
+            ? secureRandomBytes(_caveatIdSize)
+            : Uint8List.fromList(providedId);
+
+    final derived = deriveCaveatRootKey(
+      tag: tag,
+      caveatId: caveatId,
+      salt: salt,
+    );
+
+    final ticketBytes = await Future.sync(
+      () => encryptTicket(
+        Uint8List.fromList(caveatId),
+        Uint8List.fromList(derived),
+      ),
+    );
+    final ticket = Uint8List.fromList(ticketBytes);
+    if (ticket.isEmpty) {
+      throw InvalidCorkException('encrypted ticket must not be empty');
+    }
+
+    final challenge = await encryptChallenge(
+      tag: tag,
+      caveatId: caveatId,
+      salt: salt,
+      derivedKey: derived,
+      nonce: options.challengeNonce,
+    );
+
+    final thirdParty = corksv1.ThirdPartyCaveat(
+      location: options.location,
+      ticket: ticket,
+      challenge: challenge,
+    );
+    if (salt != null && salt.isNotEmpty) {
+      thirdParty.salt = Uint8List.fromList(salt);
+    }
+
+    final caveat = corksv1.Caveat(
+      caveatVersion: _defaultCaveatVersion,
+      caveatId: Uint8List.fromList(caveatId),
+      thirdParty: thirdParty,
+    );
+    _caveats.add(caveat);
+    return this;
+  }
+
+  /// Adds a default organization scope caveat. Pass `null` to clear it.
+  set defaultOrganizationScope(corksv1.OrganizationScope? scope) {
+    _defaultOrganizationScope = scope?.deepCopy();
+  }
+
+  /// Adds a default action scope caveat. Empty or `null` clears it.
+  set defaultActionScope(List<String>? actions) {
+    if (actions == null || actions.isEmpty) {
+      _defaultActionScope = null;
+      return;
+    }
+    final scope = corksv1.ActionScope()..actions.addAll(actions);
+    _defaultActionScope = scope.deepCopy();
+  }
+
   /// Ensures the builder contains all mandatory fields before encoding.
+  ///
+  /// Throws [InvalidCorkException] when a required field is missing or
+  /// malformed.
   void validate() {
+    final caveats = _buildCaveats();
+    _validateWithCaveats(caveats);
+  }
+
+  void _validateWithCaveats(List<corksv1.Caveat> caveats) {
     final missing = <String>[];
     if (_version == 0) {
       missing.add('version');
@@ -344,8 +564,8 @@ class CorkBuilder {
     if (_issuedAt == Int64.ZERO) {
       missing.add('issuedAt');
     }
-    for (var i = 0; i < _caveats.length; i++) {
-      final caveat = _caveats[i];
+    for (var i = 0; i < caveats.length; i++) {
+      final caveat = caveats[i];
       if (!caveat.hasCaveatVersion() || caveat.caveatVersion == 0) {
         missing.add('caveat[$i].version');
       }
@@ -367,7 +587,8 @@ class CorkBuilder {
   /// Call [Cork.sign] with a configured [Signer] to produce a transferable
   /// token.
   Cork build() {
-    validate();
+    final caveats = _buildCaveats();
+    _validateWithCaveats(caveats);
 
     final message = corksv1.Cork(
       version: _version,
@@ -397,7 +618,7 @@ class CorkBuilder {
       message.notAfter = _notAfter!;
     }
 
-    message.caveats.addAll(_caveats.map((c) => c.deepCopy()));
+    message.caveats.addAll(caveats.map((c) => c.deepCopy()));
 
     return Cork._(message);
   }
@@ -408,5 +629,53 @@ class CorkBuilder {
     }
     final packed = message.packIntoAny();
     return packed.deepCopy();
+  }
+
+  List<corksv1.Caveat> _buildCaveats() {
+    final caveats = <corksv1.Caveat>[];
+    caveats.addAll(_buildDefaultCaveats());
+    for (final caveat in _caveats) {
+      caveats.add(caveat.deepCopy());
+    }
+    return caveats;
+  }
+
+  List<corksv1.Caveat> _buildDefaultCaveats() {
+    final defaults = <corksv1.Caveat>[];
+    if (_defaultExpiry != null) {
+      defaults.add(
+        _firstPartyCaveat(_expiryPredicate, _defaultExpiry!.deepCopy()),
+      );
+    }
+    if (_defaultOrganizationScope != null) {
+      defaults.add(
+        _firstPartyCaveat(
+          _organizationScopePredicate,
+          _defaultOrganizationScope!.deepCopy(),
+        ),
+      );
+    }
+    if (_defaultActionScope != null) {
+      defaults.add(
+        _firstPartyCaveat(
+          _actionScopePredicate,
+          _defaultActionScope!.deepCopy(),
+        ),
+      );
+    }
+    return defaults;
+  }
+
+  corksv1.Caveat _firstPartyCaveat(String predicate, GeneratedMessage payload) {
+    final packed = payload.packIntoAny().deepCopy();
+    return corksv1.Caveat(
+      caveatVersion: _defaultCaveatVersion,
+      caveatId: secureRandomBytes(_caveatIdSize),
+      firstParty: corksv1.FirstPartyCaveat(
+        namespace: _defaultCaveatNamespace,
+        predicate: predicate,
+        payload: packed,
+      ),
+    );
   }
 }

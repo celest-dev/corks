@@ -19,6 +19,7 @@ import 'signer.dart';
 const int nonceSize = 24;
 const String macContext = 'celest:cork:v1';
 const int _tagSize = 32;
+final Int64 _byteMask = Int64(0xff);
 final Random _random = Random.secure();
 
 /// Fills a [Uint8List] with secure random data of [length] bytes.
@@ -43,10 +44,15 @@ Uint8List encodeUint32(int value) {
 }
 
 Uint8List encodeUint64(Int64 value) {
-  const int uint64Length = 8;
-  final data = ByteData(uint64Length);
-  data.setUint64(0, value.toInt(), Endian.big);
-  return data.buffer.asUint8List();
+  // Manual big-endian packing keeps dart2js compatibility
+  // (ByteData.setUint64 isn't supported).
+  final bytes = Uint8List(8);
+  var current = value.toUnsigned(64);
+  for (var i = 7; i >= 0; i--) {
+    bytes[i] = (current & _byteMask).toInt();
+    current = current >> 8;
+  }
+  return bytes;
 }
 
 bool bytesEqual(List<int> a, List<int> b) {

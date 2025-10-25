@@ -30,7 +30,7 @@ message Cork {
   // Issuer entity (usually Celest::Service).  Stored as packed Cedar EntityUid.
   google.protobuf.Any issuer = 4;
 
-  // Bearer entity representing the principal authorised to act.
+  // Bearer entity representing the principal authorized to act.
   google.protobuf.Any bearer = 5;
 
   // Optional audience the cork is scoped to (e.g. downstream service).

@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:convert/convert.dart';
 
 /// {@template corks.invalid_cork_exception}
-/// Thrown when a cork is invalid or corrupted and cannot be processed.
+/// Exception thrown when a cork is invalid or corrupted and cannot be processed.
 /// {@endtemplate}
 final class InvalidCorkException extends FormatException {
   /// {@macro corks.invalid_cork_exception}
@@ -20,7 +20,7 @@ final class InvalidCorkException extends FormatException {
 }
 
 /// {@template corks.invalid_signature_exception}
-/// Thrown when a cork signature does not match the expected value.
+/// Exception thrown when a cork signature does not match the expected value.
 /// {@endtemplate}
 final class InvalidSignatureException implements Exception {
   /// {@macro corks.invalid_signature_exception}
@@ -41,7 +41,7 @@ final class InvalidSignatureException implements Exception {
 }
 
 /// {@template corks.missing_signature_error}
-/// Thrown when a cork is missing a tail signature.
+/// Error thrown when a cork is missing a tail signature.
 /// {@endtemplate}
 final class MissingSignatureError extends StateError {
   /// {@macro corks.missing_signature_error}

@@ -25,16 +25,19 @@ const (
 // output of Build never carries a tail signature; callers must invoke Sign on
 // the resulting cork before encoding or distributing it.
 type Builder struct {
-	version  uint32
-	nonce    []byte
-	keyID    []byte
-	issuer   proto.Message
-	bearer   proto.Message
-	audience proto.Message
-	claims   proto.Message
-	caveats  []*corksv1.Caveat
-	issuedAt uint64
-	notAfter *uint64
+	version                  uint32
+	nonce                    []byte
+	keyID                    []byte
+	issuer                   proto.Message
+	bearer                   proto.Message
+	audience                 proto.Message
+	claims                   proto.Message
+	caveats                  []*corksv1.Caveat
+	issuedAt                 uint64
+	notAfter                 *uint64
+	defaultExpiry            *corksv1.Expiry
+	defaultOrganizationScope *corksv1.OrganizationScope
+	defaultActionScope       *corksv1.ActionScope
 }
 
 // NewBuilder initialises a builder with a generated nonce and the supplied key
@@ -125,9 +128,114 @@ func (b *Builder) NotAfter(notAfter time.Time) *Builder {
 	return b
 }
 
+// DefaultExpiry adds the standard Celest expiry caveat and synchronizes the
+// cork metadata with the provided timestamp.
+func (b *Builder) DefaultExpiry(notAfter time.Time) *Builder {
+	if notAfter.IsZero() {
+		b.notAfter = nil
+		b.defaultExpiry = nil
+		return b
+	}
+
+	value := uint64(notAfter.UTC().UnixMilli())
+	b.notAfter = &value
+	b.defaultExpiry = &corksv1.Expiry{NotAfter: value}
+	return b
+}
+
+// DefaultOrganizationScope adds the default organization scope caveat. Passing
+// nil clears the previously configured scope.
+func (b *Builder) DefaultOrganizationScope(scope *corksv1.OrganizationScope) *Builder {
+	if scope == nil {
+		b.defaultOrganizationScope = nil
+		return b
+	}
+	b.defaultOrganizationScope = proto.Clone(scope).(*corksv1.OrganizationScope)
+	return b
+}
+
+// DefaultActionScope adds the default action scope caveat. An empty slice
+// clears the previously configured scope.
+func (b *Builder) DefaultActionScope(actions []string) *Builder {
+	if len(actions) == 0 {
+		b.defaultActionScope = nil
+		return b
+	}
+	cloned := append([]string(nil), actions...)
+	b.defaultActionScope = &corksv1.ActionScope{Actions: cloned}
+	return b
+}
+
+func (b *Builder) appendFirstPartyCaveat(predicate string, payload proto.Message) (*Builder, error) {
+	cav, err := buildFirstPartyCaveat(defaultCaveatNamespace, predicate, payload)
+	if err != nil {
+		return nil, err
+	}
+	b.caveats = append(b.caveats, cav)
+	return b, nil
+}
+
+// AppendExpiryCaveat attenuates the cork with the provided expiry predicate.
+func (b *Builder) AppendExpiryCaveat(notAfter time.Time) (*Builder, error) {
+	if notAfter.IsZero() {
+		return nil, fmt.Errorf("%w: expiry not_after must be set", ErrInvalidCork)
+	}
+	payload := &corksv1.Expiry{NotAfter: uint64(notAfter.UTC().UnixMilli())}
+	return b.appendFirstPartyCaveat(expiryPredicate, payload)
+}
+
+// AppendOrganizationScopeCaveat adds a first-party organization scope predicate.
+func (b *Builder) AppendOrganizationScopeCaveat(scope *corksv1.OrganizationScope) (*Builder, error) {
+	if scope == nil {
+		return nil, fmt.Errorf("%w: organization scope payload is nil", ErrInvalidCork)
+	}
+	clone := proto.Clone(scope).(*corksv1.OrganizationScope)
+	return b.appendFirstPartyCaveat(organizationScopePredicate, clone)
+}
+
+// AppendActionScopeCaveat adds an action whitelist predicate to the cork.
+func (b *Builder) AppendActionScopeCaveat(actions []string) (*Builder, error) {
+	if len(actions) == 0 {
+		return nil, fmt.Errorf("%w: action scope requires at least one action", ErrInvalidCork)
+	}
+	clone := append([]string(nil), actions...)
+	payload := &corksv1.ActionScope{Actions: clone}
+	return b.appendFirstPartyCaveat(actionScopePredicate, payload)
+}
+
+// AppendIPBindingCaveat binds the cork to one or more CIDR ranges.
+func (b *Builder) AppendIPBindingCaveat(cidrs []string) (*Builder, error) {
+	if len(cidrs) == 0 {
+		return nil, fmt.Errorf("%w: ip binding requires at least one CIDR", ErrInvalidCork)
+	}
+	clone := append([]string(nil), cidrs...)
+	payload := &corksv1.IpBinding{Cidrs: clone}
+	return b.appendFirstPartyCaveat(ipBindingPredicate, payload)
+}
+
+// AppendSessionStateCaveat records the session identifier/version for revocation.
+func (b *Builder) AppendSessionStateCaveat(state *corksv1.SessionState) (*Builder, error) {
+	if state == nil {
+		return nil, fmt.Errorf("%w: session state payload is nil", ErrInvalidCork)
+	}
+	if state.GetSessionId() == "" {
+		return nil, fmt.Errorf("%w: session state requires session_id", ErrInvalidCork)
+	}
+	clone := proto.Clone(state).(*corksv1.SessionState)
+	return b.appendFirstPartyCaveat(sessionStatePredicate, clone)
+}
+
 // Validate checks that the builder contains the required fields prior to
 // signing.
 func (b *Builder) Validate() error {
+	caveats, err := b.caveatsWithDefaults()
+	if err != nil {
+		return err
+	}
+	return b.validateWithCaveats(caveats)
+}
+
+func (b *Builder) validateWithCaveats(caveats []*corksv1.Caveat) error {
 	missing := make([]string, 0, 4)
 	if b.version == 0 {
 		missing = append(missing, "version")
@@ -150,7 +258,7 @@ func (b *Builder) Validate() error {
 	if len(missing) > 0 {
 		return fmt.Errorf("%w: missing %s", ErrInvalidCork, strings.Join(missing, ", "))
 	}
-	for i, cav := range b.caveats {
+	for i, cav := range caveats {
 		if cav == nil {
 			return fmt.Errorf("%w: caveat %d is nil", ErrInvalidCork, i)
 		}
@@ -163,13 +271,112 @@ func (b *Builder) Validate() error {
 		if cav.GetFirstParty() == nil && cav.GetThirdParty() == nil {
 			return fmt.Errorf("%w: caveat %d missing body", ErrInvalidCork, i)
 		}
+		if third := cav.GetThirdParty(); third != nil {
+			if third.GetLocation() == "" {
+				return fmt.Errorf("%w: caveat %d missing third-party location", ErrInvalidCork, i)
+			}
+			if len(third.GetTicket()) == 0 {
+				return fmt.Errorf("%w: caveat %d missing third-party ticket", ErrInvalidCork, i)
+			}
+			if len(third.GetChallenge()) == 0 {
+				return fmt.Errorf("%w: caveat %d missing third-party challenge", ErrInvalidCork, i)
+			}
+		}
 	}
 	return nil
 }
 
+func (b *Builder) caveatsWithDefaults() ([]*corksv1.Caveat, error) {
+	defaults, err := b.buildDefaultCaveats()
+	if err != nil {
+		return nil, err
+	}
+	result := make([]*corksv1.Caveat, 0, len(defaults)+len(b.caveats))
+	result = append(result, defaults...)
+	for _, cav := range b.caveats {
+		if cav == nil {
+			result = append(result, nil)
+			continue
+		}
+		clone := proto.Clone(cav).(*corksv1.Caveat)
+		result = append(result, clone)
+	}
+	return result, nil
+}
+
+func (b *Builder) buildDefaultCaveats() ([]*corksv1.Caveat, error) {
+	defaults := make([]*corksv1.Caveat, 0, 3)
+
+	if b.defaultExpiry != nil {
+		payload := proto.Clone(b.defaultExpiry).(*corksv1.Expiry)
+		cav, err := buildFirstPartyCaveat(defaultCaveatNamespace, expiryPredicate, payload)
+		if err != nil {
+			return nil, err
+		}
+		defaults = append(defaults, cav)
+	}
+	if b.defaultOrganizationScope != nil {
+		scope := proto.Clone(b.defaultOrganizationScope).(*corksv1.OrganizationScope)
+		cav, err := buildFirstPartyCaveat(defaultCaveatNamespace, organizationScopePredicate, scope)
+		if err != nil {
+			return nil, err
+		}
+		defaults = append(defaults, cav)
+	}
+	if b.defaultActionScope != nil {
+		actions := proto.Clone(b.defaultActionScope).(*corksv1.ActionScope)
+		cav, err := buildFirstPartyCaveat(defaultCaveatNamespace, actionScopePredicate, actions)
+		if err != nil {
+			return nil, err
+		}
+		defaults = append(defaults, cav)
+	}
+
+	return defaults, nil
+}
+
+const (
+	defaultCaveatNamespace           = "celest.auth"
+	expiryPredicate                  = "expiry"
+	organizationScopePredicate       = "organization_scope"
+	actionScopePredicate             = "actions"
+	ipBindingPredicate               = "ip_binding"
+	sessionStatePredicate            = "session_state"
+	defaultCaveatIdentifierByteCount = 16
+)
+
+func buildFirstPartyCaveat(namespace, predicate string, payload proto.Message) (*corksv1.Caveat, error) {
+	packed, err := corksproto.MarshalAny(payload)
+	if err != nil {
+		return nil, fmt.Errorf("%w: failed to marshal caveat payload: %w", ErrInvalidCork, err)
+	}
+	identifier := make([]byte, defaultCaveatIdentifierByteCount)
+	if _, err := rand.Read(identifier); err != nil {
+		return nil, fmt.Errorf("%w: failed to generate caveat id: %w", ErrInvalidCork, err)
+	}
+
+	return &corksv1.Caveat{
+		CaveatVersion: defaultCaveatVersion,
+		CaveatId:      identifier,
+		Body: &corksv1.Caveat_FirstParty{
+			FirstParty: &corksv1.FirstPartyCaveat{
+				Namespace: namespace,
+				Predicate: predicate,
+				Payload:   packed,
+			},
+		},
+	}, nil
+}
+
+const defaultCaveatVersion = 1
+
 // Build validates and returns an unsigned cork instance.
 func (b *Builder) Build() (*Cork, error) {
-	if err := b.Validate(); err != nil {
+	caveats, err := b.caveatsWithDefaults()
+	if err != nil {
+		return nil, err
+	}
+	if err := b.validateWithCaveats(caveats); err != nil {
 		return nil, err
 	}
 
@@ -190,11 +397,6 @@ func (b *Builder) Build() (*Cork, error) {
 		return nil, err
 	}
 
-	protoCaveats := make([]*corksv1.Caveat, len(b.caveats))
-	for i, caveat := range b.caveats {
-		protoCaveats[i] = proto.Clone(caveat).(*corksv1.Caveat)
-	}
-
 	c := &corksv1.Cork{
 		Version:  b.version,
 		Nonce:    append([]byte(nil), b.nonce...),
@@ -203,11 +405,13 @@ func (b *Builder) Build() (*Cork, error) {
 		Bearer:   bearer,
 		Audience: audience,
 		Claims:   claims,
-		Caveats:  protoCaveats,
 		IssuedAt: b.issuedAt,
 	}
 	if b.notAfter != nil {
 		c.NotAfter = *b.notAfter
+	}
+	if len(caveats) > 0 {
+		c.Caveats = append([]*corksv1.Caveat(nil), caveats...)
 	}
 
 	return &Cork{proto: c}, nil

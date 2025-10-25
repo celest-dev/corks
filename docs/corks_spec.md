@@ -13,7 +13,7 @@ Celest corks are composable authorization credentials inspired by macaroons ([B
 ## 3. Terminology
 - **Cork:** A Celest macaroon credential.
 - **Issuer:** Service minting the cork (typically Celest Cloud Auth).
-- **Bearer:** Principal authorised to act (user/session/automation agent).
+- **Bearer:** Principal authorized to act (user/session/automation agent).
 - **Audience:** Optional service expected to receive the cork.
 - **Caveat:** Predicate restricting the cork. First-party caveats are evaluated by the verifier; third-party caveats require a discharge macaroon from the referenced service.
 - **Discharge:** A macaroon fulfilling a third-party caveat.
