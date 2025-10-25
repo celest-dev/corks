@@ -21,6 +21,7 @@ dependency_overrides:
     path: ../../cedar/packages/cedar
 
 dev_dependencies:
+  benchmark_harness: ^2.3.1
   build_runner: ^2.10.1
   json_annotation: ^4.9.0
   json_serializable: ^6.11.1

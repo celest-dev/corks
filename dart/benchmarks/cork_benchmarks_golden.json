@@ -1,0 +1,8 @@
+{
+  "cork.sign": 47.777263,
+  "cork.verify": 48.280362,
+  "crypto.computeTailSignature": 46.997274,
+  "crypto.decryptChallenge": 6.136896,
+  "crypto.deriveCaveatRootKey": 86.758586,
+  "crypto.encryptChallenge": 5.460169
+}
