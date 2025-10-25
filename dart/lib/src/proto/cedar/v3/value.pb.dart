@@ -1,19 +1,20 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: cedar/v3/value.proto
-//
+// Generated from cedar/v3/value.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import '../../google/protobuf/wrappers.pb.dart' as $3;
+import '../../google/protobuf/wrappers.pb.dart' as $0;
 import 'entity_uid.pb.dart' as $1;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
@@ -32,49 +33,35 @@ enum Value_Value {
 
 class Value extends $pb.GeneratedMessage {
   factory Value({
-    $3.StringValue? string,
-    $3.Int64Value? long,
-    $3.BoolValue? bool_3,
+    $0.StringValue? string,
+    $0.Int64Value? long,
+    $0.BoolValue? bool_3,
     SetValue? set,
     RecordValue? record,
     ExtensionCall? extensionCall,
     EntityValue? entity,
     DecimalValue? decimal,
   }) {
-    final $result = create();
-    if (string != null) {
-      $result.string = string;
-    }
-    if (long != null) {
-      $result.long = long;
-    }
-    if (bool_3 != null) {
-      $result.bool_3 = bool_3;
-    }
-    if (set != null) {
-      $result.set = set;
-    }
-    if (record != null) {
-      $result.record = record;
-    }
-    if (extensionCall != null) {
-      $result.extensionCall = extensionCall;
-    }
-    if (entity != null) {
-      $result.entity = entity;
-    }
-    if (decimal != null) {
-      $result.decimal = decimal;
-    }
-    return $result;
+    final result = create();
+    if (string != null) result.string = string;
+    if (long != null) result.long = long;
+    if (bool_3 != null) result.bool_3 = bool_3;
+    if (set != null) result.set = set;
+    if (record != null) result.record = record;
+    if (extensionCall != null) result.extensionCall = extensionCall;
+    if (entity != null) result.entity = entity;
+    if (decimal != null) result.decimal = decimal;
+    return result;
   }
-  Value._() : super();
-  factory Value.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Value.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Value._();
+
+  factory Value.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Value.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Value_Value> _Value_ValueByTag = {
     1: Value_Value.string,
@@ -92,12 +79,12 @@ class Value extends $pb.GeneratedMessage {
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8])
-    ..aOM<$3.StringValue>(1, _omitFieldNames ? '' : 'string',
-        subBuilder: $3.StringValue.create)
-    ..aOM<$3.Int64Value>(2, _omitFieldNames ? '' : 'long',
-        subBuilder: $3.Int64Value.create)
-    ..aOM<$3.BoolValue>(3, _omitFieldNames ? '' : 'bool',
-        subBuilder: $3.BoolValue.create)
+    ..aOM<$0.StringValue>(1, _omitFieldNames ? '' : 'string',
+        subBuilder: $0.StringValue.create)
+    ..aOM<$0.Int64Value>(2, _omitFieldNames ? '' : 'long',
+        subBuilder: $0.Int64Value.create)
+    ..aOM<$0.BoolValue>(3, _omitFieldNames ? '' : 'bool',
+        subBuilder: $0.BoolValue.create)
     ..aOM<SetValue>(4, _omitFieldNames ? '' : 'set',
         subBuilder: SetValue.create)
     ..aOM<RecordValue>(5, _omitFieldNames ? '' : 'record',
@@ -110,20 +97,18 @@ class Value extends $pb.GeneratedMessage {
         subBuilder: DecimalValue.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Value clone() => Value()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Value copyWith(void Function(Value) updates) =>
       super.copyWith((message) => updates(message as Value)) as Value;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Value create() => Value._();
+  @$core.override
   Value createEmptyInstance() => create();
   static $pb.PbList<Value> createRepeated() => $pb.PbList<Value>();
   @$core.pragma('dart2js:noInline')
@@ -135,54 +120,42 @@ class Value extends $pb.GeneratedMessage {
   void clearValue() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
-  $3.StringValue get string => $_getN(0);
+  $0.StringValue get string => $_getN(0);
   @$pb.TagNumber(1)
-  set string($3.StringValue v) {
-    $_setField(1, v);
-  }
-
+  set string($0.StringValue value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasString() => $_has(0);
   @$pb.TagNumber(1)
   void clearString() => $_clearField(1);
   @$pb.TagNumber(1)
-  $3.StringValue ensureString() => $_ensure(0);
+  $0.StringValue ensureString() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $3.Int64Value get long => $_getN(1);
+  $0.Int64Value get long => $_getN(1);
   @$pb.TagNumber(2)
-  set long($3.Int64Value v) {
-    $_setField(2, v);
-  }
-
+  set long($0.Int64Value value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasLong() => $_has(1);
   @$pb.TagNumber(2)
   void clearLong() => $_clearField(2);
   @$pb.TagNumber(2)
-  $3.Int64Value ensureLong() => $_ensure(1);
+  $0.Int64Value ensureLong() => $_ensure(1);
 
   @$pb.TagNumber(3)
-  $3.BoolValue get bool_3 => $_getN(2);
+  $0.BoolValue get bool_3 => $_getN(2);
   @$pb.TagNumber(3)
-  set bool_3($3.BoolValue v) {
-    $_setField(3, v);
-  }
-
+  set bool_3($0.BoolValue value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasBool_3() => $_has(2);
   @$pb.TagNumber(3)
   void clearBool_3() => $_clearField(3);
   @$pb.TagNumber(3)
-  $3.BoolValue ensureBool_3() => $_ensure(2);
+  $0.BoolValue ensureBool_3() => $_ensure(2);
 
   @$pb.TagNumber(4)
   SetValue get set => $_getN(3);
   @$pb.TagNumber(4)
-  set set(SetValue v) {
-    $_setField(4, v);
-  }
-
+  set set(SetValue value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasSet() => $_has(3);
   @$pb.TagNumber(4)
@@ -193,10 +166,7 @@ class Value extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   RecordValue get record => $_getN(4);
   @$pb.TagNumber(5)
-  set record(RecordValue v) {
-    $_setField(5, v);
-  }
-
+  set record(RecordValue value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasRecord() => $_has(4);
   @$pb.TagNumber(5)
@@ -207,10 +177,7 @@ class Value extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   ExtensionCall get extensionCall => $_getN(5);
   @$pb.TagNumber(6)
-  set extensionCall(ExtensionCall v) {
-    $_setField(6, v);
-  }
-
+  set extensionCall(ExtensionCall value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasExtensionCall() => $_has(5);
   @$pb.TagNumber(6)
@@ -221,10 +188,7 @@ class Value extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   EntityValue get entity => $_getN(6);
   @$pb.TagNumber(7)
-  set entity(EntityValue v) {
-    $_setField(7, v);
-  }
-
+  set entity(EntityValue value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasEntity() => $_has(6);
   @$pb.TagNumber(7)
@@ -235,10 +199,7 @@ class Value extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   DecimalValue get decimal => $_getN(7);
   @$pb.TagNumber(8)
-  set decimal(DecimalValue v) {
-    $_setField(8, v);
-  }
-
+  set decimal(DecimalValue value) => $_setField(8, value);
   @$pb.TagNumber(8)
   $core.bool hasDecimal() => $_has(7);
   @$pb.TagNumber(8)
@@ -251,19 +212,19 @@ class SetValue extends $pb.GeneratedMessage {
   factory SetValue({
     $core.Iterable<Value>? elements,
   }) {
-    final $result = create();
-    if (elements != null) {
-      $result.elements.addAll(elements);
-    }
-    return $result;
+    final result = create();
+    if (elements != null) result.elements.addAll(elements);
+    return result;
   }
-  SetValue._() : super();
-  factory SetValue.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SetValue.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  SetValue._();
+
+  factory SetValue.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SetValue.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'SetValue',
@@ -273,20 +234,18 @@ class SetValue extends $pb.GeneratedMessage {
         subBuilder: Value.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SetValue clone() => SetValue()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   SetValue copyWith(void Function(SetValue) updates) =>
       super.copyWith((message) => updates(message as SetValue)) as SetValue;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SetValue create() => SetValue._();
+  @$core.override
   SetValue createEmptyInstance() => create();
   static $pb.PbList<SetValue> createRepeated() => $pb.PbList<SetValue>();
   @$core.pragma('dart2js:noInline')
@@ -302,19 +261,19 @@ class RecordValue extends $pb.GeneratedMessage {
   factory RecordValue({
     $core.Iterable<$core.MapEntry<$core.String, Value>>? attributes,
   }) {
-    final $result = create();
-    if (attributes != null) {
-      $result.attributes.addEntries(attributes);
-    }
-    return $result;
+    final result = create();
+    if (attributes != null) result.attributes.addEntries(attributes);
+    return result;
   }
-  RecordValue._() : super();
-  factory RecordValue.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory RecordValue.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  RecordValue._();
+
+  factory RecordValue.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory RecordValue.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'RecordValue',
@@ -329,21 +288,19 @@ class RecordValue extends $pb.GeneratedMessage {
         packageName: const $pb.PackageName('cedar.v3'))
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RecordValue clone() => RecordValue()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   RecordValue copyWith(void Function(RecordValue) updates) =>
       super.copyWith((message) => updates(message as RecordValue))
           as RecordValue;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static RecordValue create() => RecordValue._();
+  @$core.override
   RecordValue createEmptyInstance() => create();
   static $pb.PbList<RecordValue> createRepeated() => $pb.PbList<RecordValue>();
   @$core.pragma('dart2js:noInline')
@@ -360,22 +317,20 @@ class ExtensionCall extends $pb.GeneratedMessage {
     $core.String? fn,
     Value? arg,
   }) {
-    final $result = create();
-    if (fn != null) {
-      $result.fn = fn;
-    }
-    if (arg != null) {
-      $result.arg = arg;
-    }
-    return $result;
+    final result = create();
+    if (fn != null) result.fn = fn;
+    if (arg != null) result.arg = arg;
+    return result;
   }
-  ExtensionCall._() : super();
-  factory ExtensionCall.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExtensionCall.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExtensionCall._();
+
+  factory ExtensionCall.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExtensionCall.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExtensionCall',
@@ -385,21 +340,19 @@ class ExtensionCall extends $pb.GeneratedMessage {
     ..aOM<Value>(2, _omitFieldNames ? '' : 'arg', subBuilder: Value.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExtensionCall clone() => ExtensionCall()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExtensionCall copyWith(void Function(ExtensionCall) updates) =>
       super.copyWith((message) => updates(message as ExtensionCall))
           as ExtensionCall;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExtensionCall create() => ExtensionCall._();
+  @$core.override
   ExtensionCall createEmptyInstance() => create();
   static $pb.PbList<ExtensionCall> createRepeated() =>
       $pb.PbList<ExtensionCall>();
@@ -411,10 +364,7 @@ class ExtensionCall extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get fn => $_getSZ(0);
   @$pb.TagNumber(1)
-  set fn($core.String v) {
-    $_setString(0, v);
-  }
-
+  set fn($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasFn() => $_has(0);
   @$pb.TagNumber(1)
@@ -423,10 +373,7 @@ class ExtensionCall extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Value get arg => $_getN(1);
   @$pb.TagNumber(2)
-  set arg(Value v) {
-    $_setField(2, v);
-  }
-
+  set arg(Value value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasArg() => $_has(1);
   @$pb.TagNumber(2)
@@ -439,19 +386,19 @@ class EntityValue extends $pb.GeneratedMessage {
   factory EntityValue({
     $1.EntityUid? uid,
   }) {
-    final $result = create();
-    if (uid != null) {
-      $result.uid = uid;
-    }
-    return $result;
+    final result = create();
+    if (uid != null) result.uid = uid;
+    return result;
   }
-  EntityValue._() : super();
-  factory EntityValue.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory EntityValue.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  EntityValue._();
+
+  factory EntityValue.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory EntityValue.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'EntityValue',
@@ -461,21 +408,19 @@ class EntityValue extends $pb.GeneratedMessage {
         subBuilder: $1.EntityUid.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EntityValue clone() => EntityValue()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   EntityValue copyWith(void Function(EntityValue) updates) =>
       super.copyWith((message) => updates(message as EntityValue))
           as EntityValue;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static EntityValue create() => EntityValue._();
+  @$core.override
   EntityValue createEmptyInstance() => create();
   static $pb.PbList<EntityValue> createRepeated() => $pb.PbList<EntityValue>();
   @$core.pragma('dart2js:noInline')
@@ -486,10 +431,7 @@ class EntityValue extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $1.EntityUid get uid => $_getN(0);
   @$pb.TagNumber(1)
-  set uid($1.EntityUid v) {
-    $_setField(1, v);
-  }
-
+  set uid($1.EntityUid value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasUid() => $_has(0);
   @$pb.TagNumber(1)
@@ -502,19 +444,19 @@ class DecimalValue extends $pb.GeneratedMessage {
   factory DecimalValue({
     $core.String? value,
   }) {
-    final $result = create();
-    if (value != null) {
-      $result.value = value;
-    }
-    return $result;
+    final result = create();
+    if (value != null) result.value = value;
+    return result;
   }
-  DecimalValue._() : super();
-  factory DecimalValue.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory DecimalValue.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  DecimalValue._();
+
+  factory DecimalValue.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory DecimalValue.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'DecimalValue',
@@ -523,21 +465,19 @@ class DecimalValue extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'value')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DecimalValue clone() => DecimalValue()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DecimalValue copyWith(void Function(DecimalValue) updates) =>
       super.copyWith((message) => updates(message as DecimalValue))
           as DecimalValue;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static DecimalValue create() => DecimalValue._();
+  @$core.override
   DecimalValue createEmptyInstance() => create();
   static $pb.PbList<DecimalValue> createRepeated() =>
       $pb.PbList<DecimalValue>();
@@ -549,16 +489,14 @@ class DecimalValue extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get value => $_getSZ(0);
   @$pb.TagNumber(1)
-  set value($core.String v) {
-    $_setString(0, v);
-  }
-
+  set value($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
   void clearValue() => $_clearField(1);
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

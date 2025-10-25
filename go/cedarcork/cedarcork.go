@@ -1,13 +1,23 @@
 package cedarcork
 
 import (
+	"crypto/rand"
 	"errors"
 	"fmt"
+	"time"
 
 	corks "github.com/celest-dev/corks/go"
 	"github.com/celest-dev/corks/go/cedar"
 	cedarexpr "github.com/celest-dev/corks/go/cedar/expr"
 	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
+	corksv1 "github.com/celest-dev/corks/go/proto/corks/v1"
+	"google.golang.org/protobuf/types/known/anypb"
+)
+
+const (
+	cedarNamespace              = "celest.cedar"
+	cedarPredicate              = "expr"
+	defaultCaveatVersion uint32 = 1
 )
 
 type Cork struct {
@@ -82,15 +92,20 @@ func (c *Cork) Caveats() []*cedarv3.Expr {
 	if c == nil {
 		return nil
 	}
-	caveats := c.Cork.Caveats()
-	expressions := make([]*cedarv3.Expr, len(caveats))
-	for i, caveat := range caveats {
+	var expressions []*cedarv3.Expr
+	for _, caveat := range c.Cork.Caveats() {
+		first := caveat.GetFirstParty()
+		if first == nil || first.Namespace != cedarNamespace || first.Predicate != cedarPredicate {
+			continue
+		}
+		if first.Payload == nil {
+			continue
+		}
 		expression := new(cedarv3.Expr)
-		err := caveat.UnmarshalTo(expression)
-		if err != nil {
+		if err := first.Payload.UnmarshalTo(expression); err != nil {
 			return nil
 		}
-		expressions[i] = expression
+		expressions = append(expressions, expression)
 	}
 	return expressions
 }
@@ -106,9 +121,9 @@ type builder struct {
 	errors []error
 }
 
-// NewBuilder creates a new cork builder with the given ID.
-func NewBuilder(id []byte) *builder {
-	return &builder{Builder: corks.NewBuilder(id)}
+// NewBuilder creates a new cork builder with the given key identifier.
+func NewBuilder(keyID []byte) *builder {
+	return &builder{Builder: corks.NewBuilder(keyID)}
 }
 
 // Issuer sets the issuer of the cork.
@@ -141,7 +156,40 @@ func (b *builder) Caveat(caveat *cedarexpr.Expr) *builder {
 		b.errors = append(b.errors, fmt.Errorf("%w: caveat is nil", corks.ErrInvalidCork))
 		return b
 	}
-	b.Builder.Caveat(caveat.Proto())
+	payload, err := anypb.New(caveat.Proto())
+	if err != nil {
+		b.errors = append(b.errors, err)
+		return b
+	}
+	id := make([]byte, 16)
+	if _, err := rand.Read(id); err != nil {
+		b.errors = append(b.errors, err)
+		return b
+	}
+	protoCaveat := &corksv1.Caveat{
+		CaveatVersion: defaultCaveatVersion,
+		CaveatId:      id,
+		Body: &corksv1.Caveat_FirstParty{
+			FirstParty: &corksv1.FirstPartyCaveat{
+				Namespace: cedarNamespace,
+				Predicate: cedarPredicate,
+				Payload:   payload,
+			},
+		},
+	}
+	b.Builder.Caveat(protoCaveat)
+	return b
+}
+
+// NotAfter sets the expiry on the underlying cork builder.
+func (b *builder) NotAfter(notAfter time.Time) *builder {
+	b.Builder.NotAfter(notAfter)
+	return b
+}
+
+// IssuedAt allows tests to override the issuance timestamp.
+func (b *builder) IssuedAt(issuedAt time.Time) *builder {
+	b.Builder.IssuedAt(issuedAt)
 	return b
 }
 

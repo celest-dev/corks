@@ -1,9 +1,9 @@
-import 'package:crypto/crypto.dart';
+import 'dart:typed_data';
 
-import 'cork.dart';
+import 'package:convert/convert.dart';
 
 /// {@template corks.invalid_cork_exception}
-/// Thrown when a [Cork] is invalid or corrupted and cannot be processed.
+/// Thrown when a cork is invalid or corrupted and cannot be processed.
 /// {@endtemplate}
 final class InvalidCorkException extends FormatException {
   /// {@macro corks.invalid_cork_exception}
@@ -20,30 +20,30 @@ final class InvalidCorkException extends FormatException {
 }
 
 /// {@template corks.invalid_signature_exception}
-/// Thrown when a [Cork] signature does not match the expected value.
+/// Thrown when a cork signature does not match the expected value.
 /// {@endtemplate}
 final class InvalidSignatureException implements Exception {
   /// {@macro corks.invalid_signature_exception}
-  const InvalidSignatureException({
-    required Digest expected,
-    required Digest actual,
-  }) : _expected = expected,
-       _actual = actual;
+  InvalidSignatureException({
+    required Uint8List expected,
+    required Uint8List actual,
+  }) : _expected = Uint8List.fromList(expected),
+       _actual = Uint8List.fromList(actual);
 
-  final Digest _expected;
-  final Digest _actual;
+  final Uint8List _expected;
+  final Uint8List _actual;
 
   @override
   String toString() =>
-      'Signatures do not match:\n'
-      'Expected: $_expected\n'
-      'Got:      $_actual';
+      'Signatures do not match: '
+      'expected ${hex.encode(_expected)}, '
+      'got ${hex.encode(_actual)}';
 }
 
 /// {@template corks.missing_signature_error}
-/// Thrown when a [Cork] is missing a signature.
+/// Thrown when a cork is missing a tail signature.
 /// {@endtemplate}
 final class MissingSignatureError extends StateError {
   /// {@macro corks.missing_signature_error}
-  MissingSignatureError() : super('Cork has not been signed.');
+  MissingSignatureError() : super('Cork tail signature not present.');
 }

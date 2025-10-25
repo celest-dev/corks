@@ -1,80 +1,75 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: cedar/v3/entity.proto
-//
+// Generated from cedar/v3/entity.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'entity_uid.pb.dart' as $1;
-import 'value.pb.dart' as $0;
+import 'entity_uid.pb.dart' as $0;
+import 'value.pb.dart' as $1;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 class Entity extends $pb.GeneratedMessage {
   factory Entity({
-    $1.EntityUid? uid,
-    $core.Iterable<$1.EntityUid>? parents,
-    $core.Iterable<$core.MapEntry<$core.String, $0.Value>>? attributes,
+    $0.EntityUid? uid,
+    $core.Iterable<$0.EntityUid>? parents,
+    $core.Iterable<$core.MapEntry<$core.String, $1.Value>>? attributes,
   }) {
-    final $result = create();
-    if (uid != null) {
-      $result.uid = uid;
-    }
-    if (parents != null) {
-      $result.parents.addAll(parents);
-    }
-    if (attributes != null) {
-      $result.attributes.addEntries(attributes);
-    }
-    return $result;
+    final result = create();
+    if (uid != null) result.uid = uid;
+    if (parents != null) result.parents.addAll(parents);
+    if (attributes != null) result.attributes.addEntries(attributes);
+    return result;
   }
-  Entity._() : super();
-  factory Entity.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Entity.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Entity._();
+
+  factory Entity.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Entity.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'Entity',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'cedar.v3'),
       createEmptyInstance: create)
-    ..aOM<$1.EntityUid>(1, _omitFieldNames ? '' : 'uid',
-        subBuilder: $1.EntityUid.create)
-    ..pc<$1.EntityUid>(2, _omitFieldNames ? '' : 'parents', $pb.PbFieldType.PM,
-        subBuilder: $1.EntityUid.create)
-    ..m<$core.String, $0.Value>(3, _omitFieldNames ? '' : 'attributes',
+    ..aOM<$0.EntityUid>(1, _omitFieldNames ? '' : 'uid',
+        subBuilder: $0.EntityUid.create)
+    ..pc<$0.EntityUid>(2, _omitFieldNames ? '' : 'parents', $pb.PbFieldType.PM,
+        subBuilder: $0.EntityUid.create)
+    ..m<$core.String, $1.Value>(3, _omitFieldNames ? '' : 'attributes',
         entryClassName: 'Entity.AttributesEntry',
         keyFieldType: $pb.PbFieldType.OS,
         valueFieldType: $pb.PbFieldType.OM,
-        valueCreator: $0.Value.create,
-        valueDefaultOrMaker: $0.Value.getDefault,
+        valueCreator: $1.Value.create,
+        valueDefaultOrMaker: $1.Value.getDefault,
         packageName: const $pb.PackageName('cedar.v3'))
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Entity clone() => Entity()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Entity copyWith(void Function(Entity) updates) =>
       super.copyWith((message) => updates(message as Entity)) as Entity;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Entity create() => Entity._();
+  @$core.override
   Entity createEmptyInstance() => create();
   static $pb.PbList<Entity> createRepeated() => $pb.PbList<Entity>();
   @$core.pragma('dart2js:noInline')
@@ -83,26 +78,24 @@ class Entity extends $pb.GeneratedMessage {
   static Entity? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $1.EntityUid get uid => $_getN(0);
+  $0.EntityUid get uid => $_getN(0);
   @$pb.TagNumber(1)
-  set uid($1.EntityUid v) {
-    $_setField(1, v);
-  }
-
+  set uid($0.EntityUid value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasUid() => $_has(0);
   @$pb.TagNumber(1)
   void clearUid() => $_clearField(1);
   @$pb.TagNumber(1)
-  $1.EntityUid ensureUid() => $_ensure(0);
+  $0.EntityUid ensureUid() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $pb.PbList<$1.EntityUid> get parents => $_getList(1);
+  $pb.PbList<$0.EntityUid> get parents => $_getList(1);
 
   @$pb.TagNumber(3)
-  $pb.PbMap<$core.String, $0.Value> get attributes => $_getMap(2);
+  $pb.PbMap<$core.String, $1.Value> get attributes => $_getMap(2);
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');

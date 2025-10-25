@@ -1,37 +1,148 @@
 syntax = "proto3";
 
-package corks.v1;
+package celest.corks.v1;
 
 import "google/protobuf/any.proto";
 
-option go_package = "corks/v1;corkspb";
+option go_package = "celest/corks/v1;v1";
 
-// Encodes a cork's metadata and its signature.
+// -----------------------------------------------------------------------------
+//  Celest Cork Wire Format
+// -----------------------------------------------------------------------------
+//  This file encodes the canonical protobuf structures described in
+//  docs/corks_spec.md.  Implementations should use deterministic serialization
+//  and preserve field ordering so chained MAC signatures remain stable.
+
+// Cork captures the metadata and chained MAC tail for a Celest authorization
+// token.
 //
-// A cork can be further restricted by its bearer by appending additional
-// caveats and creating a new signature.
-//
-// All existing caveats and other values are not open for extension or
-// modification once signed.
+// All fields participate in the HMAC chain as detailed in Spec §5.
 message Cork {
-  // The unique identifier of the cork and its root key.
-  bytes id = 1;
+  // Protocol version for future upgrades.
+  uint32 version = 1;  // Spec §4 mandates value 1.
 
-  // The encoded issuer of the cork.
-  google.protobuf.Any issuer = 2;
+  // 192-bit nonce used to derive the per-cork root key.
+  bytes nonce = 2;  // Spec §5 covers derivation details.
 
-  // The encoded bearer of the cork.
-  google.protobuf.Any bearer = 3;
+  // Identifier for the signing key; must point to a rotating master key.
+  bytes key_id = 3;
 
-  // The encoded audience of the cork.
-  optional google.protobuf.Any audience = 4;
+  // Issuer entity (usually Celest::Service).  Stored as packed Cedar EntityUid.
+  google.protobuf.Any issuer = 4;
 
-  // The encoded claims of the cork.
-  optional google.protobuf.Any claims = 5;
+  // Bearer entity representing the principal authorised to act.
+  google.protobuf.Any bearer = 5;
 
-  // The encoded caveats of the cork.
-  repeated google.protobuf.Any caveats = 6;
+  // Optional audience the cork is scoped to (e.g. downstream service).
+  google.protobuf.Any audience = 6;
 
-  // The final signature of the cork.
-  bytes signature = 999;
+  // Optional structured claims (session context, device hints, etc.).
+  google.protobuf.Any claims = 7;
+
+  // Ordered caveat list evaluated during verification.
+  repeated Caveat caveats = 8;  // See Spec §9 for registry guidance.
+
+  // Final MAC produced by the chained signature algorithm.
+  bytes tail_signature = 9;  // Spec §5.
+
+  // Millisecond epoch when the cork was minted.
+  uint64 issued_at = 10;
+
+  // Optional expiry timestamp; omit for non-expiring corks (discouraged).
+  uint64 not_after = 11;
+}
+
+// Caveat restricts how a cork may be used. Placement order matters because the
+// chained MAC is sensitive to the sequence of caveats.
+message Caveat {
+  // Version of the caveat wire format.
+  uint32 caveat_version = 1;  // Spec §4.
+
+  // Unique identifier so that discharges can reference the originating caveat.
+  bytes caveat_id = 2;
+
+  oneof body {
+    // First-party caveats are evaluated directly by Celest verifiers.
+    FirstPartyCaveat first_party = 3;
+
+    // Third-party caveats require an external discharge.
+    ThirdPartyCaveat third_party = 4;  // Spec §7.3.
+  }
+}
+
+// FirstPartyCaveat encodes predicates evaluated inside the verifier.
+message FirstPartyCaveat {
+  // Namespace to avoid predicate collisions (e.g. "celest.auth").
+  string namespace = 1;
+
+  // Predicate identifier registered in the caveat registry (Spec §9).
+  string predicate = 2;
+
+  // Deterministically packed payload containing predicate inputs.
+  google.protobuf.Any payload = 3;
+}
+
+// ThirdPartyCaveat delegates checks to an external discharge service.
+message ThirdPartyCaveat {
+  // Logical or physical location of the discharge service.
+  string location = 1;
+
+  // Ciphertext delivered to the third party so it can mint a discharge.
+  bytes ticket = 2;
+
+  // AEAD payload consumed by the verifier to recover the caveat root key.
+  bytes challenge = 3;  // Spec §7.3.
+
+  // Optional salt for HKDF derivations when computing third-party keys.
+  bytes salt = 4;
+}
+
+// Discharge fulfils a third-party caveat and may add additional caveats.
+message Discharge {
+  uint32 version = 1;
+  bytes nonce = 2;
+  bytes key_id = 3;
+
+  // Links back to Caveat.caveat_id so the verifier can pair discharge + caveat.
+  bytes parent_caveat_id = 4;
+
+  // Third-party issuer information for auditability.
+  google.protobuf.Any issuer = 5;
+
+  // Additional attenuation applied by the third party.
+  repeated Caveat caveats = 6;
+
+  // Discharge MAC produced using the caveat root key.
+  bytes tail_signature = 7;  // Spec §7.3.
+
+  uint64 issued_at = 8;
+  uint64 not_after = 9;
+}
+
+// Expiry constrains the latest time a cork may be used.
+message Expiry {
+  uint64 not_after = 1;
+}
+
+// OrganizationScope encodes Celest tenant hierarchy context.
+message OrganizationScope {
+  string organization_id = 1;
+  string project_id = 2;
+  string environment_id = 3;
+}
+
+// ActionScope enumerates allowed actions for the cork.
+message ActionScope {
+  repeated string actions = 1;
+}
+
+// IpBinding limits usage to specific CIDR ranges.
+message IpBinding {
+  repeated string cidrs = 1;
+}
+
+// SessionState encodes versioning information for revocation.
+message SessionState {
+  string session_id = 1;
+  uint64 version = 2;
 }

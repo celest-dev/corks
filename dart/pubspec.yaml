@@ -11,10 +11,15 @@ dependencies:
   collection: ^1.18.0
   convert: ^3.0.0
   crypto: ^3.0.0
+  cryptography: ^2.7.0
   fixnum: ^1.1.0
   meta: ^1.10.0
   protobuf: ^4.0.0
 
+dependency_overrides:
+  cedar:
+    path: ../../cedar/packages/cedar
+
 dev_dependencies:
-  lints: ^5.0.0
+  lints: ^6.0.0
   test: ^1.24.0

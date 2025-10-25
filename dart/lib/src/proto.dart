@@ -1,7 +1,3 @@
-import 'dart:async';
-import 'dart:typed_data';
-
-import 'package:corks_cedar/corks_cedar.dart';
 import 'package:corks_cedar/src/proto/cedar/v3/entity.pb.dart' as proto;
 import 'package:corks_cedar/src/proto/cedar/v3/entity_uid.pb.dart' as proto;
 import 'package:corks_cedar/src/proto/cedar/v3/expr.pb.dart' as proto;
@@ -35,15 +31,4 @@ extension AnyHelper<T extends GeneratedMessage> on T {
     final AnyMixin anotherAny => Any()..mergeFromMessage(anotherAny),
     _ => Any.pack(this),
   };
-}
-
-extension SignProto on Signer {
-  Future<Uint8List> signProto(GeneratedMessage message) async {
-    final any = message.packIntoAny();
-    final block =
-        BytesBuilder(copy: false)
-          ..add(any.typeUrl.codeUnits)
-          ..add(any.value);
-    return sign(block.takeBytes());
-  }
 }

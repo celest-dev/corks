@@ -1,9 +1,11 @@
 package cedarcork_test
 
 import (
+	"context"
 	"crypto/rand"
 	"errors"
 	"testing"
+	"time"
 
 	corks "github.com/celest-dev/corks/go"
 	"github.com/celest-dev/corks/go/cedar"
@@ -111,6 +113,7 @@ func TestBuildAndVerify(t *testing.T) {
 					Audience(audience).
 					Claims(claims).
 					Caveat(caveat).
+					NotAfter(time.Now().Add(time.Hour)).
 					Build()
 			},
 		},
@@ -127,36 +130,38 @@ func TestBuildAndVerify(t *testing.T) {
 			require.NoError(t, err)
 
 			signer := corks.NewSigner(aId, aKey)
+			ctx := context.Background()
 			t.Run("sign/verify", func(t *testing.T) {
-				require.ErrorIs(t, cork.Verify(signer), corks.ErrMissingSignature)
+				require.ErrorIs(t, cork.Verify(ctx, signer), corks.ErrMissingSignature)
 
-				signed, err := cork.Sign(signer)
+				signed, err := cork.Sign(ctx, signer)
 				require.NoError(t, err)
-				require.NoError(t, signed.Verify(signer))
-				require.NoError(t, signed.Verify(corks.NewSigner(aId, aKey)))
+				require.NotEmpty(t, signed.TailSignature())
+				require.NoError(t, signed.Verify(ctx, signer))
+				require.NoError(t, signed.Verify(ctx, corks.NewSigner(aId, aKey)))
 
 				bSigner := corks.NewSigner(bId, bKey)
-				require.ErrorIs(t, signed.Verify(bSigner), corks.ErrMismatchedKey)
+				require.ErrorIs(t, signed.Verify(ctx, bSigner), corks.ErrMismatchedKey)
 
 				fakeASigner := corks.NewSigner(aId, bKey)
-				require.ErrorIs(t, signed.Verify(fakeASigner), corks.ErrInvalidSignature)
+				require.ErrorIs(t, signed.Verify(ctx, fakeASigner), corks.ErrInvalidSignature)
 			})
 
 			t.Run("encode/decode", func(t *testing.T) {
-				cork, err := cork.Sign(signer)
+				signed, err := cork.Sign(ctx, signer)
 				require.NoError(t, err)
 
-				encoded, err := cork.Encode()
+				encoded, err := signed.Encode()
 				require.NoError(t, err)
 
 				decoded, err := corks.Decode(encoded)
 				require.NoError(t, err)
 
-				if diff := cmp.Diff(decoded.Proto(), cork.Proto(), protocmp.Transform()); diff != "" {
+				if diff := cmp.Diff(decoded.Proto(), signed.Proto(), protocmp.Transform()); diff != "" {
 					t.Errorf("decoded != encoded: %s", diff)
 				}
 
-				require.NoError(t, decoded.Verify(signer))
+				require.NoError(t, decoded.Verify(ctx, signer))
 			})
 		})
 	}

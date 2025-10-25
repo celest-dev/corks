@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: cedar/v3/expr.proto
-//
+// Generated from cedar/v3/expr.proto.
+
 // @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:core' as $core;
 
@@ -85,103 +86,48 @@ class Expr extends $pb.GeneratedMessage {
     ExprRecord? record,
     ExprExtensionCall? extensionCall,
   }) {
-    final $result = create();
-    if (value != null) {
-      $result.value = value;
-    }
-    if (variable != null) {
-      $result.variable = variable;
-    }
-    if (slot != null) {
-      $result.slot = slot;
-    }
-    if (unknown != null) {
-      $result.unknown = unknown;
-    }
-    if (not != null) {
-      $result.not = not;
-    }
-    if (negate != null) {
-      $result.negate = negate;
-    }
-    if (equals != null) {
-      $result.equals = equals;
-    }
-    if (notEquals != null) {
-      $result.notEquals = notEquals;
-    }
-    if (in_ != null) {
-      $result.in_ = in_;
-    }
-    if (lessThan != null) {
-      $result.lessThan = lessThan;
-    }
-    if (lessThanOrEquals != null) {
-      $result.lessThanOrEquals = lessThanOrEquals;
-    }
-    if (greaterThan != null) {
-      $result.greaterThan = greaterThan;
-    }
-    if (greaterThanOrEquals != null) {
-      $result.greaterThanOrEquals = greaterThanOrEquals;
-    }
-    if (and != null) {
-      $result.and = and;
-    }
-    if (or != null) {
-      $result.or = or;
-    }
-    if (add != null) {
-      $result.add = add;
-    }
-    if (subtract != null) {
-      $result.subtract = subtract;
-    }
-    if (multiply != null) {
-      $result.multiply = multiply;
-    }
-    if (contains != null) {
-      $result.contains = contains;
-    }
-    if (containsAll != null) {
-      $result.containsAll = containsAll;
-    }
-    if (containsAny != null) {
-      $result.containsAny = containsAny;
-    }
-    if (getAttribute != null) {
-      $result.getAttribute = getAttribute;
-    }
-    if (hasAttribute != null) {
-      $result.hasAttribute = hasAttribute;
-    }
-    if (like != null) {
-      $result.like = like;
-    }
-    if (is_ != null) {
-      $result.is_ = is_;
-    }
-    if (ifThenElse != null) {
-      $result.ifThenElse = ifThenElse;
-    }
-    if (set != null) {
-      $result.set = set;
-    }
-    if (record != null) {
-      $result.record = record;
-    }
-    if (extensionCall != null) {
-      $result.extensionCall = extensionCall;
-    }
-    return $result;
+    final result = create();
+    if (value != null) result.value = value;
+    if (variable != null) result.variable = variable;
+    if (slot != null) result.slot = slot;
+    if (unknown != null) result.unknown = unknown;
+    if (not != null) result.not = not;
+    if (negate != null) result.negate = negate;
+    if (equals != null) result.equals = equals;
+    if (notEquals != null) result.notEquals = notEquals;
+    if (in_ != null) result.in_ = in_;
+    if (lessThan != null) result.lessThan = lessThan;
+    if (lessThanOrEquals != null) result.lessThanOrEquals = lessThanOrEquals;
+    if (greaterThan != null) result.greaterThan = greaterThan;
+    if (greaterThanOrEquals != null)
+      result.greaterThanOrEquals = greaterThanOrEquals;
+    if (and != null) result.and = and;
+    if (or != null) result.or = or;
+    if (add != null) result.add = add;
+    if (subtract != null) result.subtract = subtract;
+    if (multiply != null) result.multiply = multiply;
+    if (contains != null) result.contains = contains;
+    if (containsAll != null) result.containsAll = containsAll;
+    if (containsAny != null) result.containsAny = containsAny;
+    if (getAttribute != null) result.getAttribute = getAttribute;
+    if (hasAttribute != null) result.hasAttribute = hasAttribute;
+    if (like != null) result.like = like;
+    if (is_ != null) result.is_ = is_;
+    if (ifThenElse != null) result.ifThenElse = ifThenElse;
+    if (set != null) result.set = set;
+    if (record != null) result.record = record;
+    if (extensionCall != null) result.extensionCall = extensionCall;
+    return result;
   }
-  Expr._() : super();
-  factory Expr.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Expr.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  Expr._();
+
+  factory Expr.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory Expr.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static const $core.Map<$core.int, Expr_Expr> _Expr_ExprByTag = {
     1: Expr_Expr.value,
@@ -304,20 +250,18 @@ class Expr extends $pb.GeneratedMessage {
         subBuilder: ExprExtensionCall.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Expr clone() => Expr()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Expr copyWith(void Function(Expr) updates) =>
       super.copyWith((message) => updates(message as Expr)) as Expr;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Expr create() => Expr._();
+  @$core.override
   Expr createEmptyInstance() => create();
   static $pb.PbList<Expr> createRepeated() => $pb.PbList<Expr>();
   @$core.pragma('dart2js:noInline')
@@ -331,10 +275,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   ExprValue get value => $_getN(0);
   @$pb.TagNumber(1)
-  set value(ExprValue v) {
-    $_setField(1, v);
-  }
-
+  set value(ExprValue value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
@@ -345,10 +286,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ExprVariable get variable => $_getN(1);
   @$pb.TagNumber(2)
-  set variable(ExprVariable v) {
-    $_setField(2, v);
-  }
-
+  set variable(ExprVariable value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasVariable() => $_has(1);
   @$pb.TagNumber(2)
@@ -359,10 +297,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   ExprSlot get slot => $_getN(2);
   @$pb.TagNumber(3)
-  set slot(ExprSlot v) {
-    $_setField(3, v);
-  }
-
+  set slot(ExprSlot value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasSlot() => $_has(2);
   @$pb.TagNumber(3)
@@ -373,10 +308,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   ExprUnknown get unknown => $_getN(3);
   @$pb.TagNumber(4)
-  set unknown(ExprUnknown v) {
-    $_setField(4, v);
-  }
-
+  set unknown(ExprUnknown value) => $_setField(4, value);
   @$pb.TagNumber(4)
   $core.bool hasUnknown() => $_has(3);
   @$pb.TagNumber(4)
@@ -387,10 +319,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   ExprNot get not => $_getN(4);
   @$pb.TagNumber(5)
-  set not(ExprNot v) {
-    $_setField(5, v);
-  }
-
+  set not(ExprNot value) => $_setField(5, value);
   @$pb.TagNumber(5)
   $core.bool hasNot() => $_has(4);
   @$pb.TagNumber(5)
@@ -401,10 +330,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   ExprNegate get negate => $_getN(5);
   @$pb.TagNumber(6)
-  set negate(ExprNegate v) {
-    $_setField(6, v);
-  }
-
+  set negate(ExprNegate value) => $_setField(6, value);
   @$pb.TagNumber(6)
   $core.bool hasNegate() => $_has(5);
   @$pb.TagNumber(6)
@@ -415,10 +341,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   ExprEquals get equals => $_getN(6);
   @$pb.TagNumber(7)
-  set equals(ExprEquals v) {
-    $_setField(7, v);
-  }
-
+  set equals(ExprEquals value) => $_setField(7, value);
   @$pb.TagNumber(7)
   $core.bool hasEquals() => $_has(6);
   @$pb.TagNumber(7)
@@ -429,10 +352,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   ExprNotEquals get notEquals => $_getN(7);
   @$pb.TagNumber(8)
-  set notEquals(ExprNotEquals v) {
-    $_setField(8, v);
-  }
-
+  set notEquals(ExprNotEquals value) => $_setField(8, value);
   @$pb.TagNumber(8)
   $core.bool hasNotEquals() => $_has(7);
   @$pb.TagNumber(8)
@@ -443,10 +363,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   ExprIn get in_ => $_getN(8);
   @$pb.TagNumber(9)
-  set in_(ExprIn v) {
-    $_setField(9, v);
-  }
-
+  set in_(ExprIn value) => $_setField(9, value);
   @$pb.TagNumber(9)
   $core.bool hasIn_() => $_has(8);
   @$pb.TagNumber(9)
@@ -457,10 +374,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   ExprLessThan get lessThan => $_getN(9);
   @$pb.TagNumber(10)
-  set lessThan(ExprLessThan v) {
-    $_setField(10, v);
-  }
-
+  set lessThan(ExprLessThan value) => $_setField(10, value);
   @$pb.TagNumber(10)
   $core.bool hasLessThan() => $_has(9);
   @$pb.TagNumber(10)
@@ -471,10 +385,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   ExprLessThanOrEquals get lessThanOrEquals => $_getN(10);
   @$pb.TagNumber(11)
-  set lessThanOrEquals(ExprLessThanOrEquals v) {
-    $_setField(11, v);
-  }
-
+  set lessThanOrEquals(ExprLessThanOrEquals value) => $_setField(11, value);
   @$pb.TagNumber(11)
   $core.bool hasLessThanOrEquals() => $_has(10);
   @$pb.TagNumber(11)
@@ -485,10 +396,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   ExprGreaterThan get greaterThan => $_getN(11);
   @$pb.TagNumber(12)
-  set greaterThan(ExprGreaterThan v) {
-    $_setField(12, v);
-  }
-
+  set greaterThan(ExprGreaterThan value) => $_setField(12, value);
   @$pb.TagNumber(12)
   $core.bool hasGreaterThan() => $_has(11);
   @$pb.TagNumber(12)
@@ -499,10 +407,8 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(13)
   ExprGreaterThanOrEquals get greaterThanOrEquals => $_getN(12);
   @$pb.TagNumber(13)
-  set greaterThanOrEquals(ExprGreaterThanOrEquals v) {
-    $_setField(13, v);
-  }
-
+  set greaterThanOrEquals(ExprGreaterThanOrEquals value) =>
+      $_setField(13, value);
   @$pb.TagNumber(13)
   $core.bool hasGreaterThanOrEquals() => $_has(12);
   @$pb.TagNumber(13)
@@ -513,10 +419,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(14)
   ExprAnd get and => $_getN(13);
   @$pb.TagNumber(14)
-  set and(ExprAnd v) {
-    $_setField(14, v);
-  }
-
+  set and(ExprAnd value) => $_setField(14, value);
   @$pb.TagNumber(14)
   $core.bool hasAnd() => $_has(13);
   @$pb.TagNumber(14)
@@ -527,10 +430,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(15)
   ExprOr get or => $_getN(14);
   @$pb.TagNumber(15)
-  set or(ExprOr v) {
-    $_setField(15, v);
-  }
-
+  set or(ExprOr value) => $_setField(15, value);
   @$pb.TagNumber(15)
   $core.bool hasOr() => $_has(14);
   @$pb.TagNumber(15)
@@ -541,10 +441,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(16)
   ExprAdd get add => $_getN(15);
   @$pb.TagNumber(16)
-  set add(ExprAdd v) {
-    $_setField(16, v);
-  }
-
+  set add(ExprAdd value) => $_setField(16, value);
   @$pb.TagNumber(16)
   $core.bool hasAdd() => $_has(15);
   @$pb.TagNumber(16)
@@ -555,10 +452,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(17)
   ExprSubt get subtract => $_getN(16);
   @$pb.TagNumber(17)
-  set subtract(ExprSubt v) {
-    $_setField(17, v);
-  }
-
+  set subtract(ExprSubt value) => $_setField(17, value);
   @$pb.TagNumber(17)
   $core.bool hasSubtract() => $_has(16);
   @$pb.TagNumber(17)
@@ -569,10 +463,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(18)
   ExprMult get multiply => $_getN(17);
   @$pb.TagNumber(18)
-  set multiply(ExprMult v) {
-    $_setField(18, v);
-  }
-
+  set multiply(ExprMult value) => $_setField(18, value);
   @$pb.TagNumber(18)
   $core.bool hasMultiply() => $_has(17);
   @$pb.TagNumber(18)
@@ -583,10 +474,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(19)
   ExprContains get contains => $_getN(18);
   @$pb.TagNumber(19)
-  set contains(ExprContains v) {
-    $_setField(19, v);
-  }
-
+  set contains(ExprContains value) => $_setField(19, value);
   @$pb.TagNumber(19)
   $core.bool hasContains() => $_has(18);
   @$pb.TagNumber(19)
@@ -597,10 +485,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(20)
   ExprContainsAll get containsAll => $_getN(19);
   @$pb.TagNumber(20)
-  set containsAll(ExprContainsAll v) {
-    $_setField(20, v);
-  }
-
+  set containsAll(ExprContainsAll value) => $_setField(20, value);
   @$pb.TagNumber(20)
   $core.bool hasContainsAll() => $_has(19);
   @$pb.TagNumber(20)
@@ -611,10 +496,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(21)
   ExprContainsAny get containsAny => $_getN(20);
   @$pb.TagNumber(21)
-  set containsAny(ExprContainsAny v) {
-    $_setField(21, v);
-  }
-
+  set containsAny(ExprContainsAny value) => $_setField(21, value);
   @$pb.TagNumber(21)
   $core.bool hasContainsAny() => $_has(20);
   @$pb.TagNumber(21)
@@ -625,10 +507,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(22)
   ExprGetAttribute get getAttribute => $_getN(21);
   @$pb.TagNumber(22)
-  set getAttribute(ExprGetAttribute v) {
-    $_setField(22, v);
-  }
-
+  set getAttribute(ExprGetAttribute value) => $_setField(22, value);
   @$pb.TagNumber(22)
   $core.bool hasGetAttribute() => $_has(21);
   @$pb.TagNumber(22)
@@ -639,10 +518,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(23)
   ExprHasAttribute get hasAttribute => $_getN(22);
   @$pb.TagNumber(23)
-  set hasAttribute(ExprHasAttribute v) {
-    $_setField(23, v);
-  }
-
+  set hasAttribute(ExprHasAttribute value) => $_setField(23, value);
   @$pb.TagNumber(23)
   $core.bool hasHasAttribute() => $_has(22);
   @$pb.TagNumber(23)
@@ -653,10 +529,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(24)
   ExprLike get like => $_getN(23);
   @$pb.TagNumber(24)
-  set like(ExprLike v) {
-    $_setField(24, v);
-  }
-
+  set like(ExprLike value) => $_setField(24, value);
   @$pb.TagNumber(24)
   $core.bool hasLike() => $_has(23);
   @$pb.TagNumber(24)
@@ -667,10 +540,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(25)
   ExprIs get is_ => $_getN(24);
   @$pb.TagNumber(25)
-  set is_(ExprIs v) {
-    $_setField(25, v);
-  }
-
+  set is_(ExprIs value) => $_setField(25, value);
   @$pb.TagNumber(25)
   $core.bool hasIs_() => $_has(24);
   @$pb.TagNumber(25)
@@ -681,10 +551,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(26)
   ExprIfThenElse get ifThenElse => $_getN(25);
   @$pb.TagNumber(26)
-  set ifThenElse(ExprIfThenElse v) {
-    $_setField(26, v);
-  }
-
+  set ifThenElse(ExprIfThenElse value) => $_setField(26, value);
   @$pb.TagNumber(26)
   $core.bool hasIfThenElse() => $_has(25);
   @$pb.TagNumber(26)
@@ -695,10 +562,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(27)
   ExprSet get set => $_getN(26);
   @$pb.TagNumber(27)
-  set set(ExprSet v) {
-    $_setField(27, v);
-  }
-
+  set set(ExprSet value) => $_setField(27, value);
   @$pb.TagNumber(27)
   $core.bool hasSet() => $_has(26);
   @$pb.TagNumber(27)
@@ -709,10 +573,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(28)
   ExprRecord get record => $_getN(27);
   @$pb.TagNumber(28)
-  set record(ExprRecord v) {
-    $_setField(28, v);
-  }
-
+  set record(ExprRecord value) => $_setField(28, value);
   @$pb.TagNumber(28)
   $core.bool hasRecord() => $_has(27);
   @$pb.TagNumber(28)
@@ -723,10 +584,7 @@ class Expr extends $pb.GeneratedMessage {
   @$pb.TagNumber(29)
   ExprExtensionCall get extensionCall => $_getN(28);
   @$pb.TagNumber(29)
-  set extensionCall(ExprExtensionCall v) {
-    $_setField(29, v);
-  }
-
+  set extensionCall(ExprExtensionCall value) => $_setField(29, value);
   @$pb.TagNumber(29)
   $core.bool hasExtensionCall() => $_has(28);
   @$pb.TagNumber(29)
@@ -739,19 +597,19 @@ class ExprValue extends $pb.GeneratedMessage {
   factory ExprValue({
     $0.Value? value,
   }) {
-    final $result = create();
-    if (value != null) {
-      $result.value = value;
-    }
-    return $result;
+    final result = create();
+    if (value != null) result.value = value;
+    return result;
   }
-  ExprValue._() : super();
-  factory ExprValue.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprValue.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprValue._();
+
+  factory ExprValue.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprValue.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprValue',
@@ -761,20 +619,18 @@ class ExprValue extends $pb.GeneratedMessage {
         subBuilder: $0.Value.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprValue clone() => ExprValue()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprValue copyWith(void Function(ExprValue) updates) =>
       super.copyWith((message) => updates(message as ExprValue)) as ExprValue;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprValue create() => ExprValue._();
+  @$core.override
   ExprValue createEmptyInstance() => create();
   static $pb.PbList<ExprValue> createRepeated() => $pb.PbList<ExprValue>();
   @$core.pragma('dart2js:noInline')
@@ -785,10 +641,7 @@ class ExprValue extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $0.Value get value => $_getN(0);
   @$pb.TagNumber(1)
-  set value($0.Value v) {
-    $_setField(1, v);
-  }
-
+  set value($0.Value value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasValue() => $_has(0);
   @$pb.TagNumber(1)
@@ -801,19 +654,19 @@ class ExprVariable extends $pb.GeneratedMessage {
   factory ExprVariable({
     Variable? variable,
   }) {
-    final $result = create();
-    if (variable != null) {
-      $result.variable = variable;
-    }
-    return $result;
+    final result = create();
+    if (variable != null) result.variable = variable;
+    return result;
   }
-  ExprVariable._() : super();
-  factory ExprVariable.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprVariable.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprVariable._();
+
+  factory ExprVariable.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprVariable.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprVariable',
@@ -825,21 +678,19 @@ class ExprVariable extends $pb.GeneratedMessage {
         enumValues: Variable.values)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprVariable clone() => ExprVariable()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprVariable copyWith(void Function(ExprVariable) updates) =>
       super.copyWith((message) => updates(message as ExprVariable))
           as ExprVariable;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprVariable create() => ExprVariable._();
+  @$core.override
   ExprVariable createEmptyInstance() => create();
   static $pb.PbList<ExprVariable> createRepeated() =>
       $pb.PbList<ExprVariable>();
@@ -851,10 +702,7 @@ class ExprVariable extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Variable get variable => $_getN(0);
   @$pb.TagNumber(1)
-  set variable(Variable v) {
-    $_setField(1, v);
-  }
-
+  set variable(Variable value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasVariable() => $_has(0);
   @$pb.TagNumber(1)
@@ -865,19 +713,19 @@ class ExprSlot extends $pb.GeneratedMessage {
   factory ExprSlot({
     SlotId? slotId,
   }) {
-    final $result = create();
-    if (slotId != null) {
-      $result.slotId = slotId;
-    }
-    return $result;
+    final result = create();
+    if (slotId != null) result.slotId = slotId;
+    return result;
   }
-  ExprSlot._() : super();
-  factory ExprSlot.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprSlot.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprSlot._();
+
+  factory ExprSlot.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprSlot.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprSlot',
@@ -889,20 +737,18 @@ class ExprSlot extends $pb.GeneratedMessage {
         enumValues: SlotId.values)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprSlot clone() => ExprSlot()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprSlot copyWith(void Function(ExprSlot) updates) =>
       super.copyWith((message) => updates(message as ExprSlot)) as ExprSlot;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprSlot create() => ExprSlot._();
+  @$core.override
   ExprSlot createEmptyInstance() => create();
   static $pb.PbList<ExprSlot> createRepeated() => $pb.PbList<ExprSlot>();
   @$core.pragma('dart2js:noInline')
@@ -913,10 +759,7 @@ class ExprSlot extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   SlotId get slotId => $_getN(0);
   @$pb.TagNumber(1)
-  set slotId(SlotId v) {
-    $_setField(1, v);
-  }
-
+  set slotId(SlotId value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasSlotId() => $_has(0);
   @$pb.TagNumber(1)
@@ -927,19 +770,19 @@ class ExprUnknown extends $pb.GeneratedMessage {
   factory ExprUnknown({
     $core.String? name,
   }) {
-    final $result = create();
-    if (name != null) {
-      $result.name = name;
-    }
-    return $result;
+    final result = create();
+    if (name != null) result.name = name;
+    return result;
   }
-  ExprUnknown._() : super();
-  factory ExprUnknown.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprUnknown.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprUnknown._();
+
+  factory ExprUnknown.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprUnknown.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprUnknown',
@@ -948,21 +791,19 @@ class ExprUnknown extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprUnknown clone() => ExprUnknown()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprUnknown copyWith(void Function(ExprUnknown) updates) =>
       super.copyWith((message) => updates(message as ExprUnknown))
           as ExprUnknown;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprUnknown create() => ExprUnknown._();
+  @$core.override
   ExprUnknown createEmptyInstance() => create();
   static $pb.PbList<ExprUnknown> createRepeated() => $pb.PbList<ExprUnknown>();
   @$core.pragma('dart2js:noInline')
@@ -973,10 +814,7 @@ class ExprUnknown extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -987,19 +825,19 @@ class ExprNot extends $pb.GeneratedMessage {
   factory ExprNot({
     Expr? arg,
   }) {
-    final $result = create();
-    if (arg != null) {
-      $result.arg = arg;
-    }
-    return $result;
+    final result = create();
+    if (arg != null) result.arg = arg;
+    return result;
   }
-  ExprNot._() : super();
-  factory ExprNot.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprNot.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprNot._();
+
+  factory ExprNot.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprNot.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprNot',
@@ -1008,20 +846,18 @@ class ExprNot extends $pb.GeneratedMessage {
     ..aOM<Expr>(1, _omitFieldNames ? '' : 'arg', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprNot clone() => ExprNot()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprNot copyWith(void Function(ExprNot) updates) =>
       super.copyWith((message) => updates(message as ExprNot)) as ExprNot;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprNot create() => ExprNot._();
+  @$core.override
   ExprNot createEmptyInstance() => create();
   static $pb.PbList<ExprNot> createRepeated() => $pb.PbList<ExprNot>();
   @$core.pragma('dart2js:noInline')
@@ -1032,10 +868,7 @@ class ExprNot extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get arg => $_getN(0);
   @$pb.TagNumber(1)
-  set arg(Expr v) {
-    $_setField(1, v);
-  }
-
+  set arg(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasArg() => $_has(0);
   @$pb.TagNumber(1)
@@ -1048,19 +881,19 @@ class ExprNegate extends $pb.GeneratedMessage {
   factory ExprNegate({
     Expr? arg,
   }) {
-    final $result = create();
-    if (arg != null) {
-      $result.arg = arg;
-    }
-    return $result;
+    final result = create();
+    if (arg != null) result.arg = arg;
+    return result;
   }
-  ExprNegate._() : super();
-  factory ExprNegate.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprNegate.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprNegate._();
+
+  factory ExprNegate.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprNegate.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprNegate',
@@ -1069,20 +902,18 @@ class ExprNegate extends $pb.GeneratedMessage {
     ..aOM<Expr>(1, _omitFieldNames ? '' : 'arg', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprNegate clone() => ExprNegate()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprNegate copyWith(void Function(ExprNegate) updates) =>
       super.copyWith((message) => updates(message as ExprNegate)) as ExprNegate;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprNegate create() => ExprNegate._();
+  @$core.override
   ExprNegate createEmptyInstance() => create();
   static $pb.PbList<ExprNegate> createRepeated() => $pb.PbList<ExprNegate>();
   @$core.pragma('dart2js:noInline')
@@ -1093,10 +924,7 @@ class ExprNegate extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get arg => $_getN(0);
   @$pb.TagNumber(1)
-  set arg(Expr v) {
-    $_setField(1, v);
-  }
-
+  set arg(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasArg() => $_has(0);
   @$pb.TagNumber(1)
@@ -1110,22 +938,20 @@ class ExprEquals extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprEquals._() : super();
-  factory ExprEquals.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprEquals.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprEquals._();
+
+  factory ExprEquals.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprEquals.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprEquals',
@@ -1135,20 +961,18 @@ class ExprEquals extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprEquals clone() => ExprEquals()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprEquals copyWith(void Function(ExprEquals) updates) =>
       super.copyWith((message) => updates(message as ExprEquals)) as ExprEquals;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprEquals create() => ExprEquals._();
+  @$core.override
   ExprEquals createEmptyInstance() => create();
   static $pb.PbList<ExprEquals> createRepeated() => $pb.PbList<ExprEquals>();
   @$core.pragma('dart2js:noInline')
@@ -1159,10 +983,7 @@ class ExprEquals extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1173,10 +994,7 @@ class ExprEquals extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1190,22 +1008,20 @@ class ExprNotEquals extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprNotEquals._() : super();
-  factory ExprNotEquals.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprNotEquals.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprNotEquals._();
+
+  factory ExprNotEquals.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprNotEquals.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprNotEquals',
@@ -1215,21 +1031,19 @@ class ExprNotEquals extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprNotEquals clone() => ExprNotEquals()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprNotEquals copyWith(void Function(ExprNotEquals) updates) =>
       super.copyWith((message) => updates(message as ExprNotEquals))
           as ExprNotEquals;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprNotEquals create() => ExprNotEquals._();
+  @$core.override
   ExprNotEquals createEmptyInstance() => create();
   static $pb.PbList<ExprNotEquals> createRepeated() =>
       $pb.PbList<ExprNotEquals>();
@@ -1241,10 +1055,7 @@ class ExprNotEquals extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1255,10 +1066,7 @@ class ExprNotEquals extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1272,22 +1080,20 @@ class ExprIn extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprIn._() : super();
-  factory ExprIn.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprIn.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprIn._();
+
+  factory ExprIn.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprIn.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprIn',
@@ -1297,20 +1103,18 @@ class ExprIn extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprIn clone() => ExprIn()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprIn copyWith(void Function(ExprIn) updates) =>
       super.copyWith((message) => updates(message as ExprIn)) as ExprIn;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprIn create() => ExprIn._();
+  @$core.override
   ExprIn createEmptyInstance() => create();
   static $pb.PbList<ExprIn> createRepeated() => $pb.PbList<ExprIn>();
   @$core.pragma('dart2js:noInline')
@@ -1321,10 +1125,7 @@ class ExprIn extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1335,10 +1136,7 @@ class ExprIn extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1352,22 +1150,20 @@ class ExprLessThan extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprLessThan._() : super();
-  factory ExprLessThan.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprLessThan.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprLessThan._();
+
+  factory ExprLessThan.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprLessThan.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprLessThan',
@@ -1377,21 +1173,19 @@ class ExprLessThan extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprLessThan clone() => ExprLessThan()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprLessThan copyWith(void Function(ExprLessThan) updates) =>
       super.copyWith((message) => updates(message as ExprLessThan))
           as ExprLessThan;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprLessThan create() => ExprLessThan._();
+  @$core.override
   ExprLessThan createEmptyInstance() => create();
   static $pb.PbList<ExprLessThan> createRepeated() =>
       $pb.PbList<ExprLessThan>();
@@ -1403,10 +1197,7 @@ class ExprLessThan extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1417,10 +1208,7 @@ class ExprLessThan extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1434,22 +1222,20 @@ class ExprLessThanOrEquals extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprLessThanOrEquals._() : super();
-  factory ExprLessThanOrEquals.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprLessThanOrEquals.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprLessThanOrEquals._();
+
+  factory ExprLessThanOrEquals.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprLessThanOrEquals.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprLessThanOrEquals',
@@ -1459,22 +1245,20 @@ class ExprLessThanOrEquals extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprLessThanOrEquals clone() =>
       ExprLessThanOrEquals()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprLessThanOrEquals copyWith(void Function(ExprLessThanOrEquals) updates) =>
       super.copyWith((message) => updates(message as ExprLessThanOrEquals))
           as ExprLessThanOrEquals;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprLessThanOrEquals create() => ExprLessThanOrEquals._();
+  @$core.override
   ExprLessThanOrEquals createEmptyInstance() => create();
   static $pb.PbList<ExprLessThanOrEquals> createRepeated() =>
       $pb.PbList<ExprLessThanOrEquals>();
@@ -1486,10 +1270,7 @@ class ExprLessThanOrEquals extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1500,10 +1281,7 @@ class ExprLessThanOrEquals extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1517,22 +1295,20 @@ class ExprGreaterThan extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprGreaterThan._() : super();
-  factory ExprGreaterThan.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprGreaterThan.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprGreaterThan._();
+
+  factory ExprGreaterThan.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprGreaterThan.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprGreaterThan',
@@ -1542,21 +1318,19 @@ class ExprGreaterThan extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprGreaterThan clone() => ExprGreaterThan()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprGreaterThan copyWith(void Function(ExprGreaterThan) updates) =>
       super.copyWith((message) => updates(message as ExprGreaterThan))
           as ExprGreaterThan;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprGreaterThan create() => ExprGreaterThan._();
+  @$core.override
   ExprGreaterThan createEmptyInstance() => create();
   static $pb.PbList<ExprGreaterThan> createRepeated() =>
       $pb.PbList<ExprGreaterThan>();
@@ -1568,10 +1342,7 @@ class ExprGreaterThan extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1582,10 +1353,7 @@ class ExprGreaterThan extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1599,22 +1367,20 @@ class ExprGreaterThanOrEquals extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprGreaterThanOrEquals._() : super();
-  factory ExprGreaterThanOrEquals.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprGreaterThanOrEquals.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprGreaterThanOrEquals._();
+
+  factory ExprGreaterThanOrEquals.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprGreaterThanOrEquals.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprGreaterThanOrEquals',
@@ -1624,23 +1390,21 @@ class ExprGreaterThanOrEquals extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprGreaterThanOrEquals clone() =>
       ExprGreaterThanOrEquals()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprGreaterThanOrEquals copyWith(
           void Function(ExprGreaterThanOrEquals) updates) =>
       super.copyWith((message) => updates(message as ExprGreaterThanOrEquals))
           as ExprGreaterThanOrEquals;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprGreaterThanOrEquals create() => ExprGreaterThanOrEquals._();
+  @$core.override
   ExprGreaterThanOrEquals createEmptyInstance() => create();
   static $pb.PbList<ExprGreaterThanOrEquals> createRepeated() =>
       $pb.PbList<ExprGreaterThanOrEquals>();
@@ -1652,10 +1416,7 @@ class ExprGreaterThanOrEquals extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1666,10 +1427,7 @@ class ExprGreaterThanOrEquals extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1683,22 +1441,20 @@ class ExprAnd extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprAnd._() : super();
-  factory ExprAnd.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprAnd.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprAnd._();
+
+  factory ExprAnd.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprAnd.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprAnd',
@@ -1708,20 +1464,18 @@ class ExprAnd extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprAnd clone() => ExprAnd()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprAnd copyWith(void Function(ExprAnd) updates) =>
       super.copyWith((message) => updates(message as ExprAnd)) as ExprAnd;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprAnd create() => ExprAnd._();
+  @$core.override
   ExprAnd createEmptyInstance() => create();
   static $pb.PbList<ExprAnd> createRepeated() => $pb.PbList<ExprAnd>();
   @$core.pragma('dart2js:noInline')
@@ -1732,10 +1486,7 @@ class ExprAnd extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1746,10 +1497,7 @@ class ExprAnd extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1763,22 +1511,20 @@ class ExprOr extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprOr._() : super();
-  factory ExprOr.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprOr.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprOr._();
+
+  factory ExprOr.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprOr.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprOr',
@@ -1788,20 +1534,18 @@ class ExprOr extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprOr clone() => ExprOr()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprOr copyWith(void Function(ExprOr) updates) =>
       super.copyWith((message) => updates(message as ExprOr)) as ExprOr;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprOr create() => ExprOr._();
+  @$core.override
   ExprOr createEmptyInstance() => create();
   static $pb.PbList<ExprOr> createRepeated() => $pb.PbList<ExprOr>();
   @$core.pragma('dart2js:noInline')
@@ -1812,10 +1556,7 @@ class ExprOr extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1826,10 +1567,7 @@ class ExprOr extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1843,22 +1581,20 @@ class ExprAdd extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprAdd._() : super();
-  factory ExprAdd.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprAdd.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprAdd._();
+
+  factory ExprAdd.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprAdd.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprAdd',
@@ -1868,20 +1604,18 @@ class ExprAdd extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprAdd clone() => ExprAdd()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprAdd copyWith(void Function(ExprAdd) updates) =>
       super.copyWith((message) => updates(message as ExprAdd)) as ExprAdd;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprAdd create() => ExprAdd._();
+  @$core.override
   ExprAdd createEmptyInstance() => create();
   static $pb.PbList<ExprAdd> createRepeated() => $pb.PbList<ExprAdd>();
   @$core.pragma('dart2js:noInline')
@@ -1892,10 +1626,7 @@ class ExprAdd extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1906,10 +1637,7 @@ class ExprAdd extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -1923,22 +1651,20 @@ class ExprSubt extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprSubt._() : super();
-  factory ExprSubt.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprSubt.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprSubt._();
+
+  factory ExprSubt.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprSubt.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprSubt',
@@ -1948,20 +1674,18 @@ class ExprSubt extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprSubt clone() => ExprSubt()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprSubt copyWith(void Function(ExprSubt) updates) =>
       super.copyWith((message) => updates(message as ExprSubt)) as ExprSubt;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprSubt create() => ExprSubt._();
+  @$core.override
   ExprSubt createEmptyInstance() => create();
   static $pb.PbList<ExprSubt> createRepeated() => $pb.PbList<ExprSubt>();
   @$core.pragma('dart2js:noInline')
@@ -1972,10 +1696,7 @@ class ExprSubt extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -1986,10 +1707,7 @@ class ExprSubt extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -2003,22 +1721,20 @@ class ExprMult extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprMult._() : super();
-  factory ExprMult.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprMult.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprMult._();
+
+  factory ExprMult.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprMult.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprMult',
@@ -2028,20 +1744,18 @@ class ExprMult extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprMult clone() => ExprMult()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprMult copyWith(void Function(ExprMult) updates) =>
       super.copyWith((message) => updates(message as ExprMult)) as ExprMult;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprMult create() => ExprMult._();
+  @$core.override
   ExprMult createEmptyInstance() => create();
   static $pb.PbList<ExprMult> createRepeated() => $pb.PbList<ExprMult>();
   @$core.pragma('dart2js:noInline')
@@ -2052,10 +1766,7 @@ class ExprMult extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -2066,10 +1777,7 @@ class ExprMult extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -2083,22 +1791,20 @@ class ExprContains extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprContains._() : super();
-  factory ExprContains.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprContains.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprContains._();
+
+  factory ExprContains.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprContains.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprContains',
@@ -2108,21 +1814,19 @@ class ExprContains extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprContains clone() => ExprContains()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprContains copyWith(void Function(ExprContains) updates) =>
       super.copyWith((message) => updates(message as ExprContains))
           as ExprContains;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprContains create() => ExprContains._();
+  @$core.override
   ExprContains createEmptyInstance() => create();
   static $pb.PbList<ExprContains> createRepeated() =>
       $pb.PbList<ExprContains>();
@@ -2134,10 +1838,7 @@ class ExprContains extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -2148,10 +1849,7 @@ class ExprContains extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -2165,22 +1863,20 @@ class ExprContainsAll extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprContainsAll._() : super();
-  factory ExprContainsAll.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprContainsAll.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprContainsAll._();
+
+  factory ExprContainsAll.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprContainsAll.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprContainsAll',
@@ -2190,21 +1886,19 @@ class ExprContainsAll extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprContainsAll clone() => ExprContainsAll()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprContainsAll copyWith(void Function(ExprContainsAll) updates) =>
       super.copyWith((message) => updates(message as ExprContainsAll))
           as ExprContainsAll;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprContainsAll create() => ExprContainsAll._();
+  @$core.override
   ExprContainsAll createEmptyInstance() => create();
   static $pb.PbList<ExprContainsAll> createRepeated() =>
       $pb.PbList<ExprContainsAll>();
@@ -2216,10 +1910,7 @@ class ExprContainsAll extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -2230,10 +1921,7 @@ class ExprContainsAll extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -2247,22 +1935,20 @@ class ExprContainsAny extends $pb.GeneratedMessage {
     Expr? left,
     Expr? right,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (right != null) {
-      $result.right = right;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (right != null) result.right = right;
+    return result;
   }
-  ExprContainsAny._() : super();
-  factory ExprContainsAny.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprContainsAny.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprContainsAny._();
+
+  factory ExprContainsAny.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprContainsAny.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprContainsAny',
@@ -2272,21 +1958,19 @@ class ExprContainsAny extends $pb.GeneratedMessage {
     ..aOM<Expr>(2, _omitFieldNames ? '' : 'right', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprContainsAny clone() => ExprContainsAny()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprContainsAny copyWith(void Function(ExprContainsAny) updates) =>
       super.copyWith((message) => updates(message as ExprContainsAny))
           as ExprContainsAny;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprContainsAny create() => ExprContainsAny._();
+  @$core.override
   ExprContainsAny createEmptyInstance() => create();
   static $pb.PbList<ExprContainsAny> createRepeated() =>
       $pb.PbList<ExprContainsAny>();
@@ -2298,10 +1982,7 @@ class ExprContainsAny extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -2312,10 +1993,7 @@ class ExprContainsAny extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get right => $_getN(1);
   @$pb.TagNumber(2)
-  set right(Expr v) {
-    $_setField(2, v);
-  }
-
+  set right(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasRight() => $_has(1);
   @$pb.TagNumber(2)
@@ -2329,22 +2007,20 @@ class ExprGetAttribute extends $pb.GeneratedMessage {
     Expr? left,
     $core.String? attr,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (attr != null) {
-      $result.attr = attr;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (attr != null) result.attr = attr;
+    return result;
   }
-  ExprGetAttribute._() : super();
-  factory ExprGetAttribute.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprGetAttribute.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprGetAttribute._();
+
+  factory ExprGetAttribute.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprGetAttribute.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprGetAttribute',
@@ -2354,21 +2030,19 @@ class ExprGetAttribute extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'attr')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprGetAttribute clone() => ExprGetAttribute()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprGetAttribute copyWith(void Function(ExprGetAttribute) updates) =>
       super.copyWith((message) => updates(message as ExprGetAttribute))
           as ExprGetAttribute;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprGetAttribute create() => ExprGetAttribute._();
+  @$core.override
   ExprGetAttribute createEmptyInstance() => create();
   static $pb.PbList<ExprGetAttribute> createRepeated() =>
       $pb.PbList<ExprGetAttribute>();
@@ -2380,10 +2054,7 @@ class ExprGetAttribute extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -2394,10 +2065,7 @@ class ExprGetAttribute extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get attr => $_getSZ(1);
   @$pb.TagNumber(2)
-  set attr($core.String v) {
-    $_setString(1, v);
-  }
-
+  set attr($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasAttr() => $_has(1);
   @$pb.TagNumber(2)
@@ -2409,22 +2077,20 @@ class ExprHasAttribute extends $pb.GeneratedMessage {
     Expr? left,
     $core.String? attr,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (attr != null) {
-      $result.attr = attr;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (attr != null) result.attr = attr;
+    return result;
   }
-  ExprHasAttribute._() : super();
-  factory ExprHasAttribute.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprHasAttribute.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprHasAttribute._();
+
+  factory ExprHasAttribute.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprHasAttribute.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprHasAttribute',
@@ -2434,21 +2100,19 @@ class ExprHasAttribute extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'attr')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprHasAttribute clone() => ExprHasAttribute()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprHasAttribute copyWith(void Function(ExprHasAttribute) updates) =>
       super.copyWith((message) => updates(message as ExprHasAttribute))
           as ExprHasAttribute;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprHasAttribute create() => ExprHasAttribute._();
+  @$core.override
   ExprHasAttribute createEmptyInstance() => create();
   static $pb.PbList<ExprHasAttribute> createRepeated() =>
       $pb.PbList<ExprHasAttribute>();
@@ -2460,10 +2124,7 @@ class ExprHasAttribute extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -2474,10 +2135,7 @@ class ExprHasAttribute extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get attr => $_getSZ(1);
   @$pb.TagNumber(2)
-  set attr($core.String v) {
-    $_setString(1, v);
-  }
-
+  set attr($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasAttr() => $_has(1);
   @$pb.TagNumber(2)
@@ -2489,22 +2147,20 @@ class ExprLike extends $pb.GeneratedMessage {
     Expr? left,
     $core.String? pattern,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (pattern != null) {
-      $result.pattern = pattern;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (pattern != null) result.pattern = pattern;
+    return result;
   }
-  ExprLike._() : super();
-  factory ExprLike.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprLike.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprLike._();
+
+  factory ExprLike.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprLike.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprLike',
@@ -2514,20 +2170,18 @@ class ExprLike extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'pattern')
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprLike clone() => ExprLike()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprLike copyWith(void Function(ExprLike) updates) =>
       super.copyWith((message) => updates(message as ExprLike)) as ExprLike;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprLike create() => ExprLike._();
+  @$core.override
   ExprLike createEmptyInstance() => create();
   static $pb.PbList<ExprLike> createRepeated() => $pb.PbList<ExprLike>();
   @$core.pragma('dart2js:noInline')
@@ -2538,10 +2192,7 @@ class ExprLike extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -2552,10 +2203,7 @@ class ExprLike extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get pattern => $_getSZ(1);
   @$pb.TagNumber(2)
-  set pattern($core.String v) {
-    $_setString(1, v);
-  }
-
+  set pattern($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasPattern() => $_has(1);
   @$pb.TagNumber(2)
@@ -2568,25 +2216,21 @@ class ExprIs extends $pb.GeneratedMessage {
     $core.String? entityType,
     Expr? in_,
   }) {
-    final $result = create();
-    if (left != null) {
-      $result.left = left;
-    }
-    if (entityType != null) {
-      $result.entityType = entityType;
-    }
-    if (in_ != null) {
-      $result.in_ = in_;
-    }
-    return $result;
+    final result = create();
+    if (left != null) result.left = left;
+    if (entityType != null) result.entityType = entityType;
+    if (in_ != null) result.in_ = in_;
+    return result;
   }
-  ExprIs._() : super();
-  factory ExprIs.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprIs.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprIs._();
+
+  factory ExprIs.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprIs.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprIs',
@@ -2597,20 +2241,18 @@ class ExprIs extends $pb.GeneratedMessage {
     ..aOM<Expr>(3, _omitFieldNames ? '' : 'in', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprIs clone() => ExprIs()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprIs copyWith(void Function(ExprIs) updates) =>
       super.copyWith((message) => updates(message as ExprIs)) as ExprIs;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprIs create() => ExprIs._();
+  @$core.override
   ExprIs createEmptyInstance() => create();
   static $pb.PbList<ExprIs> createRepeated() => $pb.PbList<ExprIs>();
   @$core.pragma('dart2js:noInline')
@@ -2621,10 +2263,7 @@ class ExprIs extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get left => $_getN(0);
   @$pb.TagNumber(1)
-  set left(Expr v) {
-    $_setField(1, v);
-  }
-
+  set left(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasLeft() => $_has(0);
   @$pb.TagNumber(1)
@@ -2635,10 +2274,7 @@ class ExprIs extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get entityType => $_getSZ(1);
   @$pb.TagNumber(2)
-  set entityType($core.String v) {
-    $_setString(1, v);
-  }
-
+  set entityType($core.String value) => $_setString(1, value);
   @$pb.TagNumber(2)
   $core.bool hasEntityType() => $_has(1);
   @$pb.TagNumber(2)
@@ -2647,10 +2283,7 @@ class ExprIs extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   Expr get in_ => $_getN(2);
   @$pb.TagNumber(3)
-  set in_(Expr v) {
-    $_setField(3, v);
-  }
-
+  set in_(Expr value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasIn_() => $_has(2);
   @$pb.TagNumber(3)
@@ -2665,25 +2298,21 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
     Expr? then,
     Expr? otherwise,
   }) {
-    final $result = create();
-    if (cond != null) {
-      $result.cond = cond;
-    }
-    if (then != null) {
-      $result.then = then;
-    }
-    if (otherwise != null) {
-      $result.otherwise = otherwise;
-    }
-    return $result;
+    final result = create();
+    if (cond != null) result.cond = cond;
+    if (then != null) result.then = then;
+    if (otherwise != null) result.otherwise = otherwise;
+    return result;
   }
-  ExprIfThenElse._() : super();
-  factory ExprIfThenElse.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprIfThenElse.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprIfThenElse._();
+
+  factory ExprIfThenElse.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprIfThenElse.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprIfThenElse',
@@ -2694,21 +2323,19 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
     ..aOM<Expr>(3, _omitFieldNames ? '' : 'otherwise', subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprIfThenElse clone() => ExprIfThenElse()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprIfThenElse copyWith(void Function(ExprIfThenElse) updates) =>
       super.copyWith((message) => updates(message as ExprIfThenElse))
           as ExprIfThenElse;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprIfThenElse create() => ExprIfThenElse._();
+  @$core.override
   ExprIfThenElse createEmptyInstance() => create();
   static $pb.PbList<ExprIfThenElse> createRepeated() =>
       $pb.PbList<ExprIfThenElse>();
@@ -2720,10 +2347,7 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   Expr get cond => $_getN(0);
   @$pb.TagNumber(1)
-  set cond(Expr v) {
-    $_setField(1, v);
-  }
-
+  set cond(Expr value) => $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasCond() => $_has(0);
   @$pb.TagNumber(1)
@@ -2734,10 +2358,7 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Expr get then => $_getN(1);
   @$pb.TagNumber(2)
-  set then(Expr v) {
-    $_setField(2, v);
-  }
-
+  set then(Expr value) => $_setField(2, value);
   @$pb.TagNumber(2)
   $core.bool hasThen() => $_has(1);
   @$pb.TagNumber(2)
@@ -2748,10 +2369,7 @@ class ExprIfThenElse extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   Expr get otherwise => $_getN(2);
   @$pb.TagNumber(3)
-  set otherwise(Expr v) {
-    $_setField(3, v);
-  }
-
+  set otherwise(Expr value) => $_setField(3, value);
   @$pb.TagNumber(3)
   $core.bool hasOtherwise() => $_has(2);
   @$pb.TagNumber(3)
@@ -2764,19 +2382,19 @@ class ExprSet extends $pb.GeneratedMessage {
   factory ExprSet({
     $core.Iterable<Expr>? expressions,
   }) {
-    final $result = create();
-    if (expressions != null) {
-      $result.expressions.addAll(expressions);
-    }
-    return $result;
+    final result = create();
+    if (expressions != null) result.expressions.addAll(expressions);
+    return result;
   }
-  ExprSet._() : super();
-  factory ExprSet.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprSet.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprSet._();
+
+  factory ExprSet.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprSet.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprSet',
@@ -2786,20 +2404,18 @@ class ExprSet extends $pb.GeneratedMessage {
         subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprSet clone() => ExprSet()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprSet copyWith(void Function(ExprSet) updates) =>
       super.copyWith((message) => updates(message as ExprSet)) as ExprSet;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprSet create() => ExprSet._();
+  @$core.override
   ExprSet createEmptyInstance() => create();
   static $pb.PbList<ExprSet> createRepeated() => $pb.PbList<ExprSet>();
   @$core.pragma('dart2js:noInline')
@@ -2815,19 +2431,19 @@ class ExprRecord extends $pb.GeneratedMessage {
   factory ExprRecord({
     $core.Iterable<$core.MapEntry<$core.String, Expr>>? attributes,
   }) {
-    final $result = create();
-    if (attributes != null) {
-      $result.attributes.addEntries(attributes);
-    }
-    return $result;
+    final result = create();
+    if (attributes != null) result.attributes.addEntries(attributes);
+    return result;
   }
-  ExprRecord._() : super();
-  factory ExprRecord.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprRecord.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprRecord._();
+
+  factory ExprRecord.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprRecord.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprRecord',
@@ -2842,20 +2458,18 @@ class ExprRecord extends $pb.GeneratedMessage {
         packageName: const $pb.PackageName('cedar.v3'))
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprRecord clone() => ExprRecord()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprRecord copyWith(void Function(ExprRecord) updates) =>
       super.copyWith((message) => updates(message as ExprRecord)) as ExprRecord;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprRecord create() => ExprRecord._();
+  @$core.override
   ExprRecord createEmptyInstance() => create();
   static $pb.PbList<ExprRecord> createRepeated() => $pb.PbList<ExprRecord>();
   @$core.pragma('dart2js:noInline')
@@ -2872,22 +2486,20 @@ class ExprExtensionCall extends $pb.GeneratedMessage {
     $core.String? fn,
     $core.Iterable<Expr>? args,
   }) {
-    final $result = create();
-    if (fn != null) {
-      $result.fn = fn;
-    }
-    if (args != null) {
-      $result.args.addAll(args);
-    }
-    return $result;
+    final result = create();
+    if (fn != null) result.fn = fn;
+    if (args != null) result.args.addAll(args);
+    return result;
   }
-  ExprExtensionCall._() : super();
-  factory ExprExtensionCall.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ExprExtensionCall.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+
+  ExprExtensionCall._();
+
+  factory ExprExtensionCall.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory ExprExtensionCall.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ExprExtensionCall',
@@ -2898,21 +2510,19 @@ class ExprExtensionCall extends $pb.GeneratedMessage {
         subBuilder: Expr.create)
     ..hasRequiredFields = false;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprExtensionCall clone() => ExprExtensionCall()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   ExprExtensionCall copyWith(void Function(ExprExtensionCall) updates) =>
       super.copyWith((message) => updates(message as ExprExtensionCall))
           as ExprExtensionCall;
 
+  @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static ExprExtensionCall create() => ExprExtensionCall._();
+  @$core.override
   ExprExtensionCall createEmptyInstance() => create();
   static $pb.PbList<ExprExtensionCall> createRepeated() =>
       $pb.PbList<ExprExtensionCall>();
@@ -2924,10 +2534,7 @@ class ExprExtensionCall extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get fn => $_getSZ(0);
   @$pb.TagNumber(1)
-  set fn($core.String v) {
-    $_setString(0, v);
-  }
-
+  set fn($core.String value) => $_setString(0, value);
   @$pb.TagNumber(1)
   $core.bool hasFn() => $_has(0);
   @$pb.TagNumber(1)
@@ -2937,6 +2544,7 @@ class ExprExtensionCall extends $pb.GeneratedMessage {
   $pb.PbList<Expr> get args => $_getList(1);
 }
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
     $core.bool.fromEnvironment('protobuf.omit_message_names');
