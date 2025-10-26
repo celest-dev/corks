@@ -1,0 +1,21 @@
+name: third_party_discharge_example
+publish_to: "none"
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  corks_cedar:
+    path: ../../
+  fixnum: ^1.1.0
+  http: ^1.2.0
+  protobuf: ^5.0.0
+  shelf: ^1.4.1
+  shelf_router: ^1.1.4
+
+dependency_overrides:
+  cedar:
+    path: ../../../../cedar/packages/cedar
+
+dev_dependencies:
+  lints: ^6.0.0

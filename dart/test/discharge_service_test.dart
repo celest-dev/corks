@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:corks_cedar/corks_cedar.dart';
 import 'package:corks_cedar/src/crypto.dart';
-import 'package:corks_cedar/src/proto/corks/v1/cork.pb.dart' as corksv1;
+import 'package:corks_cedar/src/proto/celest/corks/v1/cork.pb.dart' as corksv1;
 import 'package:corks_cedar/src/proto/google/protobuf/wrappers.pb.dart'
     as wrappers;
 import 'package:test/test.dart';
@@ -95,14 +95,15 @@ void main() {
     });
 
     test('appendFirstPartyCaveat generates identifiers', () {
-      final builder = DischargeBuilder(
-        parentCaveatId: Uint8List.fromList(List<int>.filled(16, 0x01)),
-        caveatRootKey: Uint8List.fromList(List<int>.filled(tagSize, 0x03)),
-        keyId: Uint8List.fromList(List<int>.filled(16, 0x04)),
-      )..appendFirstPartyCaveat(
-        namespace: 'celest.third_party',
-        predicate: 'rate_limited',
-      );
+      final builder =
+          DischargeBuilder(
+            parentCaveatId: Uint8List.fromList(List<int>.filled(16, 0x01)),
+            caveatRootKey: Uint8List.fromList(List<int>.filled(tagSize, 0x03)),
+            keyId: Uint8List.fromList(List<int>.filled(16, 0x04)),
+          )..appendFirstPartyCaveat(
+            namespace: 'celest.third_party',
+            predicate: 'rate_limited',
+          );
 
       final discharge = builder.build();
       expect(discharge.toProto().caveats, hasLength(1));

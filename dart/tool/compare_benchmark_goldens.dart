@@ -64,9 +64,11 @@ String _formatSigned(double value) {
 
 String _formatOptional(double? baseline, double? measurement) {
   final baseText = baseline == null ? 'n/a' : baseline.toStringAsFixed(3);
-  final currentText =
-      measurement == null ? 'n/a' : measurement.toStringAsFixed(3);
-  final note =
-      baseline == null ? 'new benchmark' : 'missing current measurement';
+  final currentText = measurement == null
+      ? 'n/a'
+      : measurement.toStringAsFixed(3);
+  final note = baseline == null
+      ? 'new benchmark'
+      : 'missing current measurement';
   return '${baseText.padLeft(10)}${currentText.padLeft(10)}   $note';
 }

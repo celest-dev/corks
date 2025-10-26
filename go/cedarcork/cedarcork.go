@@ -9,8 +9,8 @@ import (
 	corks "github.com/celest-dev/corks/go"
 	"github.com/celest-dev/corks/go/cedar"
 	cedarexpr "github.com/celest-dev/corks/go/cedar/expr"
-	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
-	corksv1 "github.com/celest-dev/corks/go/proto/corks/v1"
+	cedarv4 "github.com/celest-dev/corks/go/proto/cedar/v4"
+	corksv1 "github.com/celest-dev/corks/go/proto/celest/corks/v1"
 	"google.golang.org/protobuf/types/known/anypb"
 )
 
@@ -32,7 +32,7 @@ func (c *Cork) Issuer() *cedar.EntityUid {
 	if issuer == nil {
 		return nil
 	}
-	entityId := new(cedarv3.EntityUid)
+	entityId := new(cedarv4.EntityUid)
 	err := issuer.UnmarshalTo(entityId)
 	if err != nil {
 		return nil
@@ -48,7 +48,7 @@ func (c *Cork) Bearer() *cedar.EntityUid {
 	if bearer == nil {
 		return nil
 	}
-	entityId := new(cedarv3.EntityUid)
+	entityId := new(cedarv4.EntityUid)
 	err := bearer.UnmarshalTo(entityId)
 	if err != nil {
 		return nil
@@ -64,7 +64,7 @@ func (c *Cork) Audience() *cedar.EntityUid {
 	if audience == nil {
 		return nil
 	}
-	entityId := new(cedarv3.EntityUid)
+	entityId := new(cedarv4.EntityUid)
 	err := audience.UnmarshalTo(entityId)
 	if err != nil {
 		return nil
@@ -72,7 +72,7 @@ func (c *Cork) Audience() *cedar.EntityUid {
 	return (*cedar.EntityUid)(entityId)
 }
 
-func (c *Cork) Claims() *cedarv3.Entity {
+func (c *Cork) Claims() *cedarv4.Entity {
 	if c == nil {
 		return nil
 	}
@@ -80,7 +80,7 @@ func (c *Cork) Claims() *cedarv3.Entity {
 	if claims == nil {
 		return nil
 	}
-	entity := new(cedarv3.Entity)
+	entity := new(cedarv4.Entity)
 	err := claims.UnmarshalTo(entity)
 	if err != nil {
 		return nil
@@ -88,11 +88,11 @@ func (c *Cork) Claims() *cedarv3.Entity {
 	return entity
 }
 
-func (c *Cork) Caveats() []*cedarv3.Expr {
+func (c *Cork) Caveats() []*cedarv4.Expr {
 	if c == nil {
 		return nil
 	}
-	var expressions []*cedarv3.Expr
+	var expressions []*cedarv4.Expr
 	for _, caveat := range c.Cork.Caveats() {
 		first := caveat.GetFirstParty()
 		if first == nil || first.Namespace != cedarNamespace || first.Predicate != cedarPredicate {
@@ -101,7 +101,7 @@ func (c *Cork) Caveats() []*cedarv3.Expr {
 		if first.Payload == nil {
 			continue
 		}
-		expression := new(cedarv3.Expr)
+		expression := new(cedarv4.Expr)
 		if err := first.Payload.UnmarshalTo(expression); err != nil {
 			return nil
 		}

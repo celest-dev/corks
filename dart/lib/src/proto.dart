@@ -1,8 +1,8 @@
-import 'package:corks_cedar/src/proto/cedar/v3/entity.pb.dart' as proto;
-import 'package:corks_cedar/src/proto/cedar/v3/entity_uid.pb.dart' as proto;
-import 'package:corks_cedar/src/proto/cedar/v3/expr.pb.dart' as proto;
-import 'package:corks_cedar/src/proto/cedar/v3/policy.pb.dart' as proto;
-import 'package:corks_cedar/src/proto/cedar/v3/value.pb.dart' as proto;
+import 'package:corks_cedar/src/proto/cedar/v4/entity.pb.dart' as proto;
+import 'package:corks_cedar/src/proto/cedar/v4/entity_uid.pb.dart' as proto;
+import 'package:corks_cedar/src/proto/cedar/v4/expr.pb.dart' as proto;
+import 'package:corks_cedar/src/proto/cedar/v4/policy.pb.dart' as proto;
+import 'package:corks_cedar/src/proto/cedar/v4/value.pb.dart' as proto;
 import 'package:corks_cedar/src/proto/google/protobuf/any.pb.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:protobuf/src/protobuf/mixins/well_known.dart';

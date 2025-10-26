@@ -2,15 +2,15 @@ import 'dart:typed_data';
 
 import 'package:cedar/ast.dart' as cedar;
 import 'package:cedar/cedar.dart' as cedar_model;
-import 'package:cedar/src/proto/cedar/v3/entity.pb.dart' as cedar_entity;
-import 'package:cedar/src/proto/cedar/v3/entity_uid.pb.dart' as cedar_uid;
-import 'package:cedar/src/proto/cedar/v3/expr.pb.dart' as cedar_expr;
+import 'package:cedar/src/proto/cedar/v4/entity.pb.dart' as cedar_entity;
+import 'package:cedar/src/proto/cedar/v4/entity_uid.pb.dart' as cedar_uid;
+import 'package:cedar/src/proto/cedar/v4/expr.pb.dart' as cedar_expr;
 import 'package:corks_cedar/src/crypto.dart';
 import 'package:corks_cedar/src/proto.dart';
 import 'package:meta/meta.dart';
 
 import 'cork.dart';
-import 'proto/corks/v1/cork.pb.dart' as corksv1;
+import 'proto/celest/corks/v1/cork.pb.dart' as corksv1;
 import 'proto/google/protobuf/any.pb.dart' as anypb;
 
 /// Cedar-specialized view over a [Cork] credential.

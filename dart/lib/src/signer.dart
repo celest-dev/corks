@@ -77,10 +77,9 @@ final class InMemorySigner implements Signer {
     if (!bytesEqual(keyId, _keyId)) {
       throw ArgumentError('provided key id does not match signer key id');
     }
-    final payload =
-        Uint8List(nonce.length + keyId.length)
-          ..setRange(0, nonce.length, nonce)
-          ..setRange(nonce.length, nonce.length + keyId.length, keyId);
+    final payload = Uint8List(nonce.length + keyId.length)
+      ..setRange(0, nonce.length, nonce)
+      ..setRange(nonce.length, nonce.length + keyId.length, keyId);
     return computeMac(
       message: payload,
       keyId: keyId,

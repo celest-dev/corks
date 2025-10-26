@@ -9,7 +9,7 @@ import (
 	"time"
 
 	corksproto "github.com/celest-dev/corks/go/proto"
-	corksv1 "github.com/celest-dev/corks/go/proto/corks/v1"
+	corksv1 "github.com/celest-dev/corks/go/proto/celest/corks/v1"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"

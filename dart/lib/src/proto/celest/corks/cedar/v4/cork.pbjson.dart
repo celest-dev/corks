@@ -1,0 +1,81 @@
+// This is a generated file - do not edit.
+//
+// Generated from celest/corks/cedar/v4/cork.proto.
+
+// @dart = 3.3
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
+
+import 'dart:convert' as $convert;
+import 'dart:core' as $core;
+import 'dart:typed_data' as $typed_data;
+
+@$core.Deprecated('Use cedarCorkDescriptor instead')
+const CedarCork$json = {
+  '1': 'CedarCork',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 12, '10': 'id'},
+    {
+      '1': 'issuer',
+      '3': 2,
+      '4': 1,
+      '5': 11,
+      '6': '.cedar.v4.EntityUid',
+      '10': 'issuer'
+    },
+    {
+      '1': 'bearer',
+      '3': 3,
+      '4': 1,
+      '5': 11,
+      '6': '.cedar.v4.EntityUid',
+      '10': 'bearer'
+    },
+    {
+      '1': 'audience',
+      '3': 4,
+      '4': 1,
+      '5': 11,
+      '6': '.cedar.v4.EntityUid',
+      '9': 0,
+      '10': 'audience',
+      '17': true
+    },
+    {
+      '1': 'claims',
+      '3': 5,
+      '4': 1,
+      '5': 11,
+      '6': '.cedar.v4.Entity',
+      '9': 1,
+      '10': 'claims',
+      '17': true
+    },
+    {
+      '1': 'caveats',
+      '3': 6,
+      '4': 3,
+      '5': 11,
+      '6': '.cedar.v4.Expr',
+      '10': 'caveats'
+    },
+    {'1': 'signature', '3': 999, '4': 1, '5': 12, '10': 'signature'},
+  ],
+  '8': [
+    {'1': '_audience'},
+    {'1': '_claims'},
+  ],
+};
+
+/// Descriptor for `CedarCork`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List cedarCorkDescriptor = $convert.base64Decode(
+    'CglDZWRhckNvcmsSDgoCaWQYASABKAxSAmlkEisKBmlzc3VlchgCIAEoCzITLmNlZGFyLnY0Lk'
+    'VudGl0eVVpZFIGaXNzdWVyEisKBmJlYXJlchgDIAEoCzITLmNlZGFyLnY0LkVudGl0eVVpZFIG'
+    'YmVhcmVyEjQKCGF1ZGllbmNlGAQgASgLMhMuY2VkYXIudjQuRW50aXR5VWlkSABSCGF1ZGllbm'
+    'NliAEBEi0KBmNsYWltcxgFIAEoCzIQLmNlZGFyLnY0LkVudGl0eUgBUgZjbGFpbXOIAQESKAoH'
+    'Y2F2ZWF0cxgGIAMoCzIOLmNlZGFyLnY0LkV4cHJSB2NhdmVhdHMSHQoJc2lnbmF0dXJlGOcHIA'
+    'EoDFIJc2lnbmF0dXJlQgsKCV9hdWRpZW5jZUIJCgdfY2xhaW1z');

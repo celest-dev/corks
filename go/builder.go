@@ -7,7 +7,7 @@ import (
 	"time"
 
 	corksproto "github.com/celest-dev/corks/go/proto"
-	corksv1 "github.com/celest-dev/corks/go/proto/corks/v1"
+	corksv1 "github.com/celest-dev/corks/go/proto/celest/corks/v1"
 	"google.golang.org/protobuf/proto"
 )
 

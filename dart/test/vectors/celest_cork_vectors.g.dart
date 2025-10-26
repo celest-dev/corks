@@ -20,10 +20,10 @@ final _$celestCorkVectorsJsonLiteral = {
       'description': 'Deterministic cork signed with the default key.',
       'signer': 'default',
       'token':
-          'CAESGAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxoQAAECAwQFBgcICQoLDA0ODyI-CiZ0eXBlLmdvb2dsZWFwaXMuY29tL2NlZGFyLnYzLkVudGl0eVVpZBIUCgRVc2VyEgxpc3N1ZXItYWxpY2UqPAomdHlwZS5nb29nbGVhcGlzLmNvbS9jZWRhci52My5FbnRpdHlVaWQSEgoEVXNlchIKYmVhcmVyLWJvYjJBCiZ0eXBlLmdvb2dsZWFwaXMuY29tL2NlZGFyLnYzLkVudGl0eVVpZBIXCgdTZXJ2aWNlEgxjZWxlc3QtY2xvdWRKIFV5whrSfrc8kYWAteDQQQgHbudpkLmuIcdBHcM5LxcVUIDox5LMMViAxaOUzDE',
+          'CAESGAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxoQAAECAwQFBgcICQoLDA0ODyI-CiZ0eXBlLmdvb2dsZWFwaXMuY29tL2NlZGFyLnY0LkVudGl0eVVpZBIUCgRVc2VyEgxpc3N1ZXItYWxpY2UqPAomdHlwZS5nb29nbGVhcGlzLmNvbS9jZWRhci52NC5FbnRpdHlVaWQSEgoEVXNlchIKYmVhcmVyLWJvYjJBCiZ0eXBlLmdvb2dsZWFwaXMuY29tL2NlZGFyLnY0LkVudGl0eVVpZBIXCgdTZXJ2aWNlEgxjZWxlc3QtY2xvdWRKIPAX7pP5PComM_gkCaPj0tj24KhH-lY7qFJTTux0jY7OUIDox5LMMViAxaOUzDE',
       'tailSignature': {
-        'actual': 'VXnCGtJ+tzyRhYC14NBBCAdu52mQua4hx0EdwzkvFxU=',
-        'expected': 'VXnCGtJ+tzyRhYC14NBBCAdu52mQua4hx0EdwzkvFxU=',
+        'actual': '8Bfuk/k8KiYz+CQJo+PS2PbgqEf6VjuoUlNO7HSNjs4=',
+        'expected': '8Bfuk/k8KiYz+CQJo+PS2PbgqEf6VjuoUlNO7HSNjs4=',
       },
       'expect': {'signatureValid': true},
       'proto': {
@@ -33,19 +33,19 @@ final _$celestCorkVectorsJsonLiteral = {
         'issuer': {
           'type': 'User',
           'id': 'issuer-alice',
-          '@type': 'type.googleapis.com/cedar.v3.EntityUid',
+          '@type': 'type.googleapis.com/cedar.v4.EntityUid',
         },
         'bearer': {
           'type': 'User',
           'id': 'bearer-bob',
-          '@type': 'type.googleapis.com/cedar.v3.EntityUid',
+          '@type': 'type.googleapis.com/cedar.v4.EntityUid',
         },
         'audience': {
           'type': 'Service',
           'id': 'celest-cloud',
-          '@type': 'type.googleapis.com/cedar.v3.EntityUid',
+          '@type': 'type.googleapis.com/cedar.v4.EntityUid',
         },
-        'tailSignature': 'VXnCGtJ+tzyRhYC14NBBCAdu52mQua4hx0EdwzkvFxU=',
+        'tailSignature': '8Bfuk/k8KiYz+CQJo+PS2PbgqEf6VjuoUlNO7HSNjs4=',
         'issuedAt': '1704067200000',
         'notAfter': '1704070800000',
       },
@@ -55,10 +55,10 @@ final _$celestCorkVectorsJsonLiteral = {
       'description': 'Tail signature first byte flipped to invalidate token.',
       'signer': 'default',
       'token':
-          'CAESGAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxoQAAECAwQFBgcICQoLDA0ODyI-CiZ0eXBlLmdvb2dsZWFwaXMuY29tL2NlZGFyLnYzLkVudGl0eVVpZBIUCgRVc2VyEgxpc3N1ZXItYWxpY2UqPAomdHlwZS5nb29nbGVhcGlzLmNvbS9jZWRhci52My5FbnRpdHlVaWQSEgoEVXNlchIKYmVhcmVyLWJvYjJBCiZ0eXBlLmdvb2dsZWFwaXMuY29tL2NlZGFyLnYzLkVudGl0eVVpZBIXCgdTZXJ2aWNlEgxjZWxlc3QtY2xvdWRKIKp5whrSfrc8kYWAteDQQQgHbudpkLmuIcdBHcM5LxcVUIDox5LMMViAxaOUzDE',
+          'CAESGAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxoQAAECAwQFBgcICQoLDA0ODyI-CiZ0eXBlLmdvb2dsZWFwaXMuY29tL2NlZGFyLnY0LkVudGl0eVVpZBIUCgRVc2VyEgxpc3N1ZXItYWxpY2UqPAomdHlwZS5nb29nbGVhcGlzLmNvbS9jZWRhci52NC5FbnRpdHlVaWQSEgoEVXNlchIKYmVhcmVyLWJvYjJBCiZ0eXBlLmdvb2dsZWFwaXMuY29tL2NlZGFyLnY0LkVudGl0eVVpZBIXCgdTZXJ2aWNlEgxjZWxlc3QtY2xvdWRKIA8X7pP5PComM_gkCaPj0tj24KhH-lY7qFJTTux0jY7OUIDox5LMMViAxaOUzDE',
       'tailSignature': {
-        'actual': 'qnnCGtJ+tzyRhYC14NBBCAdu52mQua4hx0EdwzkvFxU=',
-        'expected': 'VXnCGtJ+tzyRhYC14NBBCAdu52mQua4hx0EdwzkvFxU=',
+        'actual': 'Dxfuk/k8KiYz+CQJo+PS2PbgqEf6VjuoUlNO7HSNjs4=',
+        'expected': '8Bfuk/k8KiYz+CQJo+PS2PbgqEf6VjuoUlNO7HSNjs4=',
       },
       'expect': {'signatureValid': false},
       'proto': {
@@ -68,19 +68,19 @@ final _$celestCorkVectorsJsonLiteral = {
         'issuer': {
           'type': 'User',
           'id': 'issuer-alice',
-          '@type': 'type.googleapis.com/cedar.v3.EntityUid',
+          '@type': 'type.googleapis.com/cedar.v4.EntityUid',
         },
         'bearer': {
           'type': 'User',
           'id': 'bearer-bob',
-          '@type': 'type.googleapis.com/cedar.v3.EntityUid',
+          '@type': 'type.googleapis.com/cedar.v4.EntityUid',
         },
         'audience': {
           'type': 'Service',
           'id': 'celest-cloud',
-          '@type': 'type.googleapis.com/cedar.v3.EntityUid',
+          '@type': 'type.googleapis.com/cedar.v4.EntityUid',
         },
-        'tailSignature': 'qnnCGtJ+tzyRhYC14NBBCAdu52mQua4hx0EdwzkvFxU=',
+        'tailSignature': 'Dxfuk/k8KiYz+CQJo+PS2PbgqEf6VjuoUlNO7HSNjs4=',
         'issuedAt': '1704067200000',
         'notAfter': '1704070800000',
       },

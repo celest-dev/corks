@@ -8,7 +8,7 @@ import 'package:protobuf/protobuf.dart' show GeneratedMessage;
 
 import 'exceptions.dart';
 import 'proto.dart';
-import 'proto/corks/v1/cork.pb.dart' as corksv1;
+import 'proto/celest/corks/v1/cork.pb.dart' as corksv1;
 import 'proto/google/protobuf/any.pb.dart' as anypb;
 import 'signer.dart';
 
@@ -23,7 +23,7 @@ import 'signer.dart';
 /// ```dart
 /// import 'dart:typed_data';
 /// import 'package:corks_cedar/corks_cedar.dart';
-/// import 'package:corks_cedar/src/proto/cedar/v3/entity_uid.pb.dart' as cedar;
+/// import 'package:corks_cedar/src/proto/cedar/v4/entity_uid.pb.dart' as cedar;
 ///
 /// final keyId = Uint8List.fromList(List<int>.generate(16, (i) => i));
 /// final masterKey = Uint8List.fromList(List<int>.generate(32, (i) => i + 16));
@@ -56,13 +56,12 @@ class Cork {
     DateTime? issuedAt,
     DateTime? notAfter,
   }) {
-    final builder =
-        CorkBuilder(keyId)
-          ..issuer = issuer
-          ..bearer = bearer
-          ..audience = audience
-          ..claims = claims
-          ..notAfter = notAfter;
+    final builder = CorkBuilder(keyId)
+      ..issuer = issuer
+      ..bearer = bearer
+      ..audience = audience
+      ..claims = claims
+      ..notAfter = notAfter;
     if (issuedAt != null) {
       builder.issuedAt = issuedAt;
     }
@@ -116,8 +115,8 @@ class Cork {
 
   /// Creates a [Cork] from its JSON representation.
   factory Cork.fromJson(Map<String, Object?> json) {
-    final message =
-        corksv1.Cork()..mergeFromProto3Json(json, typeRegistry: typeRegistry);
+    final message = corksv1.Cork()
+      ..mergeFromProto3Json(json, typeRegistry: typeRegistry);
     return Cork._(message);
   }
 
@@ -253,8 +252,9 @@ final class ThirdPartyCaveatOptions {
   }) : _tag = Uint8List.fromList(tag),
        _salt = salt == null ? null : Uint8List.fromList(salt),
        _caveatId = caveatId == null ? null : Uint8List.fromList(caveatId),
-       _challengeNonce =
-           challengeNonce == null ? null : Uint8List.fromList(challengeNonce);
+       _challengeNonce = challengeNonce == null
+           ? null
+           : Uint8List.fromList(challengeNonce);
 
   final String location;
   final ThirdPartyTicketEncrypter encryptTicket;
@@ -313,10 +313,9 @@ class CorkBuilder {
       _bearer = message.hasBearer() ? message.bearer.deepCopy() : null,
       _audience = message.hasAudience() ? message.audience.deepCopy() : null,
       _claims = message.hasClaims() ? message.claims.deepCopy() : null,
-      _issuedAt =
-          message.hasIssuedAt()
-              ? message.issuedAt
-              : Int64(DateTime.timestamp().millisecondsSinceEpoch),
+      _issuedAt = message.hasIssuedAt()
+          ? message.issuedAt
+          : Int64(DateTime.timestamp().millisecondsSinceEpoch),
       _notAfter = message.hasNotAfter() ? message.notAfter : null {
     for (final caveat in message.caveats) {
       _caveats.add(caveat.deepCopy());
@@ -472,10 +471,9 @@ class CorkBuilder {
     final tag = options.tag;
     final salt = options.salt;
     final providedId = options.caveatId;
-    final caveatId =
-        providedId == null || providedId.isEmpty
-            ? secureRandomBytes(_caveatIdSize)
-            : Uint8List.fromList(providedId);
+    final caveatId = providedId == null || providedId.isEmpty
+        ? secureRandomBytes(_caveatIdSize)
+        : Uint8List.fromList(providedId);
 
     final derived = deriveCaveatRootKey(
       tag: tag,

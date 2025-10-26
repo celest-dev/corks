@@ -7,7 +7,7 @@ import 'package:protobuf/protobuf.dart';
 import 'crypto.dart';
 import 'exceptions.dart';
 import 'proto.dart';
-import 'proto/corks/v1/cork.pb.dart' as corksv1;
+import 'proto/celest/corks/v1/cork.pb.dart' as corksv1;
 import 'proto/google/protobuf/any.pb.dart' as anypb;
 
 const int _defaultCaveatVersion = 1;

@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package celest.corks.cedar.v3;
+
+import "cedar/v3/entity.proto";
+import "cedar/v3/entity_uid.proto";
+import "cedar/v3/expr.proto";
+import "google/protobuf/any.proto";
+
+option go_package = "celest/corks/cedar/v3;v3";
+
+// A bearer token that can be used to make claims about an entity for the purpose
+// of authorization and authentication w/ Cedar.
+message CedarCork {
+  // The unique identifier of the cork.
+  bytes id = 1;
+
+  // The issuing authority of the cork.
+  .cedar.v3.EntityUid issuer = 2;
+
+  // The bearer of the cork, about which [claims] can be made.
+  .cedar.v3.EntityUid bearer = 3;
+
+  // The intended audience of the cork.
+  optional .cedar.v3.EntityUid audience = 4;
+
+  // Claims made about the [bearer] of the cork.
+  optional .cedar.v3.Entity claims = 5;
+
+  // The caveats to this cork's validity and usage.
+  //
+  // Caveats are structured conditions which must be met for the cork to be considered
+  // valid and for its claims to be considered true.
+  //
+  // Effectively, these form the body of a `forbid unless` policy AND'd together.
+  repeated .cedar.v3.Expr caveats = 6;
+
+  // The final signature of the cork.
+  bytes signature = 999;
+}

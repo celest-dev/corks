@@ -11,7 +11,7 @@ import (
 	"github.com/celest-dev/corks/go/cedar"
 	cedarexpr "github.com/celest-dev/corks/go/cedar/expr"
 	"github.com/celest-dev/corks/go/cedarcork"
-	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
+	cedarv4 "github.com/celest-dev/corks/go/proto/cedar/v4"
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/testing/protocmp"
@@ -88,19 +88,19 @@ func TestBuildAndVerify(t *testing.T) {
 				audience := issuer
 				claims := &cedar.Entity{
 					Uid: bearer.Proto(),
-					Attributes: map[string]*cedarv3.Value{
+					Attributes: map[string]*cedarv4.Value{
 						"email": {
-							Value: &cedarv3.Value_String_{
+							Value: &cedarv4.Value_String_{
 								String_: wrapperspb.String("test@example.com"),
 							},
 						},
 					},
 				}
 				caveat := &cedarexpr.Expr{
-					Expr: &cedarv3.Expr_Value{
-						Value: &cedarv3.ExprValue{
-							Value: &cedarv3.Value{
-								Value: &cedarv3.Value_Bool{
+					Expr: &cedarv4.Expr_Value{
+						Value: &cedarv4.ExprValue{
+							Value: &cedarv4.Value{
+								Value: &cedarv4.Value_Bool{
 									Bool: wrapperspb.Bool(true),
 								},
 							},

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:corks_cedar/corks_cedar.dart';
 import 'package:corks_cedar/src/crypto.dart' show computeTailSignature;
 import 'package:corks_cedar/src/proto.dart';
-import 'package:corks_cedar/src/proto/cedar/v3/entity_uid.pb.dart'
+import 'package:corks_cedar/src/proto/cedar/v4/entity_uid.pb.dart'
     as cedar_proto;
 import 'package:test/test.dart';
 
@@ -125,14 +125,13 @@ Future<Cork> _buildSignedCork({
   required Uint8List masterKey,
 }) async {
   final nonce = Uint8List.fromList(List<int>.generate(24, (index) => index));
-  final builder =
-      Cork.builder(keyId)
-        ..nonce = nonce
-        ..issuer = cedar_proto.EntityUid(type: 'User', id: 'issuer-alice')
-        ..bearer = cedar_proto.EntityUid(type: 'User', id: 'bearer-bob')
-        ..audience = cedar_proto.EntityUid(type: 'Service', id: 'celest-cloud')
-        ..issuedAt = DateTime.utc(2024, 1, 1, 0, 0, 0)
-        ..notAfter = DateTime.utc(2024, 1, 1, 1, 0, 0);
+  final builder = Cork.builder(keyId)
+    ..nonce = nonce
+    ..issuer = cedar_proto.EntityUid(type: 'User', id: 'issuer-alice')
+    ..bearer = cedar_proto.EntityUid(type: 'User', id: 'bearer-bob')
+    ..audience = cedar_proto.EntityUid(type: 'Service', id: 'celest-cloud')
+    ..issuedAt = DateTime.utc(2024, 1, 1, 0, 0, 0)
+    ..notAfter = DateTime.utc(2024, 1, 1, 1, 0, 0);
 
   final unsigned = builder.build();
   final signer = Signer(keyId, masterKey);

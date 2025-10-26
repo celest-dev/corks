@@ -4,9 +4,9 @@ import 'package:benchmark_harness/benchmark_harness.dart';
 import 'package:corks_cedar/src/cork.dart';
 import 'package:corks_cedar/src/crypto.dart';
 import 'package:corks_cedar/src/proto.dart';
-import 'package:corks_cedar/src/proto/cedar/v3/entity_uid.pb.dart' as cedar;
-import 'package:corks_cedar/src/proto/cedar/v3/value.pb.dart' as cedar_value;
-import 'package:corks_cedar/src/proto/corks/v1/cork.pb.dart' as corksv1;
+import 'package:corks_cedar/src/proto/cedar/v4/entity_uid.pb.dart' as cedar;
+import 'package:corks_cedar/src/proto/cedar/v4/value.pb.dart' as cedar_value;
+import 'package:corks_cedar/src/proto/celest/corks/v1/cork.pb.dart' as corksv1;
 import 'package:corks_cedar/src/proto/google/protobuf/wrappers.pb.dart'
     as wrappers;
 import 'package:corks_cedar/src/signer.dart';
@@ -193,30 +193,28 @@ class _BenchmarkFixtures {
     );
     signer = Signer(keyId, masterKey);
 
-    final builder =
-        CorkBuilder(keyId)
-          ..nonce = Uint8List.fromList(
-            List<int>.generate(nonceSize, (index) => index),
-          )
-          ..issuer =
-              (cedar.EntityUid()
-                    ..type = 'Service'
-                    ..id = 'celest-cloud')
-                  .packIntoAny()
-          ..bearer =
-              (cedar.EntityUid()
-                    ..type = 'Session'
-                    ..id = 'sess-123')
-                  .packIntoAny()
-          ..claims =
-              (cedar_value.Value()
-                    ..string = (wrappers.StringValue()..value = 'alpha'))
-                  .packIntoAny()
-          ..notAfter = DateTime.utc(2030, 1, 1);
+    final builder = CorkBuilder(keyId)
+      ..nonce = Uint8List.fromList(
+        List<int>.generate(nonceSize, (index) => index),
+      )
+      ..issuer =
+          (cedar.EntityUid()
+                ..type = 'Service'
+                ..id = 'celest-cloud')
+              .packIntoAny()
+      ..bearer =
+          (cedar.EntityUid()
+                ..type = 'Session'
+                ..id = 'sess-123')
+              .packIntoAny()
+      ..claims =
+          (cedar_value.Value()
+                ..string = (wrappers.StringValue()..value = 'alpha'))
+              .packIntoAny()
+      ..notAfter = DateTime.utc(2030, 1, 1);
 
-    final scope =
-        cedar_value.Value()
-          ..string = (wrappers.StringValue()..value = 'org:123');
+    final scope = cedar_value.Value()
+      ..string = (wrappers.StringValue()..value = 'org:123');
     builder.addCaveat(
       corksv1.Caveat(
         caveatVersion: 1,

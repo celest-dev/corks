@@ -45,13 +45,12 @@ class DoubleValue extends $pb.GeneratedMessage with $mixin.DoubleValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.DoubleValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.DoubleValueMixin.fromProto3JsonHelper)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OD)
+      wellKnownType: $mixin.WellKnownType.doubleValue)
+    ..aD(1, _omitFieldNames ? '' : 'value')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DoubleValue clone() => DoubleValue()..mergeFromMessage(this);
+  DoubleValue clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DoubleValue copyWith(void Function(DoubleValue) updates) =>
       super.copyWith((message) => updates(message as DoubleValue))
@@ -107,13 +106,12 @@ class FloatValue extends $pb.GeneratedMessage with $mixin.FloatValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.FloatValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.FloatValueMixin.fromProto3JsonHelper)
-    ..a<$core.double>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OF)
+      wellKnownType: $mixin.WellKnownType.floatValue)
+    ..aD(1, _omitFieldNames ? '' : 'value', fieldType: $pb.PbFieldType.OF)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  FloatValue clone() => FloatValue()..mergeFromMessage(this);
+  FloatValue clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   FloatValue copyWith(void Function(FloatValue) updates) =>
       super.copyWith((message) => updates(message as FloatValue)) as FloatValue;
@@ -168,13 +166,12 @@ class Int64Value extends $pb.GeneratedMessage with $mixin.Int64ValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.Int64ValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.Int64ValueMixin.fromProto3JsonHelper)
+      wellKnownType: $mixin.WellKnownType.int64Value)
     ..aInt64(1, _omitFieldNames ? '' : 'value')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Int64Value clone() => Int64Value()..mergeFromMessage(this);
+  Int64Value clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Int64Value copyWith(void Function(Int64Value) updates) =>
       super.copyWith((message) => updates(message as Int64Value)) as Int64Value;
@@ -229,14 +226,13 @@ class UInt64Value extends $pb.GeneratedMessage with $mixin.UInt64ValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.UInt64ValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.UInt64ValueMixin.fromProto3JsonHelper)
+      wellKnownType: $mixin.WellKnownType.uint64Value)
     ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UInt64Value clone() => UInt64Value()..mergeFromMessage(this);
+  UInt64Value clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UInt64Value copyWith(void Function(UInt64Value) updates) =>
       super.copyWith((message) => updates(message as UInt64Value))
@@ -292,13 +288,12 @@ class Int32Value extends $pb.GeneratedMessage with $mixin.Int32ValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.Int32ValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.Int32ValueMixin.fromProto3JsonHelper)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.O3)
+      wellKnownType: $mixin.WellKnownType.int32Value)
+    ..aI(1, _omitFieldNames ? '' : 'value')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Int32Value clone() => Int32Value()..mergeFromMessage(this);
+  Int32Value clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Int32Value copyWith(void Function(Int32Value) updates) =>
       super.copyWith((message) => updates(message as Int32Value)) as Int32Value;
@@ -353,13 +348,12 @@ class UInt32Value extends $pb.GeneratedMessage with $mixin.UInt32ValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.UInt32ValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.UInt32ValueMixin.fromProto3JsonHelper)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OU3)
+      wellKnownType: $mixin.WellKnownType.uint32Value)
+    ..aI(1, _omitFieldNames ? '' : 'value', fieldType: $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UInt32Value clone() => UInt32Value()..mergeFromMessage(this);
+  UInt32Value clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UInt32Value copyWith(void Function(UInt32Value) updates) =>
       super.copyWith((message) => updates(message as UInt32Value))
@@ -415,13 +409,12 @@ class BoolValue extends $pb.GeneratedMessage with $mixin.BoolValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.BoolValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.BoolValueMixin.fromProto3JsonHelper)
+      wellKnownType: $mixin.WellKnownType.boolValue)
     ..aOB(1, _omitFieldNames ? '' : 'value')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  BoolValue clone() => BoolValue()..mergeFromMessage(this);
+  BoolValue clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BoolValue copyWith(void Function(BoolValue) updates) =>
       super.copyWith((message) => updates(message as BoolValue)) as BoolValue;
@@ -476,13 +469,12 @@ class StringValue extends $pb.GeneratedMessage with $mixin.StringValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.StringValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.StringValueMixin.fromProto3JsonHelper)
+      wellKnownType: $mixin.WellKnownType.stringValue)
     ..aOS(1, _omitFieldNames ? '' : 'value')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  StringValue clone() => StringValue()..mergeFromMessage(this);
+  StringValue clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   StringValue copyWith(void Function(StringValue) updates) =>
       super.copyWith((message) => updates(message as StringValue))
@@ -538,14 +530,13 @@ class BytesValue extends $pb.GeneratedMessage with $mixin.BytesValueMixin {
       package:
           const $pb.PackageName(_omitMessageNames ? '' : 'google.protobuf'),
       createEmptyInstance: create,
-      toProto3Json: $mixin.BytesValueMixin.toProto3JsonHelper,
-      fromProto3Json: $mixin.BytesValueMixin.fromProto3JsonHelper)
+      wellKnownType: $mixin.WellKnownType.bytesValue)
     ..a<$core.List<$core.int>>(
         1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  BytesValue clone() => BytesValue()..mergeFromMessage(this);
+  BytesValue clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   BytesValue copyWith(void Function(BytesValue) updates) =>
       super.copyWith((message) => updates(message as BytesValue)) as BytesValue;

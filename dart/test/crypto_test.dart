@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:corks_cedar/corks_cedar.dart';
 import 'package:corks_cedar/src/crypto.dart';
-import 'package:corks_cedar/src/exceptions.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:cryptography/cryptography.dart';
 import 'package:test/test.dart';
@@ -223,11 +223,10 @@ Uint8List _hkdfSha256({
   var counter = 1;
 
   while (result.length < length) {
-    final buffer =
-        BytesBuilder(copy: false)
-          ..add(previous)
-          ..add(info)
-          ..addByte(counter);
+    final buffer = BytesBuilder(copy: false)
+      ..add(previous)
+      ..add(info)
+      ..addByte(counter);
     previous = _hmacSha256(prk, buffer.toBytes());
     result.add(previous);
     counter++;

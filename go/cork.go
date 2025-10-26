@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"time"
 
-	corksv1 "github.com/celest-dev/corks/go/proto/corks/v1"
+	corksv1 "github.com/celest-dev/corks/go/proto/celest/corks/v1"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 )

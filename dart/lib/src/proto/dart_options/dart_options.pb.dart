@@ -50,7 +50,7 @@ class DartMixin extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  DartMixin clone() => DartMixin()..mergeFromMessage(this);
+  DartMixin clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   DartMixin copyWith(void Function(DartMixin) updates) =>
       super.copyWith((message) => updates(message as DartMixin)) as DartMixin;
@@ -125,12 +125,12 @@ class Imports extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'Imports',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'dart_options'),
       createEmptyInstance: create)
-    ..pc<DartMixin>(1, _omitFieldNames ? '' : 'mixins', $pb.PbFieldType.PM,
+    ..pPM<DartMixin>(1, _omitFieldNames ? '' : 'mixins',
         subBuilder: DartMixin.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  Imports clone() => Imports()..mergeFromMessage(this);
+  Imports clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   Imports copyWith(void Function(Imports) updates) =>
       super.copyWith((message) => updates(message as Imports)) as Imports;

@@ -13,7 +13,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"google.golang.org/protobuf/encoding/protojson"
 
-	cedarv3 "github.com/celest-dev/corks/go/proto/cedar/v3"
+	cedarv4 "github.com/celest-dev/corks/go/proto/cedar/v4"
 )
 
 const (
@@ -123,9 +123,9 @@ func buildExpectedVectors(t testing.TB) map[string]any {
 
 	builder := NewBuilder(keyID).
 		Nonce(nonce).
-		Issuer(&cedarv3.EntityUid{Type: "User", Id: "issuer-alice"}).
-		Bearer(&cedarv3.EntityUid{Type: "User", Id: "bearer-bob"}).
-		Audience(&cedarv3.EntityUid{Type: "Service", Id: "celest-cloud"}).
+		Issuer(&cedarv4.EntityUid{Type: "User", Id: "issuer-alice"}).
+		Bearer(&cedarv4.EntityUid{Type: "User", Id: "bearer-bob"}).
+		Audience(&cedarv4.EntityUid{Type: "Service", Id: "celest-cloud"}).
 		IssuedAt(time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)).
 		NotAfter(time.Date(2024, 1, 1, 1, 0, 0, 0, time.UTC))
 

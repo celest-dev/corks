@@ -32,10 +32,9 @@ void main() {
         encryptTicket: (caveatId, derivedKey) {
           capturedId = Uint8List.fromList(caveatId);
           capturedKey = Uint8List.fromList(derivedKey);
-          final payload =
-              Uint8List(7 + derivedKey.length)
-                ..setAll(0, 'ticket:'.codeUnits)
-                ..setAll(7, derivedKey);
+          final payload = Uint8List(7 + derivedKey.length)
+            ..setAll(0, 'ticket:'.codeUnits)
+            ..setAll(7, derivedKey);
           return payload;
         },
       );
@@ -97,10 +96,9 @@ void main() {
       }
 
       Future<CorkBuilder> callAppend(ThirdPartyCaveatOptions opts) async {
-        final builder =
-            CorkBuilder(Uint8List(16))
-              ..issuer = wrappers.StringValue(value: 'issuer')
-              ..bearer = wrappers.StringValue(value: 'bearer');
+        final builder = CorkBuilder(Uint8List(16))
+          ..issuer = wrappers.StringValue(value: 'issuer')
+          ..bearer = wrappers.StringValue(value: 'bearer');
         return builder.appendThirdPartyCaveat(opts);
       }
 
@@ -140,8 +138,8 @@ void main() {
       await expectLater(
         callAppend(
           baseOptions(
-            encryptTicket:
-                (id, key) => Future<List<int>>.error(StateError('boom')),
+            encryptTicket: (id, key) =>
+                Future<List<int>>.error(StateError('boom')),
           ),
         ),
         throwsA(isA<StateError>().having((e) => e.message, 'message', 'boom')),

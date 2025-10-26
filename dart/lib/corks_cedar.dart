@@ -13,3 +13,5 @@ export 'src/discharge.dart';
 export 'src/discharge_service.dart';
 export 'src/exceptions.dart';
 export 'src/signer.dart';
+export 'src/third_party_client.dart';
+export 'src/third_party_ticket.dart';

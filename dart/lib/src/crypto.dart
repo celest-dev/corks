@@ -10,7 +10,7 @@ import 'package:cryptography/cryptography.dart';
 import 'package:fixnum/fixnum.dart';
 
 import 'exceptions.dart';
-import 'proto/corks/v1/cork.pb.dart' as corksv1;
+import 'proto/celest/corks/v1/cork.pb.dart' as corksv1;
 import 'proto/google/protobuf/any.pb.dart' as anypb;
 import 'signer.dart';
 
@@ -168,10 +168,9 @@ Future<Uint8List> encryptChallenge({
   }
 
   final cipher = Chacha20.poly1305Aead();
-  final usedNonce =
-      nonce != null
-          ? Uint8List.fromList(nonce)
-          : secureRandomBytes(cipher.nonceLength);
+  final usedNonce = nonce != null
+      ? Uint8List.fromList(nonce)
+      : secureRandomBytes(cipher.nonceLength);
   if (usedNonce.length != cipher.nonceLength) {
     throw InvalidCorkException(
       'challenge nonce must be ${cipher.nonceLength} bytes',

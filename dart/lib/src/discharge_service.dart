@@ -5,7 +5,7 @@ import 'package:protobuf/protobuf.dart';
 
 import 'discharge.dart';
 import 'exceptions.dart';
-import 'proto/corks/v1/cork.pb.dart' as corksv1;
+import 'proto/celest/corks/v1/cork.pb.dart' as corksv1;
 
 /// Immutable request passed to the discharge service when issuing a token.
 final class ThirdPartyDischargeRequest {
@@ -13,10 +13,9 @@ final class ThirdPartyDischargeRequest {
     required List<int> ticket,
     Map<String, Object?>? metadata,
   }) : ticket = Uint8List.fromList(ticket),
-       metadata =
-           metadata == null
-               ? const <String, Object?>{}
-               : Map.unmodifiable(Map<String, Object?>.from(metadata));
+       metadata = metadata == null
+           ? const <String, Object?>{}
+           : Map.unmodifiable(Map<String, Object?>.from(metadata));
 
   /// AEAD-protected ticket generated when the cork was attenuated.
   final Uint8List ticket;
@@ -41,10 +40,9 @@ final class DecodedDischargeTicket {
          ),
        ),
        notAfter = notAfter?.toUtc(),
-       metadata =
-           metadata == null
-               ? const <String, Object?>{}
-               : Map.unmodifiable(Map<String, Object?>.from(metadata)) {
+       metadata = metadata == null
+           ? const <String, Object?>{}
+           : Map.unmodifiable(Map<String, Object?>.from(metadata)) {
     if (this.caveatId.isEmpty) {
       throw const InvalidCorkException('ticket missing caveat id');
     }
