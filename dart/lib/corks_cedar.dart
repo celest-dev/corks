@@ -9,5 +9,7 @@ library;
 
 export 'src/cedar_cork.dart';
 export 'src/cork.dart';
+export 'src/discharge.dart';
+export 'src/discharge_service.dart';
 export 'src/exceptions.dart';
 export 'src/signer.dart';

@@ -1,5 +1,4 @@
-/// Internal crypto utilities.
-@internal
+/// Crypto utilities shared across cork implementations.
 library;
 
 import 'dart:convert';
@@ -9,7 +8,6 @@ import 'dart:typed_data';
 import 'package:crypto/crypto.dart' as crypto;
 import 'package:cryptography/cryptography.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:meta/meta.dart';
 
 import 'exceptions.dart';
 import 'proto/corks/v1/cork.pb.dart' as corksv1;
@@ -18,7 +16,7 @@ import 'signer.dart';
 
 const int nonceSize = 24;
 const String macContext = 'celest:cork:v1';
-const int _tagSize = 32;
+const int tagSize = 32;
 final Int64 _byteMask = Int64(0xff);
 final Random _random = Random.secure();
 
@@ -101,8 +99,8 @@ Future<Uint8List> computeTailSignature(
     throw InvalidCorkException('signer key id does not match cork');
   }
   final rootKey = await signer.deriveCorkRootKey(nonce: nonce, keyId: keyId);
-  if (rootKey.length != _tagSize) {
-    throw InvalidCorkException('derived root key must be $_tagSize bytes');
+  if (rootKey.length != tagSize) {
+    throw InvalidCorkException('derived root key must be $tagSize bytes');
   }
   var tag = hmacSha256(rootKey, utf8.encode(macContext));
 
@@ -139,14 +137,14 @@ Uint8List deriveCaveatRootKey({
   required Uint8List tag,
   required Uint8List caveatId,
   Uint8List? salt,
-  int length = _tagSize,
+  int length = tagSize,
 }) {
-  if (tag.length != _tagSize) {
-    throw InvalidCorkException('tag must be $_tagSize bytes');
+  if (tag.length != tagSize) {
+    throw InvalidCorkException('tag must be $tagSize bytes');
   }
-  if (length <= 0 || length > _tagSize) {
+  if (length <= 0 || length > tagSize) {
     throw InvalidCorkException(
-      'derived key length must be between 1 and $_tagSize',
+      'derived key length must be between 1 and $tagSize',
     );
   }
   final info = _buildAssociatedData(caveatId, salt);
@@ -162,11 +160,11 @@ Future<Uint8List> encryptChallenge({
   required Uint8List derivedKey,
   Uint8List? nonce,
 }) async {
-  if (tag.length != _tagSize) {
-    throw InvalidCorkException('tag must be $_tagSize bytes');
+  if (tag.length != tagSize) {
+    throw InvalidCorkException('tag must be $tagSize bytes');
   }
-  if (derivedKey.length != _tagSize) {
-    throw InvalidCorkException('derived key must be $_tagSize bytes');
+  if (derivedKey.length != tagSize) {
+    throw InvalidCorkException('derived key must be $tagSize bytes');
   }
 
   final cipher = Chacha20.poly1305Aead();
@@ -213,8 +211,8 @@ Future<Uint8List> decryptChallenge({
   Uint8List? salt,
   required Uint8List challenge,
 }) async {
-  if (tag.length != _tagSize) {
-    throw InvalidCorkException('tag must be $_tagSize bytes');
+  if (tag.length != tagSize) {
+    throw InvalidCorkException('tag must be $tagSize bytes');
   }
 
   final cipher = Chacha20.poly1305Aead();
@@ -251,7 +249,7 @@ Uint8List _buildAssociatedData(Uint8List caveatId, Uint8List? salt) {
   return data;
 }
 
-Uint8List _hkdf(Uint8List ikm, Uint8List info, {int length = _tagSize}) {
+Uint8List _hkdf(Uint8List ikm, Uint8List info, {int length = tagSize}) {
   final prk = _hkdfExtract(Uint8List(0), ikm);
   final result = BytesBuilder(copy: false);
   var previous = Uint8List(0);
@@ -272,6 +270,6 @@ Uint8List _hkdf(Uint8List ikm, Uint8List info, {int length = _tagSize}) {
 }
 
 Uint8List _hkdfExtract(Uint8List salt, Uint8List ikm) {
-  final effectiveSalt = salt.isEmpty ? Uint8List(_tagSize) : salt;
+  final effectiveSalt = salt.isEmpty ? Uint8List(tagSize) : salt;
   return hmacSha256(effectiveSalt, ikm);
 }
