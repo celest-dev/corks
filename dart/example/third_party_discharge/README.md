@@ -40,7 +40,13 @@ Run the audit flow to see custom caveats emitted by the webhook service:
 dart run bin/client.dart audit
 ```
 
+Demonstrate a multi-caveat cork by requesting both discharges in a single run:
+
+```sh
+dart run bin/client.dart both
+```
+
 Each command prints the verified discharge identifiers. The server logs every
 request it receives, letting you observe the incoming metadata and ticket
-attributes—highlighting how the helper classes in `corks_cedar` manage
-tickets, metadata, and caching.
+attributes—highlighting how the helper classes in `corks_cedar` manage single-
+and multi-caveat tickets, metadata, and caching.

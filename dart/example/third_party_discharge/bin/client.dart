@@ -37,6 +37,9 @@ Future<void> main(List<String> arguments) async {
       case 'audit':
         await _runAudit(dischargeClient);
         break;
+      case 'both':
+        await _runBoth(dischargeClient);
+        break;
       default:
         _printUsage();
         exitCode = 64;
@@ -89,8 +92,14 @@ Future<void> _runSso(ThirdPartyDischargeClient client) async {
 
   await _fetchAndVerify(
     client: client,
-    location: 'http://localhost:8080/sso:issue',
-    ticketMetadata: metadata,
+    plans: [
+      _CaveatPlan(
+        label: 'sso',
+        location: 'http://localhost:8080/sso:issue',
+        ticketMetadata: metadata,
+        ticketNotAfter: DateTime.now().toUtc().add(const Duration(minutes: 5)),
+      ),
+    ],
     requestMetadata: requestContext,
   );
 }
@@ -105,42 +114,106 @@ Future<void> _runAudit(ThirdPartyDischargeClient client) async {
 
   await _fetchAndVerify(
     client: client,
-    location: 'http://localhost:8080/audit:issue',
-    ticketMetadata: metadata,
+    plans: [
+      _CaveatPlan(
+        label: 'audit',
+        location: 'http://localhost:8080/audit:issue',
+        ticketMetadata: metadata,
+        ticketNotAfter: DateTime.now().toUtc().add(const Duration(minutes: 5)),
+      ),
+    ],
   );
+}
+
+Future<void> _runBoth(ThirdPartyDischargeClient client) async {
+  print('Requesting SSO and audit discharges...');
+
+  final now = DateTime.now().toUtc();
+
+  await _fetchAndVerify(
+    client: client,
+    plans: [
+      _CaveatPlan(
+        label: 'sso',
+        location: 'http://localhost:8080/sso:issue',
+        ticketMetadata: {
+          'session_id': 'sess-${DateTime.now().millisecondsSinceEpoch}',
+          'session_version': 1,
+        },
+        ticketNotAfter: now.add(const Duration(minutes: 5)),
+      ),
+      _CaveatPlan(
+        label: 'audit',
+        location: 'http://localhost:8080/audit:issue',
+        ticketMetadata: {
+          'resource': 'projects/example-stack',
+          'actions': ['list', 'describe'],
+        },
+        ticketNotAfter: now.add(const Duration(minutes: 7)),
+      ),
+    ],
+    requestMetadata: {'ip_address': '203.0.113.5'},
+  );
+}
+
+class _CaveatPlan {
+  const _CaveatPlan({
+    required this.label,
+    required this.location,
+    required this.ticketMetadata,
+    this.ticketNotAfter,
+  });
+
+  final String label;
+  final String location;
+  final Map<String, Object?> ticketMetadata;
+  final DateTime? ticketNotAfter;
 }
 
 Future<void> _fetchAndVerify({
   required ThirdPartyDischargeClient client,
-  required String location,
-  required Map<String, Object?> ticketMetadata,
+  required List<_CaveatPlan> plans,
   Map<String, Object?> requestMetadata = const <String, Object?>{},
 }) async {
-  final builder =
-      CorkBuilder(_fleetKeyId)
-        ..issuer = wrappers.StringValue(value: 'celest::example::issuer')
-        ..bearer = wrappers.StringValue(value: 'users/alice')
-        ..notAfter = DateTime.now().toUtc().add(const Duration(minutes: 10));
-
-  final options = _codec.createOptions(
-    location: location,
-    tag: _randomBytes(32),
-    metadata: ticketMetadata,
-    notAfter: DateTime.now().toUtc().add(const Duration(minutes: 5)),
-  );
-
-  await builder.appendThirdPartyCaveat(options);
-  final cork = builder.build();
-  final caveats =
-      cork.caveats.where((caveat) => caveat.hasThirdParty()).toList();
-  if (caveats.isEmpty) {
-    throw StateError('cork missing third-party caveat');
+  if (plans.isEmpty) {
+    throw ArgumentError('At least one caveat plan is required');
   }
 
+  final builder = _createBaseBuilder();
+  final planByLocation = <String, _CaveatPlan>{};
+  for (final plan in plans) {
+    planByLocation[plan.location] = plan;
+    final options = _codec.createOptions(
+      location: plan.location,
+      tag: _randomBytes(32),
+      metadata: plan.ticketMetadata,
+      notAfter:
+          plan.ticketNotAfter ??
+          DateTime.now().toUtc().add(const Duration(minutes: 5)),
+    );
+    await builder.appendThirdPartyCaveat(options);
+  }
+
+  final cork = builder.build();
   final decodedTickets = <String, DecodedDischargeTicket>{};
-  for (final caveat in caveats) {
+  final labelById = <String, String>{};
+  final locationById = <String, String>{};
+
+  for (final caveat in cork.caveats.where((c) => c.hasThirdParty())) {
+    final plan = planByLocation[caveat.thirdParty.location];
+    if (plan == null) {
+      continue;
+    }
     final id = _encodeId(caveat.caveatId);
+    locationById[id] = caveat.thirdParty.location;
+    labelById[id] = plan.label;
     decodedTickets[id] = await _codec.decode(caveat.thirdParty.ticket);
+  }
+
+  if (decodedTickets.length != plans.length) {
+    throw StateError(
+      'expected ${plans.length} third-party caveat(s) but decoded ${decodedTickets.length}',
+    );
   }
 
   final discharges = await client.fetchDischarges(
@@ -152,17 +225,26 @@ Future<void> _fetchAndVerify({
     throw StateError('no discharges returned');
   }
 
+  print('Verifying ${discharges.length} discharge(s)...');
   for (final entry in discharges.entries) {
-    final discharge = entry.value;
     final decoded = decodedTickets[entry.key];
     if (decoded == null) {
       throw StateError('missing decoded ticket for caveat ${entry.key}');
     }
-    discharge.verify(caveatRootKey: decoded.caveatRootKey);
-    print('  - caveat ${entry.key}: discharge=${discharge.toString()}');
+    entry.value.verify(caveatRootKey: decoded.caveatRootKey);
+    final label = labelById[entry.key] ?? 'caveat ${entry.key}';
+    final location = locationById[entry.key] ?? '<unknown>';
+    print('  - $label ($location): discharge=${entry.value.toString()}');
   }
 
   print('All discharges verified.');
+}
+
+CorkBuilder _createBaseBuilder() {
+  return CorkBuilder(_fleetKeyId)
+    ..issuer = wrappers.StringValue(value: 'celest::example::issuer')
+    ..bearer = wrappers.StringValue(value: 'users/alice')
+    ..notAfter = DateTime.now().toUtc().add(const Duration(minutes: 10));
 }
 
 Uint8List _randomBytes(int length) {
@@ -179,4 +261,5 @@ void _printUsage() {
   print('Commands:');
   print('  sso    Issue a discharge for the SSO third-party caveat');
   print('  audit  Issue a discharge for the audit logging caveat');
+  print('  both   Issue discharges for SSO and audit caveats together');
 }

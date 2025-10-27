@@ -17,7 +17,9 @@ dart run bin/server.dart    # in one shell
 dart run bin/client.dart sso
 ```
 
-Use `dart run bin/client.dart audit` to see the audit webhook variant.
+Use `dart run bin/client.dart audit` to see the audit webhook variant, or
+`dart run bin/client.dart both` to request discharges for both caveats in a
+single cork.
 
 ## Development
 
