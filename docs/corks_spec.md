@@ -1,7 +1,7 @@
 # Celest Cork Specification
 
 ## 1. Introduction
-Celest corks are composable authorization credentials inspired by macaroons ([Birgisson et al. 2014](theory.stanford.edu_~ataly_Papers_macaroons.pdf.2025-10-24T14_39_32.467Z.md)) and informed by Fly.io’s production deployment ([Ptacek 2024](fly.io_blog_macaroons-escalated-quickly_.2025-10-24T14_39_07.425Z.md), [`superfly/macaroon`](macaroon)). Corks enable multi-tenant access control across Celest Cloud services by allowing tokens to be attenuated and delegated while carrying structured caveats that encode organizational context. This specification replaces prior implementations under `packages/corks`.
+Celest corks are composable authorization credentials inspired by macaroons ([Birgisson, A. et al.](https://research.google/pubs/macaroons-cookies-with-contextual-caveats-for-decentralized-authorization-in-the-cloud/)) and informed by Fly.io’s production deployment, [`superfly/macaroon`](https://github.com/superfly/macaroon). Corks enable multi-tenant access control across Celest Cloud services by allowing tokens to be attenuated and delegated while carrying structured caveats that encode organizational context.
 
 ## 2. Goals
 - **Composable attenuation.** Holders MUST be able to add caveats without access to issuer secrets.
@@ -20,7 +20,7 @@ Celest corks are composable authorization credentials inspired by macaroons ([B
 - **Root key:** Per-cork secret derived from the issuer’s master key.
 
 ## 4. Data Model
-Corks use canonical protobuf v3 serialization with deterministic encoding. Symbols below use `proto3` syntax.
+Corks use canonical protobuf v3 serialization with deterministic encoding.
 
 ```proto
 syntax = "proto3";
@@ -123,6 +123,11 @@ message Discharge {
 - Discharge MUST reference `parent_caveat_id` and be attenuable using the same chained MAC scheme.
 - Discharges MUST accompany cork during authorization; verification without required discharges MUST fail.
 
+Reference integrations demonstrating both SSO-style and audit webhook flows live under
+`dart/example/third_party_discharge`, with automated coverage in
+`dart/test/third_party_discharge_integration_test.dart`. These examples
+exercise multi-caveat corks, ticket metadata propagation, and discharge caching behaviour.
+
 ## 8. Verification Algorithm
 Given cork `C`, discharges `D`:
 1. Validate `C.version == 1`, `tail_signature` present, `key_id` recognized, `issued_at` ≤ now ≤ `not_after` (if set).
@@ -147,6 +152,26 @@ Celest MUST publish a registry mapping `(namespace, predicate)` to handler logic
 - `celest.auth.session_state` — payload: session version for revocation.
 
 Handlers MUST be pure functions returning boolean allowed/denied. Unknown predicates MUST fail closed.
+
+### 9.1 Registry contract
+- Each verifier runtime maintains an in-memory registry keyed by `(namespace, predicate)`.
+- The Go reference implementation (`packages/corks/go/evaluator.go`) exposes `NewRegistry()` plus `Register` methods bound to the canonical namespace; registration panics on duplicates to prevent shadowing.
+- Evaluation MUST short-circuit to DENIED whenever the namespace/predicate pair is missing, the payload is absent/malformed, or the context required by the predicate is unavailable.
+- All SDKs MUST mirror this behaviour: the default must be fail-closed.
+
+Example usage in Go:
+
+```go
+registry := corks.NewRegistry()
+registry.Register("custom_predicate", customEvaluator)
+
+result := registry.Evaluate(ctx, caveat, input)
+if !result.Satisfied {
+  return fmt.Errorf("caveat denied: %s", result.Reason)
+}
+```
+
+Implementations in other languages SHOULD offer the same extension points and failure semantics so operators can safely add first-party predicates without diverging behaviour across services.
 
 ## 10. Multi-Tenant Integration
 - Corks MUST encode tenant context at issuance via the organization scope caveat.
@@ -180,5 +205,3 @@ Handlers MUST be pure functions returning boolean allowed/denied. Unknown predic
 
 ## 15. References
 1. Birgisson, A. et al. *Macaroons: Cookies with Contextual Caveats for Decentralized Authorization in the Cloud*. NDSS 2014.
-2. Ptacek, T. *Macaroons Escalated Quickly*. Fly.io Blog, 2024.
-3. `superfly/macaroon` GitHub repository (accessed 2025-10-24).
