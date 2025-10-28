@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../benchmarks/cork_benchmarks.dart' as cork_benchmarks;
+import '../benchmark/cork_benchmarks.dart' as cork_benchmarks;
 
 /// Runs the cork benchmark suite and writes the results to a JSON golden file.
 Future<void> main(List<String> args) async {
