@@ -28,3 +28,9 @@ jobs:
       - name: Test
         working-directory: dart
         run: dart test --fail-fast
+      - name: Example - Get Packages
+        working-directory: dart/example/third_party_discharge
+        run: dart pub get
+      - name: Example - Analyze
+        working-directory: dart/example/third_party_discharge
+        run: dart analyze

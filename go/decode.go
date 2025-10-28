@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"errors"
 
-	corksv1 "github.com/celest-dev/corks/go/proto/corks/v1"
+	corksv1 "github.com/celest-dev/corks/go/proto/celest/corks/v1"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -15,17 +15,16 @@ var unmarshalOpts = proto.UnmarshalOptions{
 // Unmarshal decodes the cork from the given encoded data.
 func (s *Cork) UnmarshalFrom(encoded []byte) error {
 	var cork corksv1.Cork
-	err := unmarshalOpts.Unmarshal(encoded, &cork)
-	if err != nil {
+	if err := unmarshalOpts.Unmarshal(encoded, &cork); err != nil {
 		return errors.Join(ErrInvalidCork, err)
 	}
 	s.proto = &cork
 	return nil
 }
 
-// Decode decodes a cork from a base64url-encoded string.
+// DecodeFrom decodes a cork from a base64url-encoded string.
 func (s *Cork) DecodeFrom(encoded string) error {
-	data, err := base64.URLEncoding.DecodeString(encoded)
+	data, err := base64.RawURLEncoding.DecodeString(encoded)
 	if err != nil {
 		return errors.Join(ErrInvalidCork, err)
 	}
@@ -35,8 +34,7 @@ func (s *Cork) DecodeFrom(encoded string) error {
 // Decode decodes a cork from a base64url-encoded token.
 func Decode(token string) (*Cork, error) {
 	var cork Cork
-	err := cork.DecodeFrom(token)
-	if err != nil {
+	if err := cork.DecodeFrom(token); err != nil {
 		return nil, err
 	}
 	return &cork, nil

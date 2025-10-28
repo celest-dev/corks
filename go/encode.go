@@ -13,20 +13,20 @@ var marshalOpts = proto.MarshalOptions{
 
 // Marshal encodes the sealed cork into a binary format.
 func (c *Cork) Marshal() ([]byte, error) {
-	if c.Signature() == nil {
+	if len(c.TailSignature()) == 0 {
 		return nil, ErrMissingSignature
 	}
 	return marshalOpts.Marshal(c.Proto())
 }
 
-// Encode encodes the sealed cork into a base64url-encoded string.
+// Encode encodes the sealed cork into a base64url (unpadded) string.
 func (c *Cork) Encode() (string, error) {
-	if c.Signature() == nil {
+	if len(c.TailSignature()) == 0 {
 		return "", ErrMissingSignature
 	}
 	data, err := c.Marshal()
 	if err != nil {
 		return "", errors.Join(ErrInvalidCork, err)
 	}
-	return base64.URLEncoding.EncodeToString(data), nil
+	return base64.RawURLEncoding.EncodeToString(data), nil
 }

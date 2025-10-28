@@ -1,44 +1,23 @@
-import 'dart:collection';
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cedar/ast.dart' as cedar;
-import 'package:cedar/src/proto/cedar/v3/entity.pb.dart' as proto;
-import 'package:cedar/src/proto/cedar/v3/entity_uid.pb.dart' as proto;
-import 'package:cedar/src/proto/cedar/v3/expr.pb.dart' as proto;
-import 'package:corks_cedar/corks_cedar.dart';
-import 'package:corks_cedar/corks_proto.dart' as proto;
+import 'package:cedar/cedar.dart' as cedar_model;
+import 'package:cedar/src/proto/cedar/v4/entity.pb.dart' as cedar_entity;
+import 'package:cedar/src/proto/cedar/v4/entity_uid.pb.dart' as cedar_uid;
+import 'package:cedar/src/proto/cedar/v4/expr.pb.dart' as cedar_expr;
+import 'package:corks_cedar/src/crypto.dart';
+import 'package:corks_cedar/src/proto.dart';
 import 'package:meta/meta.dart';
 
-/// A builder for [Cork]s backed by Cedar.
-extension type CedarCorkBuilder(CorkBuilder _builder) implements CorkBuilder {
-  @redeclare
-  set issuer(cedar.EntityUid issuer) {
-    _builder.issuer = issuer.toProto();
-  }
+import 'cork.dart';
+import 'proto/celest/corks/v1/cork.pb.dart' as corksv1;
+import 'proto/google/protobuf/any.pb.dart' as anypb;
 
-  @redeclare
-  set bearer(cedar.EntityUid bearer) {
-    _builder.bearer = bearer.toProto();
-  }
-
-  @redeclare
-  set audience(cedar.EntityUid audience) {
-    _builder.audience = audience.toProto();
-  }
-
-  @redeclare
-  set claims(cedar.Entity claims) {
-    _builder.claims = claims.toProto();
-  }
-
-  @redeclare
-  void addCaveat(cedar.Expr caveat) {
-    _builder.addCaveat(caveat.toProto());
-  }
-}
-
-/// A [Cork] backed by Cedar.
+/// Cedar-specialized view over a [Cork] credential.
+///
+/// This extension type exposes Cedar domain objects instead of raw protobuf
+/// payloads so applications can work with strongly typed entities, claims, and
+/// caveat expressions.
 extension type CedarCork(Cork _cork) implements Cork {
   /// Parses a base64-encoded [CedarCork].
   factory CedarCork.parse(String token) => CedarCork(Cork.parse(token));
@@ -47,7 +26,7 @@ extension type CedarCork(Cork _cork) implements Cork {
   factory CedarCork.decode(Uint8List bytes) => CedarCork(Cork.decode(bytes));
 
   /// Creates a [CedarCork] from its protocol buffer representation.
-  factory CedarCork.fromProto(proto.Cork proto) =>
+  factory CedarCork.fromProto(corksv1.Cork proto) =>
       CedarCork(Cork.fromProto(proto));
 
   /// Creates a [CedarCork] from its JSON representation.
@@ -55,48 +34,119 @@ extension type CedarCork(Cork _cork) implements Cork {
       CedarCork(Cork.fromJson(json));
 
   /// Creates a new [CedarCorkBuilder].
-  ///
-  /// If [id] is not provided, a random nonce will be generated.
-  static CedarCorkBuilder builder([Uint8List? id]) =>
-      CedarCorkBuilder(Cork.builder(id));
+  static CedarCorkBuilder builder(Uint8List keyId) =>
+      CedarCorkBuilder._(Cork.builder(keyId));
 
-  @redeclare
-  cedar.EntityUid get issuer =>
-      cedar.EntityUid.fromProto(proto.EntityUid().unpackAny(_cork.issuer));
+  static const int caveatVersion = 1;
+  static const String caveatNamespace = 'celest.cedar';
+  static const String caveatPredicate = 'expr';
 
+  /// Cedar entity that issued this cork, if present.
   @redeclare
-  cedar.EntityUid get bearer =>
-      cedar.EntityUid.fromProto(proto.EntityUid().unpackAny(_cork.bearer));
+  cedar.EntityUid? get issuer => _decodeEntityUid(_cork.issuer);
 
+  /// Cedar entity representing the bearer, if present.
   @redeclare
-  cedar.EntityUid? get audience {
-    if (_cork.audience case final audience?) {
-      return cedar.EntityUid.fromProto(proto.EntityUid().unpackAny(audience));
+  cedar.EntityUid? get bearer => _decodeEntityUid(_cork.bearer);
+
+  /// Cedar entity representing the audience, if present.
+  @redeclare
+  cedar.EntityUid? get audience => _decodeEntityUid(_cork.audience);
+
+  /// Structured Cedar claims packed into the cork, if present.
+  @redeclare
+  cedar.Entity? get claims => _decodeEntity(_cork.claims);
+
+  /// Cedar caveat expressions embedded as first-party caveats.
+  @redeclare
+  List<cedar.Expr> get caveats {
+    final expressions = <cedar.Expr>[];
+    for (final caveat in _cork.caveats) {
+      if (!caveat.hasFirstParty()) {
+        continue;
+      }
+      final first = caveat.firstParty;
+      if (first.namespace != caveatNamespace ||
+          first.predicate != caveatPredicate) {
+        continue;
+      }
+      if (!first.hasPayload()) {
+        continue;
+      }
+      final expr = _decodeExpr(first.payload);
+      if (expr != null) {
+        expressions.add(expr);
+      }
     }
-    return null;
+    return expressions;
+  }
+
+  CedarCorkBuilder rebuild() => CedarCorkBuilder._(_cork.rebuild());
+}
+
+/// Builder for cork credentials that embed Cedar payloads.
+extension type CedarCorkBuilder._(CorkBuilder _builder) implements CorkBuilder {
+  /// Creates a Cedar-aware builder for the given [keyId].
+  factory CedarCorkBuilder.forKey(Uint8List keyId) =>
+      CedarCorkBuilder._(CorkBuilder(keyId));
+
+  @redeclare
+  set issuer(cedar_model.EntityUid issuer) {
+    _builder.issuer = issuer.toProto();
   }
 
   @redeclare
-  cedar.Entity? get claims {
-    if (_cork.claims case final claims?) {
-      return cedar.Entity.fromProto(proto.Entity().unpackAny(claims));
-    }
-    return null;
+  set bearer(cedar_model.EntityUid bearer) {
+    _builder.bearer = bearer.toProto();
   }
 
   @redeclare
-  List<cedar.Expr> get caveats => UnmodifiableListView([
-    for (final caveat in _cork.caveats)
-      cedar.Expr.fromProto(proto.Expr().unpackAny(caveat)),
-  ]);
+  set audience(cedar_model.EntityUid? audience) {
+    _builder.audience = audience?.toProto();
+  }
 
   @redeclare
-  Map<String, Object?> toJson() => {
-    'id': base64.encode(_cork.id),
-    'issuer': issuer.toString(),
-    'bearer': bearer.toString(),
-    'audience': audience?.toString(),
-    'claims': claims?.toJson(),
-    'caveats': caveats.map((c) => c.toJson()).toList(),
-  };
+  set claims(cedar_model.Entity? claims) {
+    _builder.claims = claims?.toProto();
+  }
+
+  @redeclare
+  void addCaveat(cedar.Expr expression) {
+    final payload = expression.toProto().packIntoAny();
+    final id = secureRandomBytes(16);
+    final caveat = corksv1.Caveat(
+      caveatVersion: CedarCork.caveatVersion,
+      caveatId: id,
+      firstParty: corksv1.FirstPartyCaveat(
+        namespace: CedarCork.caveatNamespace,
+        predicate: CedarCork.caveatPredicate,
+        payload: payload,
+      ),
+    );
+    _builder.addCaveat(caveat);
+  }
+}
+
+cedar_model.EntityUid? _decodeEntityUid(anypb.Any? any) {
+  if (any == null || any.value.isEmpty) {
+    return null;
+  }
+  final proto = cedar_uid.EntityUid()..mergeFromBuffer(any.value);
+  return cedar_model.EntityUid.fromProto(proto);
+}
+
+cedar_model.Entity? _decodeEntity(anypb.Any? any) {
+  if (any == null || any.value.isEmpty) {
+    return null;
+  }
+  final proto = cedar_entity.Entity()..mergeFromBuffer(any.value);
+  return cedar_model.Entity.fromProto(proto);
+}
+
+cedar.Expr? _decodeExpr(anypb.Any payload) {
+  if (payload.value.isEmpty) {
+    return null;
+  }
+  final proto = cedar_expr.Expr()..mergeFromBuffer(payload.value);
+  return cedar.Expr.fromProto(proto);
 }
