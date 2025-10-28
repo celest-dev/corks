@@ -1,3 +1,14 @@
+## 1.0.0
+
+V1 release of corks, complete with a specification and updated Go/Dart libraries.
+
+- feat: Implement cross-language vectors and 3p caveats
+- feat: Add discharge service
+- feat: Add third-party discharge w/ example
+- feat: Add corks CLI
+- perf: Add micro-benchmarks
+- chore: Update protos to latest versions
+
 ## 0.2.4
 
 - feat: Add `toJson`/`fromJson` methods to `Cork` and `CedarCork`

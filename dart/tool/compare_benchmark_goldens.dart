@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../benchmarks/cork_benchmarks.dart' as cork_benchmarks;
+import '../benchmark/cork_benchmarks.dart' as cork_benchmarks;
 
 /// Maximum allowed relative drift before flagging a regression.
 const double _relativeThreshold = 0.10; // 10%
